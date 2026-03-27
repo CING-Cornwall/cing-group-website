@@ -1,0 +1,53 @@
+{{ define "main" }}
+
+<div class="pt-32 pb-20">
+  <article class="max-w-3xl mx-auto px-6 lg:px-8">
+    {{/* Back link */}}
+    <a href="{{ "/press/" | relURL }}" class="inline-flex items-center gap-2 text-primary font-bold text-sm mb-12 hover:text-tertiary transition-colors">
+      <span class="material-symbols-outlined text-lg">arrow_back</span> All Press Releases
+    </a>
+
+    {{/* Header */}}
+    <header class="mb-12">
+      <div class="flex items-center gap-4 mb-6">
+        {{ with .Params.category }}
+        <span class="bg-primary text-white text-[10px] font-bold px-3 py-1 uppercase tracking-widest rounded">{{ . }}</span>
+        {{ end }}
+        <time class="text-secondary text-sm font-medium" datetime="{{ .Date.Format "2006-01-02" }}">
+          {{ .Date.Format "2 January 2006" }}
+        </time>
+      </div>
+      <h1 class="font-headline text-3xl md:text-5xl font-extrabold text-primary tracking-tight leading-tight mb-6">
+        {{ .Title }}
+      </h1>
+      {{ with .Params.excerpt }}
+      <p class="text-xl text-secondary font-light leading-relaxed">{{ . }}</p>
+      {{ end }}
+    </header>
+
+    {{/* Divider */}}
+    <div class="w-24 h-1 bg-tertiary mb-12"></div>
+
+    {{/* Content */}}
+    <div class="text-on-surface-variant text-lg leading-relaxed
+      [&>h2]:font-headline [&>h2]:font-bold [&>h2]:text-2xl [&>h2]:text-primary [&>h2]:mt-12 [&>h2]:mb-4
+      [&>h3]:font-headline [&>h3]:font-bold [&>h3]:text-xl [&>h3]:text-primary [&>h3]:mt-8 [&>h3]:mb-3
+      [&>p]:mb-6
+      [&>ul]:mb-6 [&>ul]:ml-6 [&>ul]:list-disc [&>ul>li]:mb-2
+      [&>ol]:mb-6 [&>ol]:ml-6 [&>ol]:list-decimal [&>ol>li]:mb-2
+      [&>blockquote]:border-l-4 [&>blockquote]:border-tertiary [&>blockquote]:pl-6 [&>blockquote]:italic [&>blockquote]:text-secondary [&>blockquote]:my-8
+    ">
+      {{ .Content }}
+    </div>
+
+    {{/* Footer */}}
+    <div class="mt-16 pt-8 border-t border-surface-container">
+      <p class="text-sm text-secondary mb-4">For media enquiries, contact <a href="mailto:cllr.rowland.oconnor@cornwall.gov.uk" class="text-primary underline underline-offset-4 hover:text-tertiary">cllr.rowland.oconnor@cornwall.gov.uk</a></p>
+      <a href="{{ "/press/" | relURL }}" class="inline-flex items-center gap-2 text-primary font-bold hover:text-tertiary transition-colors">
+        <span class="material-symbols-outlined text-lg">arrow_back</span> Back to Press Releases
+      </a>
+    </div>
+  </article>
+</div>
+
+{{ end }}

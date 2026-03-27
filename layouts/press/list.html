@@ -1,0 +1,182 @@
+{{ define "main" }}
+
+<div class="pt-20">
+  {{/* Hero Section — grayscale coastline */}}
+  <section class="relative h-[60vh] min-h-[500px] flex items-end overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <img alt="Cornish Coastline" class="w-full h-full object-cover grayscale contrast-125" src="{{ "/images/press-hero-cliffs.jpg" | relURL }}" />
+      <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/60 to-transparent"></div>
+    </div>
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 pb-16 relative z-10 w-full">
+      <div class="max-w-4xl">
+        <span class="font-label text-tertiary-fixed-dim tracking-[0.3em] uppercase text-sm mb-4 block">Official Newsroom</span>
+        <h1 class="font-headline text-5xl md:text-7xl lg:text-8xl font-extrabold text-white tracking-tighter leading-none mb-6">
+          Press Releases
+        </h1>
+        <p class="text-xl md:text-2xl text-on-primary-container max-w-2xl font-light leading-relaxed">
+          Official statements and updates from the Cornish Independent NonAligned Group.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {{/* Main Content — two column layout */}}
+  <section class="max-w-7xl mx-auto px-6 lg:px-8 py-20">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+
+      {{/* Left Column: Press Release List */}}
+      <div class="lg:col-span-8">
+
+        {{/* Release List */}}
+        {{ $pages := .Pages.ByDate.Reverse }}
+        {{ if $pages }}
+        <div class="space-y-12">
+          {{ range $pages }}
+          <article class="group {{ if not (eq (index $pages 0) .) }}pt-12{{ end }}">
+            <div class="flex items-baseline gap-4 mb-3">
+              <span class="text-tertiary font-black text-sm tracking-tighter">{{ .Date.Format "Jan 02, 2006" | upper }}</span>
+              <span class="h-[1px] flex-grow bg-outline-variant/30"></span>
+              {{ with .Params.category }}
+              <span class="text-xs font-bold uppercase tracking-widest text-secondary">{{ . }}</span>
+              {{ end }}
+            </div>
+            <a href="{{ .RelPermalink }}" class="block">
+              <h2 class="font-headline text-2xl md:text-3xl font-bold text-primary group-hover:text-tertiary transition-colors mb-4 tracking-tight leading-tight">
+                {{ .Title }}
+              </h2>
+            </a>
+            <p class="text-on-surface-variant text-lg mb-6 leading-relaxed max-w-3xl">
+              {{ with .Params.excerpt }}{{ . }}{{ else }}{{ .Plain | truncate 200 }}{{ end }}
+            </p>
+            <div class="flex items-center gap-6">
+              <a href="{{ .RelPermalink }}" class="inline-flex items-center gap-2 font-black text-sm uppercase tracking-widest text-primary hover:gap-4 transition-all">
+                Read Release <span class="material-symbols-outlined text-sm">arrow_forward</span>
+              </a>
+              {{ with .Params.pdf }}
+              <a href="{{ . | relURL }}" class="inline-flex items-center gap-2 font-bold text-sm text-secondary hover:text-primary transition-colors">
+                <span class="material-symbols-outlined text-lg">download</span> PDF
+              </a>
+              {{ end }}
+            </div>
+          </article>
+          {{ end }}
+        </div>
+
+        {{/* Pagination */}}
+        {{ $paginator := .Paginate $pages }}
+        {{ if gt $paginator.TotalPages 1 }}
+        <div class="mt-20 flex justify-center">
+          <nav class="flex gap-2">
+            {{ range $paginator.Pagers }}
+            {{ if eq . $paginator }}
+            <span class="w-12 h-12 flex items-center justify-center bg-primary text-white font-bold">{{ .PageNumber }}</span>
+            {{ else }}
+            <a href="{{ .URL }}" class="w-12 h-12 flex items-center justify-center bg-surface-container hover:bg-surface-container-highest transition-colors font-bold">{{ .PageNumber }}</a>
+            {{ end }}
+            {{ end }}
+            {{ if $paginator.HasNext }}
+            <a href="{{ $paginator.Next.URL }}" class="w-12 h-12 flex items-center justify-center bg-surface-container hover:bg-surface-container-highest transition-colors font-bold">
+              <span class="material-symbols-outlined">chevron_right</span>
+            </a>
+            {{ end }}
+          </nav>
+        </div>
+        {{ end }}
+
+        {{ else }}
+        <p class="text-secondary text-lg">Press releases coming soon.</p>
+        {{ end }}
+      </div>
+
+      {{/* Right Column: Sidebar */}}
+      <aside class="lg:col-span-4 space-y-12">
+
+        {{/* Media Contact */}}
+        <div class="bg-primary p-10 text-white relative overflow-hidden rounded-xl">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-white/5 -mr-16 -mt-16 rounded-full"></div>
+          <h3 class="font-headline text-2xl font-bold mb-6 tracking-tight">Media Contact</h3>
+          <div class="space-y-6">
+            <div>
+              <p class="text-on-primary-container text-xs font-black uppercase tracking-widest mb-1">Group Leader</p>
+              <p class="text-xl font-bold">Rowland O'Connor</p>
+            </div>
+            <div class="space-y-2">
+              <a class="flex items-center gap-3 text-on-primary-container hover:text-white transition-colors" href="mailto:cllr.rowland.oconnor@cornwall.gov.uk">
+                <span class="material-symbols-outlined text-lg">mail</span>
+                cllr.rowland.oconnor@cornwall.gov.uk
+              </a>
+            </div>
+            <a href="{{ "/get-involved/" | relURL }}" class="block w-full mt-4 bg-tertiary-container text-on-tertiary-container py-4 font-black uppercase tracking-widest text-xs text-center hover:bg-tertiary transition-all rounded-md">
+              Get in Touch
+            </a>
+          </div>
+        </div>
+
+        {{/* Media Kit */}}
+        <div class="bg-surface-container-low p-10 rounded-xl">
+          <h3 class="font-headline text-2xl font-bold text-primary mb-6 tracking-tight">Media Kit</h3>
+          <p class="text-sm text-on-surface-variant mb-8 leading-relaxed">
+            Official branding assets and biographical information for media use.
+          </p>
+          <div class="space-y-4">
+            <div class="flex items-center justify-between p-4 bg-surface-container-lowest rounded-md">
+              <div class="flex items-center gap-4">
+                <span class="material-symbols-outlined text-primary">person</span>
+                <span class="font-bold text-sm uppercase tracking-wider">Councillor Bios</span>
+              </div>
+              <a href="{{ "/councillors/" | relURL }}">
+                <span class="material-symbols-outlined text-outline hover:text-primary transition-colors">arrow_forward</span>
+              </a>
+            </div>
+            <div class="flex items-center justify-between p-4 bg-surface-container-lowest rounded-md">
+              <div class="flex items-center gap-4">
+                <span class="material-symbols-outlined text-primary">description</span>
+                <span class="font-bold text-sm uppercase tracking-wider">Group Manifesto</span>
+              </div>
+              <a href="{{ "/policies/" | relURL }}">
+                <span class="material-symbols-outlined text-outline hover:text-primary transition-colors">arrow_forward</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {{/* Newsletter */}}
+        <div class="border-2 border-primary-container p-10 rounded-xl">
+          <h3 class="font-headline text-xl font-bold text-primary mb-4 tracking-tight">Stay Informed</h3>
+          <p class="text-sm text-on-surface-variant mb-6">Receive our latest statements directly in your inbox.</p>
+          <form class="space-y-4" action="https://formspree.io/f/{{ .Site.Params.formspreeId }}" method="POST">
+            <input type="hidden" name="_subject" value="Press newsletter signup" />
+            <input class="w-full p-4 bg-surface border-none border-b-2 border-outline-variant focus:border-primary focus:ring-0 text-sm rounded-md" placeholder="Email Address" type="email" name="email" required />
+            <button class="w-full bg-primary text-white py-4 font-black uppercase tracking-widest text-xs hover:bg-primary-container transition-all rounded-md" type="submit">Subscribe</button>
+          </form>
+        </div>
+
+      </aside>
+    </div>
+  </section>
+
+  {{/* Community Anchor */}}
+  <section class="w-full bg-gradient-to-r from-[#00263b] to-[#003d5b] py-24 px-6 lg:px-8 overflow-hidden relative">
+    <div class="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
+      <div class="max-w-2xl">
+        <h2 class="font-headline text-3xl md:text-5xl font-extrabold text-white tracking-tighter mb-6 leading-tight">
+          Our voice is local.<br/>Our impact is permanent.
+        </h2>
+        <p class="text-on-primary-container text-lg max-w-lg mb-8">
+          The Cornish Independent NonAligned Group represents a commitment to transparent, independent governance for Cornwall.
+        </p>
+        <div class="flex gap-4">
+          <a href="{{ "/policies/" | relURL }}" class="bg-tertiary-container text-on-tertiary-container px-8 py-4 font-black uppercase tracking-widest text-xs hover:bg-tertiary transition-all rounded-md">
+            Read Our Policies
+          </a>
+        </div>
+      </div>
+      <div class="hidden lg:block w-96 h-96 relative">
+        <img alt="Granite Texture" class="w-full h-full object-cover rounded-xl opacity-40 mix-blend-overlay" src="{{ "/images/granite-texture.jpg" | relURL }}" />
+        <div class="absolute inset-0 border-[20px] border-white/5 rounded-xl -m-6"></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+{{ end }}

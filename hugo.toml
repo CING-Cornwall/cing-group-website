@@ -29,6 +29,10 @@ copyright = "© 2026 Cornish Independent NonAligned Group. Built for Cornwall."
     pageRef = "/news/"
     weight = 50
   [[menus.main]]
+    name = "Press"
+    pageRef = "/press/"
+    weight = 55
+  [[menus.main]]
     name = "Get Involved"
     pageRef = "/get-involved/"
     weight = 60
