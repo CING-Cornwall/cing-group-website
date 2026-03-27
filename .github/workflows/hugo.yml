@@ -45,7 +45,7 @@ jobs:
           hugo \
             --gc \
             --minify \
-            --baseURL "${{ steps.pages.outputs.base_url }}/"
+            --baseURL "https://www.cingparty.uk/"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
