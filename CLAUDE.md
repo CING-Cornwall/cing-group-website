@@ -76,6 +76,6 @@ Formspree handles all form submissions. The form ID (`mvzvgdbl`) is stored in `h
 
 News posts live in `content/news/` as markdown files with front matter: `title`, `date`, `category`, `image`, `excerpt`. The news list template shows the first post as a featured bento layout and remaining posts in a 3-column grid.
 
-### CPW data integration
+### Councillor data
 
-Councillor data (divisions, committees, attendance percentages) is sourced from Cornwall Political Watch (`cornwallpoliticalwatch.com/api/public/councillors`). Currently static in YAML — no outbound links to CPW on the site. Phase 2 plan: GitHub Actions cron to auto-pull fresh data at build time.
+Councillor data (divisions, committees, attendance percentages) is maintained in `data/councillors.yaml`. Phase 2 plan: GitHub Actions cron to auto-refresh data at build time.
