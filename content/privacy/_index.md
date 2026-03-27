@@ -53,7 +53,7 @@ Under the UK General Data Protection Regulation (UK GDPR), you have the right to
 
 If you wish to exercise any of these rights, or if you have questions about how we handle your data, please contact us at:
 
-**Email**: [privacy@cingparty.uk](mailto:privacy@cingparty.uk)
+**Contact us** via our [Get Involved page](/get-involved/#contact-form).
 
 We aim to respond to all data requests within one calendar month. If you are not satisfied with our response, you have the right to lodge a complaint with the Information Commissioner's Office (ICO) at [ico.org.uk](https://ico.org.uk).
 

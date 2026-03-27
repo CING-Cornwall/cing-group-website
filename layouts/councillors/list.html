@@ -96,7 +96,7 @@
             </div>
             {{ end }}
             {{ with $councillor.email }}
-            <a class="inline-flex items-center text-primary text-xs font-bold hover:text-tertiary transition-colors mt-3" href="mailto:{{ . }}">
+            <a class="inline-flex items-center text-primary text-xs font-bold hover:text-tertiary transition-colors mt-3" href="{{ "/get-involved/#contact-form" | relURL }}">
               <span class="material-symbols-outlined text-[16px] mr-1">mail</span> Contact
             </a>
             {{ end }}
