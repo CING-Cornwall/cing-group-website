@@ -156,13 +156,14 @@
   {{ if $latestNews }}
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
     {{ range $latestNews }}
+    {{ $pageTitle := .Title }}
     <article class="group cursor-pointer">
       <a href="{{ .RelPermalink }}" class="block">
         <div class="aspect-[16/10] overflow-hidden rounded-lg mb-6 relative bg-surface-container-high">
           {{ with .Params.image }}
             <img
               src="{{ . | relURL }}"
-              alt="{{ $.Title }}"
+              alt="{{ $pageTitle }}"
               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
           {{ else }}
             <div class="w-full h-full flex items-center justify-center">

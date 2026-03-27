@@ -1,18 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ .Site.LanguageCode | default "en" }}">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ if not .IsHome }}{{ .Title }} | {{ end }}{{ .Site.Title }}</title>
+  <title>{{ if .IsHome }}CING — Independent Councillors for Cornwall{{ else }}{{ .Title }} | CING{{ end }}</title>
   <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}" />
+
+  {{/* Canonical URL */}}
+  <link rel="canonical" href="{{ .Permalink }}" />
+
+  {{/* Local SEO */}}
+  <meta name="geo.region" content="GB-CON" />
+  <meta name="geo.placename" content="Cornwall" />
 
   {{/* Open Graph */}}
   <meta property="og:title" content="{{ .Title }}" />
   <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}" />
   <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}" />
   <meta property="og:url" content="{{ .Permalink }}" />
-  {{ with .Params.image }}<meta property="og:image" content="{{ . | absURL }}" />{{ end }}
+  <meta property="og:image" content="{{ with .Params.image }}{{ . | absURL }}{{ else }}{{ with .Site.Params.ogImage }}{{ . | absURL }}{{ end }}{{ end }}" />
   <meta property="og:site_name" content="{{ .Site.Title }}" />
+
+  {{/* Twitter Card */}}
+  <meta name="twitter:card" content="{{ if .Params.image }}summary_large_image{{ else }}summary{{ end }}" />
+  <meta name="twitter:title" content="{{ .Title }}" />
+  <meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}" />
+  {{ with .Params.image }}<meta name="twitter:image" content="{{ . | absURL }}" />{{ end }}
+
+  {{/* Structured Data */}}
+  {{ if .IsHome }}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Cornish Independent NonAligned Group",
+    "alternateName": "CING",
+    "url": "https://www.cingparty.uk/",
+    "description": "{{ .Site.Params.description }}",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "County Hall, Treyew Road",
+      "addressLocality": "Truro",
+      "addressRegion": "Cornwall",
+      "postalCode": "TR1 3AY",
+      "addressCountry": "GB"
+    },
+    "areaServed": {
+      "@type": "AdministrativeArea",
+      "name": "Cornwall"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "{{ .Site.Title }}",
+    "url": "https://www.cingparty.uk/"
+  }
+  </script>
+  {{ end }}
+
+  {{/* Preconnect hints (before render-blocking resources) */}}
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
   {{/* Tailwind CSS via CDN */}}
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -82,8 +133,6 @@
   </script>
 
   {{/* Google Fonts */}}
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Public+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
 
@@ -113,9 +162,14 @@
 </head>
 <body class="bg-background text-on-background font-body selection:bg-tertiary-fixed selection:text-on-tertiary-fixed">
 
+  {{/* Skip to content (accessibility) */}}
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:bg-primary focus:text-white focus:px-4 focus:py-2 focus:rounded">
+    Skip to main content
+  </a>
+
   {{ partial "header.html" . }}
 
-  <main>
+  <main id="main-content">
     {{ block "main" . }}{{ end }}
   </main>
 

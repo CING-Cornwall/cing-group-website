@@ -6,6 +6,7 @@ copyright = "© 2026 Cornish Independent NonAligned Group. Built for Cornwall."
 [params]
   description = "The Cornish Independent NonAligned Group — independent councillors serving Cornwall's unique needs on Cornwall Council."
   formspreeId = "mvzvgdbl"
+  ogImage = "/images/hero-coastline.jpg"
 
 [menus]
   [[menus.main]]
@@ -47,6 +48,8 @@ summaryLength = 30
     [markup.goldmark.renderer]
       unsafe = true
 
+disableKinds = ["taxonomy", "term"]
+
 [outputs]
-  home = ["HTML"]
-  section = ["HTML"]
+  home = ["HTML", "RSS", "sitemap"]
+  section = ["HTML", "RSS"]

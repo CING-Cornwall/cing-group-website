@@ -1,5 +1,25 @@
 {{ define "main" }}
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "headline": "{{ .Title }}",
+  "datePublished": "{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}",
+  "dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}",
+  "description": "{{ with .Description }}{{ . }}{{ else }}{{ .Params.excerpt }}{{ end }}",
+  "author": {
+    "@type": "Organization",
+    "name": "Cornish Independent NonAligned Group"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Cornish Independent NonAligned Group",
+    "url": "https://www.cingparty.uk/"
+  }
+}
+</script>
+
 <div class="pt-32 pb-20">
   <article class="max-w-3xl mx-auto px-6 lg:px-8">
     {{/* Back link */}}
