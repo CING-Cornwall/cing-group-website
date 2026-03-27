@@ -1,0 +1,129 @@
+{{ define "main" }}
+
+<div class="pt-32 pb-20 px-6 lg:px-8 max-w-screen-2xl mx-auto">
+  {{/* Editorial header */}}
+  <header class="mb-16">
+    <span class="font-label text-tertiary uppercase tracking-widest text-sm font-bold block mb-4">Latest Dispatch</span>
+    <h1 class="font-headline text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-primary leading-none">
+      News from<br/><span class="text-tertiary">Cornwall.</span>
+    </h1>
+  </header>
+
+  {{ $pages := .Pages.ByDate.Reverse }}
+
+  {{/* Featured story (first post) in bento layout */}}
+  {{ with first 1 $pages }}
+  {{ range . }}
+  <section class="mb-24">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-0 overflow-hidden rounded-xl bg-surface-container-lowest editorial-shadow">
+      <div class="lg:col-span-7 relative h-[300px] lg:h-[600px]">
+        {{ with .Params.image }}
+        <img
+          src="{{ . | relURL }}"
+          alt="{{ $.Title }}"
+          class="absolute inset-0 w-full h-full object-cover" />
+        {{ else }}
+        <div class="absolute inset-0 bg-surface-container-high flex items-center justify-center">
+          <span class="material-symbols-outlined text-8xl text-outline-variant">newspaper</span>
+        </div>
+        {{ end }}
+        <div class="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent lg:hidden"></div>
+      </div>
+      <div class="lg:col-span-5 p-8 md:p-12 lg:p-16 flex flex-col justify-center bg-primary text-white">
+        <div class="flex items-center gap-4 mb-6">
+          {{ with .Params.category }}
+          <span class="bg-tertiary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">{{ . }}</span>
+          {{ end }}
+          <span class="text-on-primary-container text-sm font-medium">{{ .Date.Format "January 2, 2006" }}</span>
+        </div>
+        <h2 class="font-headline text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-6">
+          {{ .Title }}
+        </h2>
+        <p class="text-slate-300 text-lg mb-8 leading-relaxed font-body">
+          {{ with .Params.excerpt }}{{ . }}{{ else }}{{ .Plain | truncate 200 }}{{ end }}
+        </p>
+        <a href="{{ .RelPermalink }}" class="inline-flex items-center gap-2 font-bold text-tertiary-fixed-dim hover:gap-4 transition-all">
+          Read full article
+          <span class="material-symbols-outlined">arrow_forward</span>
+        </a>
+      </div>
+    </div>
+  </section>
+  {{ end }}
+  {{ end }}
+
+  {{/* Article grid (remaining posts) */}}
+  {{ $remaining := after 1 $pages }}
+  {{ if $remaining }}
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+    {{ range $remaining }}
+    <article class="group">
+      <a href="{{ .RelPermalink }}" class="block">
+        <div class="aspect-[16/10] mb-6 overflow-hidden rounded-lg bg-surface-container-high">
+          {{ with .Params.image }}
+          <img
+            src="{{ . | relURL }}"
+            alt="{{ $.Title }}"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+          {{ else }}
+          <div class="w-full h-full flex items-center justify-center">
+            <span class="material-symbols-outlined text-6xl text-outline-variant">article</span>
+          </div>
+          {{ end }}
+        </div>
+        <div class="flex items-center gap-3 mb-4">
+          {{ with .Params.category }}
+          <span class="text-xs font-bold text-tertiary uppercase tracking-tighter">{{ . }}</span>
+          <span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+          {{ end }}
+          <time class="text-xs text-secondary font-medium uppercase tracking-tighter" datetime="{{ .Date.Format "2006-01-02" }}">
+            {{ .Date.Format "Jan 2, 2006" }}
+          </time>
+        </div>
+        <h3 class="font-headline text-2xl font-bold text-primary mb-3 group-hover:text-tertiary transition-colors">
+          {{ .Title }}
+        </h3>
+        <p class="text-on-surface-variant leading-relaxed text-sm mb-6 line-clamp-2">
+          {{ with .Params.excerpt }}{{ . }}{{ else }}{{ .Plain | truncate 160 }}{{ end }}
+        </p>
+        <div class="h-px w-12 bg-outline-variant group-hover:w-full transition-all duration-500"></div>
+      </a>
+    </article>
+    {{ end }}
+  </div>
+  {{ end }}
+
+  {{/* Pagination */}}
+  {{ $paginator := .Paginate $pages }}
+  {{ if gt $paginator.TotalPages 1 }}
+  <nav class="mt-24 flex items-center justify-between" aria-label="Pagination">
+    {{ if $paginator.HasPrev }}
+    <a href="{{ $paginator.Prev.URL }}" class="flex items-center gap-2 text-primary font-bold hover:text-tertiary transition-colors">
+      <span class="material-symbols-outlined">arrow_back</span> Newer Posts
+    </a>
+    {{ else }}
+    <span></span>
+    {{ end }}
+
+    <div class="flex gap-2">
+      {{ range $paginator.Pagers }}
+      {{ if eq . $paginator }}
+      <span class="w-8 h-8 flex items-center justify-center bg-primary text-white rounded-md font-bold text-sm">{{ .PageNumber }}</span>
+      {{ else }}
+      <a href="{{ .URL }}" class="w-8 h-8 flex items-center justify-center text-secondary hover:bg-surface-container rounded-md cursor-pointer transition-colors text-sm">{{ .PageNumber }}</a>
+      {{ end }}
+      {{ end }}
+    </div>
+
+    {{ if $paginator.HasNext }}
+    <a href="{{ $paginator.Next.URL }}" class="flex items-center gap-2 text-primary font-bold hover:text-tertiary transition-colors">
+      Older Posts <span class="material-symbols-outlined">arrow_forward</span>
+    </a>
+    {{ else }}
+    <span></span>
+    {{ end }}
+  </nav>
+  {{ end }}
+</div>
+
+{{ end }}

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a3a4a"/>
+      <stop offset="60%" stop-color="#2d5a6a"/>
+      <stop offset="100%" stop-color="#4a7a8a"/>
+    </linearGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a4a5a"/>
+      <stop offset="100%" stop-color="#0d2a3a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#sky)"/>
+  <path d="M0 600 Q480 550 960 620 Q1440 690 1920 600 L1920 1080 L0 1080Z" fill="url(#sea)" opacity="0.8"/>
+  <path d="M0 700 Q480 680 960 720 Q1440 760 1920 700 L1920 1080 L0 1080Z" fill="#0d2a3a" opacity="0.6"/>
+  <!-- Cliff shapes -->
+  <path d="M100 600 L200 400 L350 450 L400 550 L300 600Z" fill="#2a3a3a" opacity="0.7"/>
+  <path d="M1500 600 L1600 350 L1750 400 L1850 500 L1700 600Z" fill="#2a3a3a" opacity="0.7"/>
+</svg>

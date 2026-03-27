@@ -1,0 +1,39 @@
+{{ define "main" }}
+
+<article class="pt-32 pb-20">
+  {{/* Editorial header */}}
+  <header class="max-w-screen-2xl mx-auto px-6 lg:px-8 mb-16">
+    <div class="max-w-3xl">
+      {{ with .Params.overline }}
+        <span class="font-label text-tertiary uppercase tracking-widest text-sm font-bold block mb-4">{{ . }}</span>
+      {{ end }}
+      <h1 class="font-headline text-4xl md:text-6xl font-extrabold tracking-tight text-primary leading-tight mb-6">
+        {{ .Title }}
+      </h1>
+      {{ with .Description }}
+        <p class="text-xl text-secondary font-light leading-relaxed">{{ . }}</p>
+      {{ end }}
+    </div>
+  </header>
+
+  {{/* Prose content */}}
+  <div class="max-w-3xl mx-auto px-6 lg:px-8">
+    <div class="
+      text-on-surface-variant text-lg leading-relaxed
+      [&>h2]:font-headline [&>h2]:font-bold [&>h2]:text-2xl [&>h2]:md:text-3xl [&>h2]:text-primary [&>h2]:mt-12 [&>h2]:mb-4
+      [&>h3]:font-headline [&>h3]:font-bold [&>h3]:text-xl [&>h3]:md:text-2xl [&>h3]:text-primary [&>h3]:mt-10 [&>h3]:mb-3
+      [&>h4]:font-headline [&>h4]:font-bold [&>h4]:text-lg [&>h4]:text-primary [&>h4]:mt-8 [&>h4]:mb-2
+      [&>p]:mb-6
+      [&>ul]:mb-6 [&>ul]:ml-6 [&>ul]:list-disc [&>ul>li]:mb-2
+      [&>ol]:mb-6 [&>ol]:ml-6 [&>ol]:list-decimal [&>ol>li]:mb-2
+      [&>blockquote]:border-l-4 [&>blockquote]:border-tertiary [&>blockquote]:pl-6 [&>blockquote]:italic [&>blockquote]:text-secondary [&>blockquote]:my-8
+      [&>a]:text-primary [&>a]:underline [&>a]:underline-offset-4 [&>a]:hover:text-tertiary
+      [&>img]:rounded-lg [&>img]:my-8
+      [&>hr]:my-12 [&>hr]:border-surface-container
+    ">
+      {{ .Content }}
+    </div>
+  </div>
+</article>
+
+{{ end }}

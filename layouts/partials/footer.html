@@ -1,0 +1,55 @@
+{{/* Footer matching Stitch design */}}
+<footer class="bg-surface-dim w-full border-t-0 mt-20">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8 px-8 lg:px-12 py-16 max-w-screen-2xl mx-auto">
+
+    {{/* Col 1: Brand + tagline + social */}}
+    <div class="space-y-4">
+      <div class="font-headline font-black text-primary text-2xl uppercase">CING</div>
+      <p class="text-sm tracking-wide text-slate-600 leading-relaxed max-w-xs">
+        The Cornish Independent NonAligned Group — independent councillors serving Cornwall's unique needs on Cornwall Council.
+      </p>
+      <div class="flex gap-4 pt-2">
+        <a href="#" aria-label="Social media" class="text-primary hover:text-tertiary transition-colors">
+          <span class="material-symbols-outlined">share</span>
+        </a>
+        <a href="#" aria-label="Email" class="text-primary hover:text-tertiary transition-colors">
+          <span class="material-symbols-outlined">mail</span>
+        </a>
+        <a href="#" aria-label="Location" class="text-primary hover:text-tertiary transition-colors">
+          <span class="material-symbols-outlined">location_on</span>
+        </a>
+      </div>
+    </div>
+
+    {{/* Col 2: Link columns */}}
+    <div class="grid grid-cols-2 gap-4">
+      <div class="space-y-3">
+        <h4 class="font-bold text-primary mb-2 uppercase text-xs tracking-widest">Explore</h4>
+        <a class="block text-slate-600 hover:text-[#705d00] underline-offset-4 hover:underline text-sm" href="{{ "/" | relURL }}">Home</a>
+        <a class="block text-slate-600 hover:text-[#705d00] underline-offset-4 hover:underline text-sm" href="{{ "/about/" | relURL }}">About</a>
+        <a class="block text-slate-600 hover:text-[#705d00] underline-offset-4 hover:underline text-sm" href="{{ "/policies/" | relURL }}">Policies</a>
+        <a class="block text-slate-600 hover:text-[#705d00] underline-offset-4 hover:underline text-sm" href="{{ "/news/" | relURL }}">News</a>
+      </div>
+      <div class="space-y-3">
+        <h4 class="font-bold text-primary mb-2 uppercase text-xs tracking-widest">Connect</h4>
+        <a class="block text-slate-600 hover:text-[#705d00] underline-offset-4 hover:underline text-sm" href="{{ "/get-involved/" | relURL }}">Get Involved</a>
+        <a class="block text-slate-600 hover:text-[#705d00] underline-offset-4 hover:underline text-sm" href="{{ "/councillors/" | relURL }}">Councillors</a>
+        <a class="block text-slate-600 hover:text-[#705d00] underline-offset-4 hover:underline text-sm" href="{{ "/privacy/" | relURL }}">Privacy Policy</a>
+      </div>
+    </div>
+
+    {{/* Col 3: Contact + copyright */}}
+    <div class="space-y-6">
+      <h4 class="font-bold text-primary mb-2 uppercase text-xs tracking-widest">Contact</h4>
+      <div class="flex items-start gap-3">
+        <span class="material-symbols-outlined text-primary shrink-0">location_on</span>
+        <p class="text-sm text-slate-600">Cornwall Council<br/>County Hall, Treyew Road<br/>Truro, Cornwall TR1 3AY</p>
+      </div>
+      <div class="pt-4">
+        <p class="text-sm tracking-wide text-slate-600 opacity-80">
+          {{ .Site.Copyright | default (printf "&copy; %d Cornish Independent NonAligned Group." now.Year) | safeHTML }}
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>

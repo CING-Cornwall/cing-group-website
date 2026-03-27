@@ -1,0 +1,72 @@
+{{ define "main" }}
+
+<div class="pt-32 pb-20">
+  {{/* Editorial header */}}
+  <header class="max-w-screen-2xl mx-auto px-6 lg:px-8 mb-16">
+    <div class="max-w-3xl">
+      {{ with .Params.overline }}
+        <span class="font-label text-tertiary uppercase tracking-widest text-sm font-bold block mb-4">{{ . }}</span>
+      {{ end }}
+      <h1 class="font-headline text-4xl md:text-6xl lg:text-8xl font-extrabold tracking-tight text-primary leading-none mb-6">
+        {{ .Title }}
+      </h1>
+      {{ with .Description }}
+        <p class="text-xl text-secondary font-light leading-relaxed">{{ . }}</p>
+      {{ end }}
+    </div>
+  </header>
+
+  {{/* Content from the _index.md file */}}
+  {{ if .Content }}
+  <div class="max-w-screen-2xl mx-auto px-6 lg:px-8 mb-16">
+    <div class="max-w-3xl
+      text-on-surface-variant text-lg leading-relaxed
+      [&>h2]:font-headline [&>h2]:font-bold [&>h2]:text-2xl [&>h2]:text-primary [&>h2]:mt-12 [&>h2]:mb-4
+      [&>h3]:font-headline [&>h3]:font-bold [&>h3]:text-xl [&>h3]:text-primary [&>h3]:mt-10 [&>h3]:mb-3
+      [&>p]:mb-6
+      [&>ul]:mb-6 [&>ul]:ml-6 [&>ul]:list-disc [&>ul>li]:mb-2
+      [&>ol]:mb-6 [&>ol]:ml-6 [&>ol]:list-decimal [&>ol>li]:mb-2
+      [&>blockquote]:border-l-4 [&>blockquote]:border-tertiary [&>blockquote]:pl-6 [&>blockquote]:italic [&>blockquote]:text-secondary [&>blockquote]:my-8
+    ">
+      {{ .Content }}
+    </div>
+  </div>
+  {{ end }}
+
+  {{/* Child pages list (if any) */}}
+  {{ $pages := .RegularPages }}
+  {{ if $pages }}
+  <section class="max-w-screen-2xl mx-auto px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+      {{ range $pages }}
+      <article class="group">
+        <a href="{{ .RelPermalink }}" class="block">
+          {{ with .Params.image }}
+          <div class="aspect-[16/10] mb-6 overflow-hidden rounded-lg bg-surface-container-high">
+            <img
+              src="{{ . | relURL }}"
+              alt="{{ $.Title }}"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+          </div>
+          {{ end }}
+          <h3 class="font-headline text-2xl font-bold text-primary mb-3 group-hover:text-tertiary transition-colors">
+            {{ .Title }}
+          </h3>
+          {{ with .Description }}
+          <p class="text-on-surface-variant leading-relaxed text-sm mb-4">{{ . }}</p>
+          {{ else }}
+          <p class="text-on-surface-variant leading-relaxed text-sm mb-4">{{ .Summary }}</p>
+          {{ end }}
+          <div class="h-px w-12 bg-outline-variant group-hover:w-full transition-all duration-500"></div>
+        </a>
+      </article>
+      {{ end }}
+    </div>
+
+    {{/* Pagination */}}
+    {{ template "_internal/pagination.html" . }}
+  </section>
+  {{ end }}
+</div>
+
+{{ end }}

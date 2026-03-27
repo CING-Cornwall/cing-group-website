@@ -1,0 +1,235 @@
+{{ define "main" }}
+
+{{/* ============================================
+     HERO SECTION: Full viewport, background image
+     ============================================ */}}
+<section class="relative h-screen min-h-[700px] flex items-center overflow-hidden">
+  {{/* Background image with darkening overlay */}}
+  <div class="absolute inset-0 z-0">
+    <img
+      src="{{ "/images/hero-coastline.jpg" | relURL }}"
+      alt="Dramatic Cornish coastline"
+      class="w-full h-full object-cover brightness-[0.4]" />
+  </div>
+
+  <div class="relative z-10 max-w-screen-2xl mx-auto px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12">
+    <div class="lg:col-span-8 flex flex-col justify-center gap-6">
+      <span class="inline-block text-tertiary-fixed-dim font-headline font-bold tracking-[0.2em] uppercase text-sm">
+        Independent Voices for Cornwall
+      </span>
+      <h1 class="font-headline font-extrabold text-4xl md:text-6xl lg:text-8xl text-white tracking-tight leading-[1.05] text-editorial-balance">
+        Standing for<br/>Cornwall.
+      </h1>
+      <p class="text-slate-200 text-lg md:text-2xl max-w-2xl font-light leading-relaxed">
+        The Cornish Independent NonAligned Group: independent councillors moving beyond party lines to serve the unique needs of Cornwall.
+      </p>
+      <div class="flex flex-wrap gap-4 mt-8">
+        <a href="{{ "/policies/" | relURL }}"
+           class="bg-tertiary text-on-tertiary px-8 md:px-10 py-4 rounded-md font-bold text-lg hover:bg-tertiary-container transition-all duration-300 flex items-center gap-2">
+          Our Policies <span class="material-symbols-outlined">arrow_forward</span>
+        </a>
+        <a href="{{ "/councillors/" | relURL }}"
+           class="bg-white/10 backdrop-blur-md text-white border border-white/20 px-8 md:px-10 py-4 rounded-md font-bold text-lg hover:bg-white/20 transition-all duration-300">
+          Our Councillors
+        </a>
+      </div>
+    </div>
+  </div>
+
+  {{/* Scroll indicator */}}
+  <div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50 text-white">
+    <span class="text-xs uppercase tracking-widest font-bold">Discover</span>
+    <span class="material-symbols-outlined animate-bounce">expand_more</span>
+  </div>
+</section>
+
+{{/* ============================================
+     CORE PRINCIPLES: Bento Grid
+     ============================================ */}}
+<section class="py-24 px-6 lg:px-8 max-w-screen-2xl mx-auto">
+  <div class="flex flex-col lg:flex-row justify-between items-end mb-16 gap-8">
+    <div class="max-w-2xl">
+      <h2 class="font-headline font-bold text-3xl md:text-5xl text-primary tracking-tight mb-4">What We Stand For</h2>
+      <p class="text-secondary text-lg">
+        We are not a political party. We are a group of independent councillors united by a commitment to Cornwall and its people.
+      </p>
+    </div>
+    <div class="h-[2px] flex-grow bg-surface-container mx-8 hidden lg:block"></div>
+    <div class="text-right">
+      <span class="font-headline font-black text-6xl md:text-8xl text-surface-container opacity-50 select-none">PRINCIPLES</span>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    {{/* Large feature card */}}
+    <div class="md:col-span-2 lg:col-span-2 bg-primary text-white p-10 rounded-xl flex flex-col justify-between min-h-[400px]">
+      <span class="material-symbols-outlined text-tertiary-fixed text-5xl">groups</span>
+      <div>
+        <h3 class="font-headline font-bold text-3xl mb-4">True Independence</h3>
+        <p class="text-on-primary-container leading-relaxed text-lg">
+          Free from the party whip, CING councillors vote according to the best interests of Cornwall and their constituents, not a distant party headquarters.
+        </p>
+      </div>
+    </div>
+
+    {{/* Standard cards */}}
+    <div class="bg-surface-container-lowest p-8 rounded-xl border-b-4 border-surface-container-high transition-all hover:translate-y-[-4px]">
+      <span class="material-symbols-outlined text-primary text-4xl mb-6">landscape</span>
+      <h3 class="font-headline font-bold text-xl mb-3 text-primary">Environment First</h3>
+      <p class="text-secondary leading-relaxed">Protecting Cornwall's coastline, rivers, and countryside for future generations through sustainable local policies.</p>
+    </div>
+
+    <div class="bg-surface-container-lowest p-8 rounded-xl border-b-4 border-surface-container-high transition-all hover:translate-y-[-4px]">
+      <span class="material-symbols-outlined text-primary text-4xl mb-6">house</span>
+      <h3 class="font-headline font-bold text-xl mb-3 text-primary">Housing for Locals</h3>
+      <p class="text-secondary leading-relaxed">Championing affordable housing and fighting the second-home crisis that hollows out our communities.</p>
+    </div>
+
+    <div class="bg-surface-container-lowest p-8 rounded-xl border-b-4 border-surface-container-high transition-all hover:translate-y-[-4px]">
+      <span class="material-symbols-outlined text-primary text-4xl mb-6">account_balance</span>
+      <h3 class="font-headline font-bold text-xl mb-3 text-primary">Local Accountability</h3>
+      <p class="text-secondary leading-relaxed">Holding Cornwall Council to account with transparency, scrutiny, and a commitment to good governance.</p>
+    </div>
+
+    {{/* Secondary large card */}}
+    <div class="md:col-span-2 bg-surface-container-high p-10 rounded-xl flex flex-col md:flex-row gap-8 items-center">
+      <div class="flex-1">
+        <h3 class="font-headline font-bold text-3xl mb-4 text-primary">Nonaligned & Accountable</h3>
+        <p class="text-secondary leading-relaxed text-lg">
+          We answer to the people of Cornwall, not to party donors or national campaigns. Every decision is made with our communities in mind.
+        </p>
+      </div>
+      <div class="w-full md:w-48 aspect-square rounded-full overflow-hidden bg-white flex items-center justify-center p-4">
+        <span class="material-symbols-outlined text-primary text-6xl">verified_user</span>
+      </div>
+    </div>
+
+    {{/* Gold CTA card */}}
+    <div class="bg-tertiary-container p-8 rounded-xl flex flex-col justify-center items-center text-center">
+      <h3 class="font-headline font-bold text-2xl text-on-tertiary-container mb-2">Join the Movement</h3>
+      <p class="text-on-tertiary-container text-sm mb-6">Help us shape the future of Cornwall.</p>
+      <a href="{{ "/get-involved/" | relURL }}"
+         class="bg-on-tertiary-container text-white px-6 py-2 rounded-md font-bold text-sm w-full block text-center">
+        Get Involved
+      </a>
+    </div>
+  </div>
+</section>
+
+{{/* ============================================
+     COMMUNITY ANCHOR: Full-bleed gradient
+     ============================================ */}}
+<section class="mt-16 w-full py-20 bg-gradient-to-br from-[#00263b] to-[#003d5b] text-white overflow-hidden relative">
+  <div class="max-w-screen-2xl mx-auto px-6 lg:px-8 relative z-10 flex flex-col items-center text-center">
+    <span class="font-headline font-bold tracking-[0.3em] uppercase text-xs opacity-70 mb-6">Our Commitment</span>
+    <h2 class="font-headline font-extrabold text-3xl md:text-5xl lg:text-6xl max-w-4xl tracking-tight leading-tight text-editorial-balance">
+      "Cornwall deserves councillors who put Cornwall first — free from party politics and national agendas."
+    </h2>
+    <div class="mt-12 w-24 h-1 bg-tertiary"></div>
+    <div class="mt-8 flex items-center gap-4">
+      <img src="{{ "/images/councillors/rowland-oconnor.jpg" | relURL }}" alt="Rowland O'Connor" class="w-16 h-16 rounded-full object-cover border-2 border-tertiary" />
+      <div class="text-left">
+        <p class="font-bold text-lg">Rowland O'Connor</p>
+        <p class="text-sm opacity-70">Cornish Independent NonAligned Group</p>
+      </div>
+    </div>
+  </div>
+  {{/* Subtle texture overlay */}}
+  <div class="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay"
+       style="background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%224%22%20height%3D%224%22%3E%3Crect%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E'); background-repeat: repeat;"></div>
+</section>
+
+{{/* ============================================
+     LATEST NEWS TEASER
+     ============================================ */}}
+<section class="py-24 px-6 lg:px-8 max-w-screen-2xl mx-auto">
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-12 gap-4">
+    <h2 class="font-headline font-bold text-3xl md:text-4xl text-primary tracking-tight">Latest News</h2>
+    <a class="text-primary font-bold flex items-center gap-2 hover:underline underline-offset-4" href="{{ "/news/" | relURL }}">
+      View All News <span class="material-symbols-outlined">chevron_right</span>
+    </a>
+  </div>
+
+  {{ $newsPages := where .Site.RegularPages "Section" "news" }}
+  {{ $latestNews := first 3 $newsPages }}
+
+  {{ if $latestNews }}
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+    {{ range $latestNews }}
+    <article class="group cursor-pointer">
+      <a href="{{ .RelPermalink }}" class="block">
+        <div class="aspect-[16/10] overflow-hidden rounded-lg mb-6 relative bg-surface-container-high">
+          {{ with .Params.image }}
+            <img
+              src="{{ . | relURL }}"
+              alt="{{ $.Title }}"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+          {{ else }}
+            <div class="w-full h-full flex items-center justify-center">
+              <span class="material-symbols-outlined text-6xl text-outline-variant">article</span>
+            </div>
+          {{ end }}
+          {{ with .Params.category }}
+            <div class="absolute top-4 left-4 bg-primary text-white text-[10px] font-bold px-3 py-1 uppercase tracking-widest rounded">{{ . }}</div>
+          {{ end }}
+        </div>
+        <time class="text-secondary text-sm font-medium" datetime="{{ .Date.Format "2006-01-02" }}">
+          {{ .Date.Format "January 2, 2006" }}
+        </time>
+        <h3 class="font-headline font-bold text-2xl text-primary mt-2 mb-4 leading-tight group-hover:text-tertiary transition-colors">
+          {{ .Title }}
+        </h3>
+        <p class="text-on-surface-variant line-clamp-2">{{ with .Params.excerpt }}{{ . }}{{ else }}{{ .Plain | truncate 160 }}{{ end }}</p>
+      </a>
+    </article>
+    {{ end }}
+  </div>
+  {{ else }}
+  <p class="text-secondary text-lg">News articles coming soon.</p>
+  {{ end }}
+</section>
+
+{{/* ============================================
+     CTA SECTION: Join the Movement
+     ============================================ */}}
+<section class="py-24 bg-surface-container-high relative overflow-hidden">
+  <div class="max-w-screen-2xl mx-auto px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    <div class="z-10">
+      <h2 class="font-headline font-bold text-4xl md:text-5xl text-primary mb-6 tracking-tight">
+        Enough of the party lines.<br/>Stand with Cornwall.
+      </h2>
+      <p class="text-secondary text-xl mb-8 leading-relaxed">
+        Join your neighbours in supporting independent, Cornwall-first representation. No party dues, no whip — just a commitment to your community.
+      </p>
+      <form class="flex flex-col sm:flex-row gap-4 max-w-lg" action="https://formspree.io/f/{{ .Site.Params.formspreeId }}" method="POST">
+        <input
+          type="email"
+          name="email"
+          required
+          class="flex-grow bg-surface-container-low border-none focus:ring-2 focus:ring-primary rounded-md p-4 text-primary"
+          placeholder="Enter your email" />
+        <button type="submit" class="bg-primary text-white px-8 py-4 rounded-md font-bold hover:bg-primary-container transition-colors whitespace-nowrap">
+          Join Us
+        </button>
+      </form>
+      <p class="text-xs text-on-surface-variant mt-4 opacity-70">
+        By joining, you agree to our <a href="{{ "/privacy/" | relURL }}" class="underline">privacy policy</a>. We never sell your data.
+      </p>
+    </div>
+    <div class="relative lg:h-[500px] flex items-center justify-center">
+      <div class="w-full h-[400px] lg:h-[500px] bg-white rounded-2xl shadow-xl overflow-hidden relative rotate-2 group hover:rotate-0 transition-transform duration-500">
+        <img
+          src="{{ "/images/hero-coastline.jpg" | relURL }}"
+          alt="Cornwall landscape"
+          class="w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8">
+          <p class="text-white font-headline font-bold text-2xl">Standing for all of Cornwall.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/* Decorative blur */}}
+  <div class="absolute -right-20 -bottom-20 w-96 h-96 bg-surface-dim rounded-full opacity-50 blur-3xl -z-0"></div>
+</section>
+
+{{ end }}

@@ -1,0 +1,190 @@
+{{ define "main" }}
+
+<div class="pt-32 pb-20">
+  {{/* Editorial header */}}
+  <header class="max-w-screen-2xl mx-auto px-6 lg:px-8 mb-20">
+    <div class="flex flex-col md:flex-row gap-12 items-end">
+      <div class="max-w-3xl">
+        <span class="font-label text-tertiary uppercase tracking-widest text-sm font-bold block mb-4">Take Action</span>
+        <h1 class="font-headline text-4xl md:text-6xl lg:text-8xl font-extrabold tracking-tight text-primary leading-[0.9]">
+          Shape the<br/>Future of<br/><span class="text-secondary">Cornwall.</span>
+        </h1>
+      </div>
+      <div class="pb-4">
+        <p class="text-on-surface-variant max-w-md font-body leading-relaxed text-lg">
+          We are a movement built on the independence of our people. Your involvement is the foundation of our success.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  {{/* Bento grid */}}
+  <section class="max-w-screen-2xl mx-auto px-6 lg:px-8 grid grid-cols-1 md:grid-cols-12 gap-6">
+    {{/* Large card: Join CING */}}
+    <div class="md:col-span-8 bg-primary rounded-xl overflow-hidden relative min-h-[400px] md:min-h-[500px] flex items-end p-8 md:p-12">
+      <img
+        src="{{ "/images/cliffside-dusk.jpg" | relURL }}"
+        alt="Cornwall coastline"
+        class="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-overlay" />
+      <div class="relative z-10 max-w-2xl">
+        <h2 class="text-3xl md:text-4xl font-headline font-bold text-white mb-6">Join CING</h2>
+        <p class="text-on-primary-container text-lg mb-8 leading-relaxed">
+          Become part of the Cornish Independent NonAligned Group. Your support ensures our voice remains independent from party politics.
+        </p>
+        <a href="#contact-form" class="inline-block bg-tertiary-container text-on-tertiary-container px-10 py-4 font-bold text-lg rounded-md hover:scale-95 transition-all duration-150">
+          Become a Member
+        </a>
+      </div>
+    </div>
+
+    {{/* Side card: Volunteer */}}
+    <div class="md:col-span-4 bg-surface-container-highest rounded-xl p-8 md:p-10 flex flex-col justify-between">
+      <div>
+        <span class="material-symbols-outlined text-4xl text-primary mb-6">volunteer_activism</span>
+        <h2 class="text-2xl md:text-3xl font-headline font-bold text-primary mb-4">Volunteer</h2>
+        <p class="text-on-surface-variant leading-relaxed mb-6">
+          From community events to digital advocacy, every contribution strengthens our presence across Cornwall.
+        </p>
+      </div>
+      <a href="#contact-form" class="block w-full text-center bg-primary text-white py-4 font-bold rounded-md hover:bg-primary-container transition-colors">
+        Sign Up to Volunteer
+      </a>
+    </div>
+
+    {{/* Side card: Support */}}
+    <div class="md:col-span-4 bg-surface-container-low rounded-xl p-8 md:p-10 flex flex-col justify-between">
+      <div>
+        <span class="material-symbols-outlined text-4xl text-tertiary mb-6">favorite</span>
+        <h2 class="text-2xl md:text-3xl font-headline font-bold text-primary mb-4">Support Us</h2>
+        <p class="text-on-surface-variant leading-relaxed mb-6">
+          Local representation matters. Your support helps fund community outreach and grassroots campaigns across the county.
+        </p>
+      </div>
+      <a href="#contact-form" class="block w-full text-center bg-secondary text-white py-4 font-bold rounded-md hover:opacity-90 transition-opacity">
+        Get in Touch
+      </a>
+    </div>
+
+    {{/* Full-width: Why Your Support Matters */}}
+    <div class="md:col-span-8 bg-surface-container-lowest editorial-shadow rounded-xl p-8 md:p-12 flex flex-col md:flex-row gap-12 items-center">
+      <div class="md:w-1/2">
+        <h3 class="text-2xl font-headline font-bold text-primary mb-4">Why Your Support Matters</h3>
+        <p class="text-on-surface-variant mb-6">
+          Politics in Cornwall has often been a conversation happening elsewhere. By getting involved, you ensure that decisions about our communities are made right here.
+        </p>
+        <ul class="space-y-3">
+          <li class="flex items-center gap-3 text-on-surface-variant">
+            <span class="material-symbols-outlined text-tertiary text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+            Local accountability
+          </li>
+          <li class="flex items-center gap-3 text-on-surface-variant">
+            <span class="material-symbols-outlined text-tertiary text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+            Grassroots policy making
+          </li>
+          <li class="flex items-center gap-3 text-on-surface-variant">
+            <span class="material-symbols-outlined text-tertiary text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+            Sustainable regional growth
+          </li>
+          <li class="flex items-center gap-3 text-on-surface-variant">
+            <span class="material-symbols-outlined text-tertiary text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+            Independent from party politics
+          </li>
+        </ul>
+      </div>
+      <div class="md:w-1/2 rounded-lg overflow-hidden h-64 w-full bg-surface-container-high">
+        <img src="{{ "/images/community-discussion.jpg" | relURL }}" alt="Community members in discussion" class="w-full h-full object-cover" />
+      </div>
+    </div>
+  </section>
+
+  {{/* Contact form */}}
+  <section id="contact-form" class="mt-20 max-w-screen-2xl mx-auto px-6 lg:px-8">
+    <div class="max-w-2xl mx-auto">
+      <h2 class="font-headline font-bold text-3xl md:text-4xl text-primary mb-4 text-center">Get in Touch</h2>
+      <p class="text-secondary text-center mb-12">
+        Whether you want to join, volunteer, or just ask a question, we would love to hear from you.
+      </p>
+
+      <form action="https://formspree.io/f/{{ .Site.Params.formspreeId }}" method="POST" class="space-y-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div>
+            <label for="name" class="block text-sm font-bold text-primary mb-2">Name</label>
+            <input type="text" id="name" name="name" required
+              class="w-full bg-surface-container-low border-none focus:ring-2 focus:ring-primary rounded-md p-4 text-primary" />
+          </div>
+          <div>
+            <label for="email" class="block text-sm font-bold text-primary mb-2">Email</label>
+            <input type="email" id="email" name="email" required
+              class="w-full bg-surface-container-low border-none focus:ring-2 focus:ring-primary rounded-md p-4 text-primary" />
+          </div>
+        </div>
+        <div>
+          <label for="interest" class="block text-sm font-bold text-primary mb-2">I am interested in</label>
+          <select id="interest" name="interest"
+            class="w-full bg-surface-container-low border-none focus:ring-2 focus:ring-primary rounded-md p-4 text-primary">
+            <option value="membership">Becoming a member</option>
+            <option value="volunteer">Volunteering</option>
+            <option value="support">Supporting CING</option>
+            <option value="question">General enquiry</option>
+          </select>
+        </div>
+        <div>
+          <label for="message" class="block text-sm font-bold text-primary mb-2">Message</label>
+          <textarea id="message" name="message" rows="5"
+            class="w-full bg-surface-container-low border-none focus:ring-2 focus:ring-primary rounded-md p-4 text-primary resize-y"></textarea>
+        </div>
+        <button type="submit"
+          class="w-full bg-primary text-white py-4 font-bold rounded-md hover:bg-primary-container transition-colors text-lg">
+          Send Message
+        </button>
+        <p class="text-xs text-on-surface-variant text-center opacity-70">
+          By submitting, you agree to our <a href="{{ "/privacy/" | relURL }}" class="underline">privacy policy</a>. We never sell your data.
+        </p>
+      </form>
+    </div>
+  </section>
+
+  {{/* Newsletter signup */}}
+  <section class="mt-20 px-6 lg:px-8">
+    <div class="max-w-screen-2xl mx-auto bg-gradient-to-br from-primary to-primary-container p-12 lg:p-20 rounded-xl text-white relative overflow-hidden">
+      <div class="relative z-10 text-center max-w-3xl mx-auto">
+        <h2 class="text-3xl md:text-5xl font-headline font-extrabold mb-6">Stay Informed</h2>
+        <p class="text-lg text-slate-300 font-body mb-10 leading-relaxed">
+          Get updates from your CING councillors delivered to your inbox. Community news, council decisions, and ways to get involved.
+        </p>
+        <form action="https://formspree.io/f/{{ .Site.Params.formspreeId }}" method="POST" class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
+          <input type="hidden" name="_subject" value="Newsletter signup" />
+          <input type="email" name="email" required placeholder="Your email address"
+            class="flex-grow bg-white/10 border-none focus:ring-2 focus:ring-tertiary rounded-md p-4 text-white placeholder:text-slate-400" />
+          <button type="submit" class="bg-tertiary text-on-tertiary px-8 py-4 rounded-md font-bold hover:bg-tertiary-container transition-colors whitespace-nowrap">
+            Subscribe
+          </button>
+        </form>
+      </div>
+      {{/* Decorative blob */}}
+      <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-tertiary opacity-10 rounded-full blur-3xl"></div>
+    </div>
+  </section>
+
+  {{/* Community Anchor CTA */}}
+  <section class="mt-20 w-full py-20 bg-gradient-to-br from-[#00263b] to-[#003d5b] text-white overflow-hidden relative">
+    <div class="max-w-screen-2xl mx-auto px-6 lg:px-8 relative z-10 flex flex-col items-center text-center">
+      <span class="font-headline font-bold tracking-[0.3em] uppercase text-xs opacity-70 mb-6">The Community Anchor</span>
+      <h2 class="font-headline font-extrabold text-3xl md:text-5xl max-w-4xl tracking-tight leading-tight text-editorial-balance">
+        Our movement is about building a permanent foundation for Cornwall's independent voice.
+      </h2>
+      <div class="mt-12 flex flex-wrap justify-center gap-4">
+        <a href="{{ "/policies/" | relURL }}" class="bg-tertiary text-white px-8 py-4 font-bold rounded-md hover:bg-tertiary-container transition-all">
+          Read Our Policies
+        </a>
+        <a href="{{ "/councillors/" | relURL }}" class="border border-white/30 text-white px-8 py-4 font-bold rounded-md hover:bg-white/10 transition-all">
+          Meet Our Councillors
+        </a>
+      </div>
+    </div>
+    <div class="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay"
+         style="background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%224%22%20height%3D%224%22%3E%3Crect%20width%3D%221%22%20height%3D%221%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E'); background-repeat: repeat;"></div>
+  </section>
+</div>
+
+{{ end }}

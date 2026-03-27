@@ -1,0 +1,48 @@
+baseURL = "https://www.cingparty.uk/"
+languageCode = "en-gb"
+title = "Cornish Independent NonAligned Group (CING)"
+copyright = "© 2026 Cornish Independent NonAligned Group. Built for Cornwall."
+
+[params]
+  description = "The Cornish Independent NonAligned Group — independent councillors serving Cornwall's unique needs on Cornwall Council."
+  formspreeId = "mvzvgdbl"
+
+[menus]
+  [[menus.main]]
+    name = "Home"
+    pageRef = "/"
+    weight = 10
+  [[menus.main]]
+    name = "About"
+    pageRef = "/about/"
+    weight = 20
+  [[menus.main]]
+    name = "Councillors"
+    pageRef = "/councillors/"
+    weight = 30
+  [[menus.main]]
+    name = "Policies"
+    pageRef = "/policies/"
+    weight = 40
+  [[menus.main]]
+    name = "News"
+    pageRef = "/news/"
+    weight = 50
+  [[menus.main]]
+    name = "Get Involved"
+    pageRef = "/get-involved/"
+    weight = 60
+
+[pagination]
+  pagerSize = 9
+
+summaryLength = 30
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[outputs]
+  home = ["HTML"]
+  section = ["HTML"]
