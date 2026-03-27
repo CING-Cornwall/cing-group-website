@@ -4,7 +4,7 @@ description: "Learn about the Cornish Independent NonAligned Group — who we ar
 overline: "Our Story"
 ---
 
-The Cornish Independent NonAligned Group (CING) is a group of independent councillors serving on Cornwall Council. We are not a political party. We have no manifesto imposed from Westminster, no central office directing our votes, and no party donors to answer to. Each of our members was elected on their own merits by the communities they represent, and it is to those communities alone that they owe their allegiance.
+The Cornish Independent NonAligned Group (CING) is a group of independent councillors serving on Cornwall Council. We are not a political party. We have no manifesto imposed from Westminster, no central office directing our votes, and no party donors to answer to. Each of our members primary focus is on our residents and it is those communities alone to which we all owe our allegiance.
 
 Our nonaligned philosophy is straightforward: every motion, every amendment, and every budget line should be judged on its own merits. Our councillors are free to vote according to their conscience and the needs of their constituents, without the constraint of a party whip. This means that when a proposal is good for Cornwall, we will support it — regardless of which group brings it forward. Equally, when a proposal falls short, we will say so plainly and work to improve it.
 
