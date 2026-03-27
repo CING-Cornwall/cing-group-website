@@ -3,4 +3,6 @@ resources/
 .hugo_build.lock
 .reference/
 *.png
+!static/favicon-32x32.png
+!static/apple-touch-icon.png
 .playwright-mcp/

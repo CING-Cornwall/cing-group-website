@@ -6,6 +6,11 @@
   <title>{{ if .IsHome }}CING — Independent Councillors for Cornwall{{ else }}{{ .Title }} | CING{{ end }}</title>
   <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}" />
 
+  {{/* Favicon */}}
+  <link rel="icon" type="image/svg+xml" href="{{ "/favicon.svg" | relURL }}" />
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ "/favicon-32x32.png" | relURL }}" />
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ "/apple-touch-icon.png" | relURL }}" />
+
   {{/* Canonical URL */}}
   <link rel="canonical" href="{{ .Permalink }}" />
 
