@@ -1,0 +1,436 @@
+{{ define "main" }}
+
+<div class="pt-32 pb-20">
+  {{/* Hero Section */}}
+  <header class="max-w-screen-2xl mx-auto px-6 lg:px-8 mb-20">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
+      <div class="lg:col-span-8">
+        <span class="text-tertiary font-bold tracking-widest uppercase text-sm mb-4 block">{{ .Params.overline }}</span>
+        <h1 class="font-headline text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-primary leading-none mb-8">
+          {{ .Title }}
+        </h1>
+        <p class="text-xl md:text-2xl text-secondary max-w-2xl font-light leading-relaxed">
+          {{ .Description }}
+        </p>
+      </div>
+      <div class="lg:col-span-4 hidden lg:block">
+        <div class="bg-surface-container-high p-8 rounded-lg aspect-square flex flex-col justify-between">
+          <span class="material-symbols-outlined text-primary text-5xl">palette</span>
+          <div>
+            <p class="font-headline font-bold text-primary mb-2">The Modern Monolith</p>
+            <p class="text-sm text-secondary">As permanent as Cornish granite, as fluid as the Atlantic. Editorial-High-End design for a new kind of politics.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  {{/* ── Colour Palette ── */}}
+  <section class="max-w-screen-2xl mx-auto px-6 lg:px-8 mb-20">
+    <span class="text-tertiary font-bold tracking-widest uppercase text-sm mb-4 block">Colours</span>
+    <h2 class="font-headline text-3xl md:text-5xl font-extrabold text-primary mb-4">The Cornish Palette</h2>
+    <p class="text-lg text-secondary mb-12 max-w-2xl">A direct translation of the Cornish environment. Deep, sophisticated tones over "internet-primary" colours.</p>
+
+    {{/* Primary & Secondary row */}}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+      {{/* Primary */}}
+      <div class="bg-surface-container-lowest rounded-xl overflow-hidden editorial-shadow">
+        <div class="h-32 bg-primary"></div>
+        <div class="p-5">
+          <p class="font-headline font-bold text-primary text-sm">Primary — The Deep Sea</p>
+          <p class="font-mono text-xs text-secondary mt-1">#00263b</p>
+          <p class="text-xs text-on-surface-variant mt-2">Headers, high-authority elements</p>
+        </div>
+      </div>
+      {{/* Primary Container */}}
+      <div class="bg-surface-container-lowest rounded-xl overflow-hidden editorial-shadow">
+        <div class="h-32 bg-primary-container"></div>
+        <div class="p-5">
+          <p class="font-headline font-bold text-primary text-sm">Primary Container</p>
+          <p class="font-mono text-xs text-secondary mt-1">#003d5b</p>
+          <p class="text-xs text-on-surface-variant mt-2">Hero backgrounds, Community Anchor</p>
+        </div>
+      </div>
+      {{/* Secondary */}}
+      <div class="bg-surface-container-lowest rounded-xl overflow-hidden editorial-shadow">
+        <div class="h-32 bg-secondary"></div>
+        <div class="p-5">
+          <p class="font-headline font-bold text-primary text-sm">Secondary — The Granite</p>
+          <p class="font-mono text-xs text-secondary mt-1">#595f64</p>
+          <p class="text-xs text-on-surface-variant mt-2">Secondary actions, subtle text</p>
+        </div>
+      </div>
+      {{/* Tertiary */}}
+      <div class="bg-surface-container-lowest rounded-xl overflow-hidden editorial-shadow">
+        <div class="h-32 bg-tertiary"></div>
+        <div class="p-5">
+          <p class="font-headline font-bold text-primary text-sm">Tertiary — St Piran's Gold</p>
+          <p class="font-mono text-xs text-secondary mt-1">#705d00</p>
+          <p class="text-xs text-on-surface-variant mt-2">Prestige CTAs only (Join, Donate)</p>
+        </div>
+      </div>
+    </div>
+
+    {{/* Tertiary & Gold accent row */}}
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
+      <div class="bg-surface-container-lowest rounded-xl overflow-hidden editorial-shadow">
+        <div class="h-20 bg-tertiary-container"></div>
+        <div class="p-4">
+          <p class="font-headline font-bold text-primary text-xs">Tertiary Container</p>
+          <p class="font-mono text-xs text-secondary mt-1">#c9a900</p>
+        </div>
+      </div>
+      <div class="bg-surface-container-lowest rounded-xl overflow-hidden editorial-shadow">
+        <div class="h-20 bg-tertiary-fixed"></div>
+        <div class="p-4">
+          <p class="font-headline font-bold text-primary text-xs">Tertiary Fixed</p>
+          <p class="font-mono text-xs text-secondary mt-1">#ffe16d</p>
+        </div>
+      </div>
+      <div class="bg-surface-container-lowest rounded-xl overflow-hidden editorial-shadow">
+        <div class="h-20 bg-tertiary-fixed-dim"></div>
+        <div class="p-4">
+          <p class="font-headline font-bold text-primary text-xs">Tertiary Fixed Dim</p>
+          <p class="font-mono text-xs text-secondary mt-1">#e9c400</p>
+        </div>
+      </div>
+      <div class="bg-surface-container-lowest rounded-xl overflow-hidden editorial-shadow">
+        <div class="h-20 bg-error"></div>
+        <div class="p-4">
+          <p class="font-headline font-bold text-primary text-xs">Error</p>
+          <p class="font-mono text-xs text-secondary mt-1">#ba1a1a</p>
+        </div>
+      </div>
+    </div>
+
+    {{/* Surface tiers */}}
+    <h3 class="font-headline font-bold text-primary text-xl mb-4 mt-12">Surface Tiers — Coastal Light</h3>
+    <p class="text-sm text-secondary mb-6">Depth through layering, not borders. Alternate tiers for visual rhythm.</p>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+      <div class="rounded-lg overflow-hidden editorial-shadow">
+        <div class="h-20 bg-surface-container-lowest border border-surface-container"></div>
+        <div class="p-3 bg-surface-container-lowest">
+          <p class="text-xs font-bold text-primary">Lowest</p>
+          <p class="font-mono text-xs text-secondary">#ffffff</p>
+        </div>
+      </div>
+      <div class="rounded-lg overflow-hidden editorial-shadow">
+        <div class="h-20 bg-surface-container-low"></div>
+        <div class="p-3 bg-surface-container-lowest">
+          <p class="text-xs font-bold text-primary">Low</p>
+          <p class="font-mono text-xs text-secondary">#f0f4f9</p>
+        </div>
+      </div>
+      <div class="rounded-lg overflow-hidden editorial-shadow">
+        <div class="h-20 bg-surface-container"></div>
+        <div class="p-3 bg-surface-container-lowest">
+          <p class="text-xs font-bold text-primary">Container</p>
+          <p class="font-mono text-xs text-secondary">#eaeef3</p>
+        </div>
+      </div>
+      <div class="rounded-lg overflow-hidden editorial-shadow">
+        <div class="h-20 bg-surface-container-high"></div>
+        <div class="p-3 bg-surface-container-lowest">
+          <p class="text-xs font-bold text-primary">High</p>
+          <p class="font-mono text-xs text-secondary">#e4e9ed</p>
+        </div>
+      </div>
+      <div class="rounded-lg overflow-hidden editorial-shadow">
+        <div class="h-20 bg-surface-container-highest"></div>
+        <div class="p-3 bg-surface-container-lowest">
+          <p class="text-xs font-bold text-primary">Highest</p>
+          <p class="font-mono text-xs text-secondary">#dfe3e8</p>
+        </div>
+      </div>
+      <div class="rounded-lg overflow-hidden editorial-shadow">
+        <div class="h-20 bg-surface-dim"></div>
+        <div class="p-3 bg-surface-container-lowest">
+          <p class="text-xs font-bold text-primary">Dim</p>
+          <p class="font-mono text-xs text-secondary">#d6dadf</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {{/* ── Typography ── */}}
+  <section class="bg-surface-container-low py-20">
+    <div class="max-w-screen-2xl mx-auto px-6 lg:px-8">
+      <span class="text-tertiary font-bold tracking-widest uppercase text-sm mb-4 block">Typography</span>
+      <h2 class="font-headline text-3xl md:text-5xl font-extrabold text-primary mb-4">Two Voices</h2>
+      <p class="text-lg text-secondary mb-12 max-w-2xl">Manrope for authority. Public Sans for clarity.</p>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        {{/* Manrope showcase */}}
+        <div class="bg-surface-container-lowest rounded-xl p-8 lg:p-12 editorial-shadow">
+          <span class="font-label text-tertiary uppercase tracking-widest text-xs font-bold block mb-6">Display / Headline — Manrope</span>
+          <p class="font-headline text-5xl md:text-6xl font-extrabold text-primary tracking-tight leading-none mb-6" style="letter-spacing: -0.02em;">
+            Built on Granite
+          </p>
+          <p class="font-headline text-3xl font-bold text-primary mb-4">Headline Large</p>
+          <p class="font-headline text-2xl font-bold text-primary mb-4">Headline Medium</p>
+          <p class="font-headline text-xl font-bold text-primary mb-4">Title Large</p>
+          <p class="font-headline text-lg text-primary mb-6">Title Medium</p>
+          <div class="pt-6 border-t border-surface-container">
+            <p class="text-xs text-secondary"><strong>Weights:</strong> 400, 700, 800</p>
+            <p class="text-xs text-secondary mt-1"><strong>Display letter-spacing:</strong> -0.02em</p>
+          </div>
+        </div>
+
+        {{/* Public Sans showcase */}}
+        <div class="bg-surface-container-lowest rounded-xl p-8 lg:p-12 editorial-shadow">
+          <span class="font-label text-tertiary uppercase tracking-widest text-xs font-bold block mb-6">Body / Label — Public Sans</span>
+          <p class="font-body text-lg text-on-surface-variant leading-relaxed mb-6">
+            Body Large (1rem) — the standard for all prose content. We prioritise readability for a diverse regional demographic across Cornwall's communities.
+          </p>
+          <p class="font-body text-base text-on-surface-variant leading-relaxed mb-6">
+            Body Medium — secondary prose, card descriptions, and supporting content that sits beneath headlines.
+          </p>
+          <p class="font-body text-sm text-secondary leading-relaxed mb-6">
+            Body Small — fine print, captions, and legal notices.
+          </p>
+          <div class="flex flex-wrap gap-3 mb-6">
+            <span class="font-label text-sm font-semibold text-on-surface-variant bg-surface-container-low px-3 py-1 rounded-full">Label Large</span>
+            <span class="font-label text-xs font-medium text-secondary bg-surface-container-low px-3 py-1 rounded-full">Label Medium</span>
+            <span class="font-label text-xs font-medium text-secondary bg-surface-container-low px-2 py-1 rounded-full">Label Small</span>
+          </div>
+          <div class="pt-6 border-t border-surface-container">
+            <p class="text-xs text-secondary"><strong>Weights:</strong> 300, 400, 500, 600</p>
+            <p class="text-xs text-secondary mt-1"><strong>Role:</strong> All prose, metadata, navigation, overlines</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {{/* ── Design Principles ── */}}
+  <section class="max-w-screen-2xl mx-auto px-6 lg:px-8 py-20">
+    <span class="text-tertiary font-bold tracking-widest uppercase text-sm mb-4 block">Principles</span>
+    <h2 class="font-headline text-3xl md:text-5xl font-extrabold text-primary mb-4">The Rules</h2>
+    <p class="text-lg text-secondary mb-12 max-w-2xl">Four mandates that define the CING visual language.</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {{/* No-Line Rule */}}
+      <div class="bg-primary text-white p-8 lg:p-12 rounded-xl">
+        <span class="material-symbols-outlined text-tertiary-fixed text-4xl mb-6 block">block</span>
+        <h3 class="font-headline text-2xl font-bold mb-4">The "No-Line" Rule</h3>
+        <p class="text-on-primary-container leading-relaxed mb-6">
+          Designers are prohibited from using 1px solid borders to define sections. We define space through "Tonal Shifts" — subtle changes in surface colour that signify boundaries without trapping content in boxes.
+        </p>
+        <div class="flex gap-2 mt-4">
+          <div class="flex-1 h-16 bg-[#f6faff] rounded-lg"></div>
+          <div class="flex-1 h-16 bg-[#f0f4f9] rounded-lg"></div>
+          <div class="flex-1 h-16 bg-[#eaeef3] rounded-lg"></div>
+          <div class="flex-1 h-16 bg-[#e4e9ed] rounded-lg"></div>
+        </div>
+      </div>
+
+      {{/* Glassmorphism */}}
+      <div class="bg-surface-container-lowest p-8 lg:p-12 rounded-xl editorial-shadow">
+        <span class="material-symbols-outlined text-primary text-4xl mb-6 block">blur_on</span>
+        <h3 class="font-headline text-2xl font-bold text-primary mb-4">Glassmorphism</h3>
+        <p class="text-on-surface-variant leading-relaxed mb-6">
+          Evoke the mist and spray of the coast. Use <code class="bg-surface-container-high px-2 py-0.5 rounded text-sm">surface-container-lowest</code> at 80% opacity with <code class="bg-surface-container-high px-2 py-0.5 rounded text-sm">backdrop-blur: 12px</code>.
+        </p>
+        <div class="relative h-32 bg-gradient-to-br from-primary to-primary-container rounded-lg overflow-hidden">
+          <div class="absolute inset-4 bg-white/80 backdrop-blur-[12px] rounded-lg flex items-center justify-center">
+            <p class="font-headline font-bold text-primary text-sm">Glass overlay demo</p>
+          </div>
+        </div>
+      </div>
+
+      {{/* Layering */}}
+      <div class="bg-surface-container-lowest p-8 lg:p-12 rounded-xl editorial-shadow">
+        <span class="material-symbols-outlined text-primary text-4xl mb-6 block">layers</span>
+        <h3 class="font-headline text-2xl font-bold text-primary mb-4">The Layering Principle</h3>
+        <p class="text-on-surface-variant leading-relaxed mb-6">
+          Depth is achieved by stacking surface tiers, not drop shadows. A higher-tier card on a lower-tier background provides all the "lift" required.
+        </p>
+        <div class="bg-surface p-6 rounded-lg">
+          <div class="bg-surface-container-high p-4 rounded-lg editorial-shadow">
+            <p class="text-xs font-bold text-primary">Card on surface-container-high</p>
+            <p class="text-xs text-secondary">Sitting on a surface background</p>
+          </div>
+        </div>
+      </div>
+
+      {{/* Ambient shadows */}}
+      <div class="bg-surface-container-lowest p-8 lg:p-12 rounded-xl editorial-shadow">
+        <span class="material-symbols-outlined text-primary text-4xl mb-6 block">light_mode</span>
+        <h3 class="font-headline text-2xl font-bold text-primary mb-4">Ambient Shadows</h3>
+        <p class="text-on-surface-variant leading-relaxed mb-6">
+          When floating elements are necessary, use ambient shadows: <code class="bg-surface-container-high px-2 py-0.5 rounded text-sm">blur: 40px, y: 8px</code>, <code class="bg-surface-container-high px-2 py-0.5 rounded text-sm">on-surface</code> at 4% opacity. Natural light, not glow.
+        </p>
+        <div class="flex gap-4 items-center justify-center py-4">
+          <div class="w-24 h-24 bg-surface-container-lowest rounded-lg editorial-shadow flex items-center justify-center">
+            <span class="text-xs font-bold text-primary">4%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {{/* ── Components ── */}}
+  <section class="bg-surface-container-low py-20">
+    <div class="max-w-screen-2xl mx-auto px-6 lg:px-8">
+      <span class="text-tertiary font-bold tracking-widest uppercase text-sm mb-4 block">Components</span>
+      <h2 class="font-headline text-3xl md:text-5xl font-extrabold text-primary mb-4">Building Blocks</h2>
+      <p class="text-lg text-secondary mb-12 max-w-2xl">Live examples of the core UI components.</p>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {{/* Buttons */}}
+        <div class="bg-surface-container-lowest p-8 rounded-xl editorial-shadow">
+          <h3 class="font-headline font-bold text-primary mb-6">Buttons</h3>
+          <div class="space-y-4">
+            <div>
+              <span class="font-label text-xs text-secondary uppercase tracking-widest mb-2 block">Primary</span>
+              <button class="px-6 py-3 bg-primary text-on-primary font-bold rounded-md text-sm">Primary Action</button>
+            </div>
+            <div>
+              <span class="font-label text-xs text-secondary uppercase tracking-widest mb-2 block">Secondary</span>
+              <button class="px-6 py-3 bg-secondary-container text-on-secondary-container font-bold rounded-md text-sm">Secondary Action</button>
+            </div>
+            <div>
+              <span class="font-label text-xs text-secondary uppercase tracking-widest mb-2 block">Tertiary — The "Gold" Action</span>
+              <button class="px-6 py-3 bg-tertiary-container text-on-tertiary-container font-bold rounded-md text-sm">Join CING</button>
+            </div>
+          </div>
+          <p class="text-xs text-secondary mt-6">Shape: <code class="bg-surface-container-high px-1.5 py-0.5 rounded">md</code> (0.375rem). No border.</p>
+        </div>
+
+        {{/* Cards */}}
+        <div class="bg-surface-container-lowest p-8 rounded-xl editorial-shadow">
+          <h3 class="font-headline font-bold text-primary mb-6">Editorial Card</h3>
+          <div class="bg-surface-container-lowest rounded-lg editorial-shadow p-6">
+            <span class="material-symbols-outlined text-tertiary text-3xl mb-4">article</span>
+            <h4 class="font-headline font-bold text-primary mb-2">Card Title</h4>
+            <p class="text-sm text-on-surface-variant leading-relaxed">Use <code class="bg-surface-container-high px-1.5 py-0.5 rounded text-xs">surface-container-lowest</code> with generous internal padding.</p>
+          </div>
+          <p class="text-xs text-secondary mt-6">Corner radius: <code class="bg-surface-container-high px-1.5 py-0.5 rounded">lg</code> (0.5rem). No dividers.</p>
+        </div>
+
+        {{/* Input */}}
+        <div class="bg-surface-container-lowest p-8 rounded-xl editorial-shadow">
+          <h3 class="font-headline font-bold text-primary mb-6">Grounded Input</h3>
+          <div class="space-y-4">
+            <div>
+              <label class="font-label text-xs text-secondary uppercase tracking-widest mb-2 block">Default state</label>
+              <input type="text" placeholder="Your email address" class="w-full px-4 py-3 bg-surface-container-high rounded-md text-sm text-on-surface border-b-2 border-transparent focus:border-primary focus:outline-none transition-colors" />
+            </div>
+            <div>
+              <label class="font-label text-xs text-secondary uppercase tracking-widest mb-2 block">Focused state</label>
+              <input type="text" value="rowland@example.com" class="w-full px-4 py-3 bg-surface-container-high rounded-md text-sm text-on-surface border-b-2 border-primary focus:outline-none" />
+            </div>
+          </div>
+          <p class="text-xs text-secondary mt-6">Background: <code class="bg-surface-container-high px-1.5 py-0.5 rounded">surface-container-high</code>. 2px bottom-border on focus.</p>
+        </div>
+      </div>
+
+      {{/* Community Anchor demo */}}
+      <div class="mt-6 bg-gradient-to-br from-primary to-primary-container p-12 lg:p-16 rounded-xl text-white relative overflow-hidden">
+        <span class="font-label text-tertiary-fixed uppercase tracking-widest text-xs font-bold block mb-4">Signature Component</span>
+        <h3 class="font-headline text-3xl md:text-4xl font-extrabold tracking-tight mb-4">
+          The Community Anchor
+        </h3>
+        <p class="text-on-primary-container text-lg leading-relaxed max-w-2xl">
+          Full-bleed gradient from <code class="bg-white/10 px-2 py-0.5 rounded text-sm">primary</code> to <code class="bg-white/10 px-2 py-0.5 rounded text-sm">primary-container</code>. Used for regional manifestos with display-md typography.
+        </p>
+        <div class="absolute -right-20 -bottom-20 w-72 h-72 bg-tertiary opacity-10 rounded-full blur-3xl"></div>
+      </div>
+    </div>
+  </section>
+
+  {{/* ── Do's and Don'ts ── */}}
+  <section class="max-w-screen-2xl mx-auto px-6 lg:px-8 py-20">
+    <span class="text-tertiary font-bold tracking-widest uppercase text-sm mb-4 block">Guidelines</span>
+    <h2 class="font-headline text-3xl md:text-5xl font-extrabold text-primary mb-12">Do's and Don'ts</h2>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {{/* Do's */}}
+      <div class="bg-surface-container-low p-8 lg:p-10 rounded-xl">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="material-symbols-outlined text-primary text-3xl">check_circle</span>
+          <h3 class="font-headline text-xl font-bold text-primary">Do</h3>
+        </div>
+        <ul class="space-y-4">
+          <li class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-tertiary text-lg mt-0.5">check</span>
+            <div>
+              <p class="font-bold text-primary text-sm">Embrace Negative Space</p>
+              <p class="text-sm text-secondary">Use spacing 16 and 20 to separate major content blocks. Let the "Granite" breathe.</p>
+            </div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-tertiary text-lg mt-0.5">check</span>
+            <div>
+              <p class="font-bold text-primary text-sm">Use Intentional Asymmetry</p>
+              <p class="text-sm text-secondary">Align text to the left but allow imagery to bleed off the right edge of the grid.</p>
+            </div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-tertiary text-lg mt-0.5">check</span>
+            <div>
+              <p class="font-bold text-primary text-sm">Prioritise Accessibility</p>
+              <p class="text-sm text-secondary">Ensure all text on primary or tertiary containers uses the designated on- colour tokens for AA/AAA contrast.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      {{/* Don'ts */}}
+      <div class="bg-error-container/30 p-8 lg:p-10 rounded-xl">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="material-symbols-outlined text-error text-3xl">cancel</span>
+          <h3 class="font-headline text-xl font-bold text-on-error-container">Don't</h3>
+        </div>
+        <ul class="space-y-4">
+          <li class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-error text-lg mt-0.5">close</span>
+            <div>
+              <p class="font-bold text-on-error-container text-sm">Don't use "Pure" Black</p>
+              <p class="text-sm text-on-surface-variant">Always use on-background (#171c20) to maintain the "Deep Sea/Granite" tonal profile.</p>
+            </div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-error text-lg mt-0.5">close</span>
+            <div>
+              <p class="font-bold text-on-error-container text-sm">Don't use Rounded-Full for everything</p>
+              <p class="text-sm text-on-surface-variant">Pill shape only for Chips/Tags. Buttons and Cards must remain md or lg to feel grounded.</p>
+            </div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-error text-lg mt-0.5">close</span>
+            <div>
+              <p class="font-bold text-on-error-container text-sm">Don't crowd the interface</p>
+              <p class="text-sm text-on-surface-variant">If a layout feels busy, remove a background colour and increase spacing rather than adding a divider.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {{/* ── Full Design Document (prose fallback) ── */}}
+  <section class="bg-surface-container-low py-20">
+    <div class="max-w-3xl mx-auto px-6 lg:px-8">
+      <span class="text-tertiary font-bold tracking-widest uppercase text-sm mb-4 block">Reference</span>
+      <h2 class="font-headline text-3xl md:text-4xl font-extrabold text-primary mb-8">Full Design Document</h2>
+      <div class="
+        text-on-surface-variant text-lg leading-relaxed
+        [&>h2]:font-headline [&>h2]:font-bold [&>h2]:text-2xl [&>h2]:md:text-3xl [&>h2]:text-primary [&>h2]:mt-12 [&>h2]:mb-4
+        [&>h3]:font-headline [&>h3]:font-bold [&>h3]:text-xl [&>h3]:md:text-2xl [&>h3]:text-primary [&>h3]:mt-10 [&>h3]:mb-3
+        [&>h4]:font-headline [&>h4]:font-bold [&>h4]:text-lg [&>h4]:text-primary [&>h4]:mt-8 [&>h4]:mb-2
+        [&>p]:mb-6
+        [&>ul]:mb-6 [&>ul]:ml-6 [&>ul]:list-disc [&>ul>li]:mb-2
+        [&>ol]:mb-6 [&>ol]:ml-6 [&>ol]:list-decimal [&>ol>li]:mb-2
+        [&>blockquote]:border-l-4 [&>blockquote]:border-tertiary [&>blockquote]:pl-6 [&>blockquote]:italic [&>blockquote]:text-secondary [&>blockquote]:my-8
+        [&>a]:text-primary [&>a]:underline [&>a]:underline-offset-4 [&>a]:hover:text-tertiary
+        [&>hr]:my-12 [&>hr]:border-surface-container
+        [&>code]:bg-surface-container-high [&>code]:px-1.5 [&>code]:py-0.5 [&>code]:rounded [&>code]:text-sm
+      ">
+        {{ .Content }}
+      </div>
+    </div>
+  </section>
+</div>
+
+{{ end }}

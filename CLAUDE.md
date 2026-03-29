@@ -51,19 +51,27 @@ Content pages that use a non-default layout specify it in front matter: `layout:
 
 ### Design system
 
-All styling uses Tailwind CSS via CDN with Material Design 3 colour tokens defined inline in `baseof.html`. Key tokens:
+All styling uses Tailwind CSS via CDN with Material Design 3 colour tokens defined inline in `baseof.html`. Full brand documentation lives in `docs/brand/`:
 
+- **[`docs/brand/DESIGN.md`](docs/brand/DESIGN.md)** — **Master design system** ("Kernow Horizon") from Stitch. Creative north star, philosophy, do's/don'ts. The canonical design authority.
+- **[`docs/brand/colours.md`](docs/brand/colours.md)** — Complete colour token reference (primary, secondary, tertiary, surface, semantic)
+- **[`docs/brand/typography.md`](docs/brand/typography.md)** — Font families (Manrope, Public Sans), type scale, icon font
+- **[`docs/brand/design-principles.md`](docs/brand/design-principles.md)** — Implementation-specific layout rules, component patterns, Tailwind conventions
+
+Key tokens (quick reference):
 - Primary: `#00263b` (deep navy), Primary Container: `#003d5b`
 - Tertiary: `#705d00` (gold), Tertiary Container: `#c9a900`
-- Surface tiers: `surface`, `surface-container-low` through `surface-container-highest`
-- Typography: `font-headline` (Manrope), `font-body` (Public Sans), `font-label` (Public Sans)
-- Icons: Material Symbols Outlined from Google Fonts
+- Typography: `font-headline` (Manrope), `font-body` / `font-label` (Public Sans)
 
 Design principle: no 1px borders — sections separated by tonal surface shifts. Cards use `editorial-shadow` (ambient, 4% opacity). Councillor photos use `grayscale group-hover:grayscale-0` effect.
 
 ### Stitch design references
 
-`.reference/` (gitignored) contains HTML snapshots exported from Google Stitch (project ID `3771371856444129928`). These are the design source of truth — the "CING Brand Update" variants are the preferred references.
+`.reference/` (gitignored) contains HTML snapshots exported from Google Stitch (project ID `3771371856444129928`). These are the design source of truth — the "CING Brand Update" variants are the preferred references. Screen IDs and Stitch project details are documented in [`docs/brand/design-principles.md`](docs/brand/design-principles.md).
+
+### Documentation
+
+`docs/` contains committed reference documentation and brand standards — see [`docs/README.md`](docs/README.md) for an index. Unlike `.reference/` (gitignored Stitch exports), `docs/` is version-controlled and serves as the durable source of truth for brand guidelines and project standards.
 
 ### Forms
 
