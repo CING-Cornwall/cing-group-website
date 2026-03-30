@@ -36,13 +36,13 @@ Access pattern in templates:
 
 Custom layouts override Hugo defaults — there is no theme:
 
-- `layouts/_default/baseof.html` — base wrapper with Tailwind config, fonts, Material Symbols
+- `layouts/_default/baseof.html` — base wrapper with Tailwind config, fonts, Material Symbols, Google Analytics (consent-gated), cookie banner
 - `layouts/partials/header.html` — glassmorphism nav with mobile hamburger (vanilla JS)
 - `layouts/partials/footer.html` — 3-column footer
 - `layouts/index.html` — homepage (hero, principles grid, news teaser, CTA)
 - `layouts/about/list.html` — hero + asymmetric story + mission grid + team bento
 - `layouts/councillors/list.html` — hero + stats bar + portrait cards + quote
-- `layouts/policies/policies.html` — bento grid of policy cards (not prose)
+- `layouts/policies/policies.html` — two-part manifesto page: hero, local policy bento grid, image divider, Westminster positions, CTA with PDF download
 - `layouts/get-involved/list.html` — bento cards + Formspree contact form + newsletter
 - `layouts/news/list.html` — featured article bento + article grid + pagination
 - `layouts/news/single.html` — individual news post
@@ -83,6 +83,14 @@ Formspree handles all form submissions. The form ID (`mvzvgdbl`) is stored in `h
 ### News content
 
 News posts live in `content/news/` as markdown files with front matter: `title`, `date`, `category`, `image`, `excerpt`. The news list template shows the first post as a featured bento layout and remaining posts in a 3-column grid.
+
+### Analytics and cookie consent
+
+Google Analytics (`G-Z1F4F1TRD0`) is loaded only in production builds (`hugo.IsProduction`) and only after the user accepts cookies via the consent banner. The consent choice is stored in `localStorage` (key: `cing-cookies`, values: `accepted` or `rejected`). The `loadGtag()` function in `baseof.html` dynamically injects the gtag script. The cookie banner and consent logic are both in `baseof.html`, gated behind `hugo.IsProduction` so local dev is unaffected.
+
+### Manifesto
+
+The full prose manifesto ("Standing Up for Cornwall") lives in `docs/manifesto/MANIFESTO.md` with a structural outline in `docs/manifesto/MANIFESTO-OUTLINE.md`. A branded PDF is at `static/documents/cing-manifesto.pdf` (generated via reportlab). The policies page links to this PDF for download.
 
 ### Councillor data
 
