@@ -4,14 +4,22 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  {{/* Google Analytics */}}
+  {{/* Google Analytics — loaded only after cookie consent */}}
   {{ if hugo.IsProduction }}
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z1F4F1TRD0"></script>
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-Z1F4F1TRD0');
+    function loadGtag() {
+      if (document.querySelector('script[src*="googletagmanager"]')) return;
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-Z1F4F1TRD0';
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-Z1F4F1TRD0');
+    }
+    if (localStorage.getItem('cing-cookies') === 'accepted') { loadGtag(); }
   </script>
   {{ end }}
   <title>{{ if .IsHome }}CING — Independent Councillors for Cornwall{{ else }}{{ .Title }} | CING{{ end }}</title>
@@ -190,6 +198,48 @@
   </main>
 
   {{ partial "footer.html" . }}
+
+  {{/* Cookie consent banner */}}
+  {{ if hugo.IsProduction }}
+  <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 z-[100] hidden" role="dialog" aria-label="Cookie consent">
+    <div class="max-w-screen-lg mx-auto px-6 pb-6">
+      <div class="bg-primary text-white p-6 md:p-8 rounded-xl shadow-2xl flex flex-col md:flex-row items-start md:items-center gap-6">
+        <div class="flex-1">
+          <p class="font-headline font-bold text-lg mb-2">We value your privacy</p>
+          <p class="text-white/80 text-sm leading-relaxed">
+            We use cookies for anonymous analytics to understand how visitors use this site, helping us improve it. No advertising or third-party tracking.
+            <a href="{{ "/privacy/#cookies" | relURL }}" class="underline text-tertiary-fixed hover:text-tertiary-container">Cookie details</a>
+          </p>
+        </div>
+        <div class="flex gap-3 shrink-0">
+          <button id="cookie-reject" class="px-6 py-3 border border-white/30 text-white font-headline font-bold text-sm rounded-md hover:bg-white/10 transition-colors">
+            Reject
+          </button>
+          <button id="cookie-accept" class="px-6 py-3 bg-tertiary-container text-on-tertiary-container font-headline font-bold text-sm rounded-md hover:bg-tertiary hover:text-white transition-colors">
+            Accept
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function() {
+      var choice = localStorage.getItem('cing-cookies');
+      if (!choice) {
+        document.getElementById('cookie-banner').classList.remove('hidden');
+      }
+      document.getElementById('cookie-accept').addEventListener('click', function() {
+        localStorage.setItem('cing-cookies', 'accepted');
+        document.getElementById('cookie-banner').classList.add('hidden');
+        if (typeof loadGtag === 'function') loadGtag();
+      });
+      document.getElementById('cookie-reject').addEventListener('click', function() {
+        localStorage.setItem('cing-cookies', 'rejected');
+        document.getElementById('cookie-banner').classList.add('hidden');
+      });
+    })();
+  </script>
+  {{ end }}
 
 </body>
 </html>
