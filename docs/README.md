@@ -11,6 +11,11 @@ Reference documentation, brand standards, and project guidelines for the CING we
 - [Typography](brand/typography.md) — Font families, type scale, icon font, loading strategy
 - [Design principles](brand/design-principles.md) — Implementation-specific layout rules and Tailwind component patterns
 
+### Manifesto (`manifesto/`)
+
+- [**MANIFESTO.md**](manifesto/MANIFESTO.md) — Full prose draft of "Standing Up for Cornwall" manifesto, covering local (Cornwall Council) and national (parliamentary) policy positions. For group review ahead of 2029 elections.
+- [**MANIFESTO-OUTLINE.md**](manifesto/MANIFESTO-OUTLINE.md) — Structural outline and discussion notes for the manifesto.
+
 ### Architecture (`architecture/`)
 
 *Planned — see suggestions below.*

@@ -1,140 +1,248 @@
 {{ define "main" }}
 
-<div class="pt-32 pb-20">
-  {{/* Hero Section: Editorial Statement */}}
-  <header class="max-w-screen-2xl mx-auto px-6 lg:px-8 mb-20">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
-      <div class="lg:col-span-8">
-        <span class="text-tertiary font-bold tracking-widest uppercase text-sm mb-4 block">Our Vision</span>
-        <h1 class="font-headline text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-primary leading-none mb-8">
-          The Granite<br/>Manifesto
-        </h1>
-        <p class="text-xl md:text-2xl text-secondary max-w-2xl font-light leading-relaxed">
-          A commitment to Cornwall's communities, environmental preservation, and a resilient local economy built for generations, not election cycles.
-        </p>
+{{/* Hero Section — full-bleed background image */}}
+<header class="relative min-h-[70vh] flex items-center pt-20 overflow-hidden bg-primary">
+  <div class="absolute inset-0 z-0">
+    <img alt="Cornish cliffs at dusk" class="w-full h-full object-cover opacity-60 scale-105" src="{{ "/images/cliffside-dusk.jpg" | relURL }}" />
+    <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/40 to-transparent"></div>
+  </div>
+  <div class="relative z-10 max-w-screen-xl mx-auto px-8 w-full">
+    <div class="max-w-3xl">
+      <span class="inline-block px-4 py-1 mb-6 bg-tertiary text-white text-xs font-bold tracking-widest uppercase rounded-sm">The Independent Manifesto</span>
+      <h1 class="text-6xl md:text-8xl font-headline font-black text-white tracking-tighter leading-[0.9] mb-8">
+        Our Vision for Cornwall
+      </h1>
+      <p class="text-xl md:text-2xl text-white/90 font-light leading-relaxed max-w-2xl border-l-4 border-tertiary pl-6 mb-10">
+        A self-reliant, sustainable, and prosperous Cornwall where local decisions are made by the people who live here.
+      </p>
+      <a href="{{ "/documents/cing-manifesto.pdf" | relURL }}" download class="inline-flex items-center gap-3 px-8 py-4 bg-tertiary-container text-on-tertiary-container font-headline font-bold rounded-md hover:bg-tertiary hover:text-white transition-all transform hover:-translate-y-0.5 shadow-lg">
+        <span class="material-symbols-outlined">download</span>
+        Download the Full Manifesto (PDF)
+      </a>
+    </div>
+  </div>
+</header>
+
+<main class="relative">
+
+  {{/* ── Part One: Local Priorities ── */}}
+  <section class="py-24 bg-surface">
+    <div class="max-w-screen-2xl mx-auto px-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
+        <div class="max-w-2xl">
+          <h2 class="text-4xl md:text-5xl font-headline font-extrabold text-primary mb-4 tracking-tight">Part One: Local Priorities for Cornwall Council</h2>
+          <p class="text-secondary text-lg">Direct action on the issues our communities raise with us most often.</p>
+        </div>
+        <div class="hidden md:block h-[1px] flex-grow mx-12 bg-outline-variant/30 mb-4"></div>
       </div>
-      <div class="lg:col-span-4 hidden lg:block">
-        <div class="bg-surface-container-high p-8 rounded-lg aspect-square flex flex-col justify-between">
-          <span class="material-symbols-outlined text-primary text-5xl">description</span>
+
+      {{/* Policy Bento Grid */}}
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+
+        {{/* Housing — Large Feature Card */}}
+        <div class="md:col-span-8 group relative overflow-hidden rounded-xl bg-surface-container-lowest shadow-sm">
+          <div class="grid grid-cols-1 md:grid-cols-2 h-full">
+            <div class="p-8 md:p-12 flex flex-col justify-center">
+              <span class="material-symbols-outlined text-tertiary mb-4" style="font-size: 40px;">home_pin</span>
+              <h3 class="text-3xl font-headline font-bold text-primary mb-4">Housing Strategy</h3>
+              <p class="text-on-surface-variant leading-relaxed mb-6">
+                Cornwall's housing crisis demands action. Local people are being priced out while second homes and holiday lets hollow out communities. We champion restrictions on second-home conversions, genuinely affordable housing on public land, and local connection requirements that work.
+              </p>
+              <ul class="space-y-3 text-on-surface font-semibold">
+                <li class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-sm mt-1">check_circle</span> End the housing crisis for Cornish families</li>
+                <li class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-sm mt-1">check_circle</span> Regulate short-term rentals effectively</li>
+                <li class="flex items-start gap-2"><span class="material-symbols-outlined text-primary text-sm mt-1">check_circle</span> Infrastructure before development</li>
+              </ul>
+            </div>
+            <div class="h-64 md:h-full overflow-hidden">
+              <img alt="Sustainable Cornish housing" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="{{ "/images/eco-building.jpg" | relURL }}" />
+            </div>
+          </div>
+        </div>
+
+        {{/* Environment — Vertical Dark Card */}}
+        <div class="md:col-span-4 bg-primary-container text-white p-8 md:p-12 rounded-xl flex flex-col justify-between">
           <div>
-            <p class="font-headline font-bold text-primary mb-2">Our Policy Positions</p>
-            <p class="text-sm text-secondary">The principles guiding CING councillors across housing, environment, economy, transport, and governance.</p>
+            <span class="material-symbols-outlined text-tertiary-fixed mb-6" style="font-size: 48px;">forest</span>
+            <h3 class="text-3xl font-headline font-bold mb-4">Our Environment</h3>
+            <p class="text-white/80 leading-relaxed mb-8">
+              Cornwall's coastline, moorland, rivers, and hedgerows are assets and responsibilities. Any green transition must come with practical, fully costed support — not just targets.
+            </p>
           </div>
+          <img alt="Cornish moorland" class="w-full h-48 object-cover rounded-lg shadow-lg" src="{{ "/images/moorland-hills.jpg" | relURL }}" />
         </div>
-      </div>
-    </div>
-  </header>
 
-  {{/* Policy Bento Grid */}}
-  <section class="max-w-screen-2xl mx-auto px-6 lg:px-8">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-      {{/* Housing Policy — large card */}}
-      <div class="lg:col-span-2 bg-surface-container-lowest p-8 lg:p-12 rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between min-h-[400px]">
-        <div>
-          <div class="flex items-center justify-between mb-8">
-            <span class="px-3 py-1 bg-primary text-white text-xs font-bold tracking-widest uppercase rounded">Priority 01</span>
-            <span class="material-symbols-outlined text-tertiary text-4xl">home_work</span>
-          </div>
-          <h2 class="font-headline text-3xl md:text-4xl font-extrabold text-primary mb-6">Housing: Homes for Locals</h2>
-          <p class="text-lg text-on-surface-variant mb-8 leading-relaxed max-w-xl">
-            Cornwall's housing crisis demands bold action. We champion restrictions on second-home ownership, genuinely affordable social housing on public land, and policies that ensure Cornwall remains a place where local people can afford to live — not just visit.
-          </p>
+        {{/* Cost of Living */}}
+        <div class="md:col-span-4 bg-surface-container-high p-8 rounded-xl border-b-4 border-primary">
+          <span class="material-symbols-outlined text-primary mb-4">payments</span>
+          <h4 class="text-xl font-headline font-bold text-primary mb-2">Cost of Living</h4>
+          <p class="text-on-surface-variant text-sm leading-relaxed">Low wages and high costs — Cornwall's defining economic squeeze. We press for a fairer funding settlement, local procurement, and support for community energy schemes.</p>
         </div>
-      </div>
 
-      {{/* Local Economy — dark card */}}
-      <div class="bg-primary text-white p-8 rounded-xl flex flex-col justify-between">
-        <div>
-          <div class="mb-8">
-            <span class="material-symbols-outlined text-tertiary-fixed text-4xl">payments</span>
-          </div>
-          <h2 class="font-headline text-3xl font-bold mb-4">Local Economy</h2>
-          <p class="text-on-primary-container text-base leading-relaxed mb-6">
-            Supporting independent Cornish businesses through procurement policies that keep money circulating locally, pushing back against extractive business models, and championing sustainable economic growth rooted in our communities.
-          </p>
+        {{/* Jobs & Economy */}}
+        <div class="md:col-span-4 bg-surface-container-high p-8 rounded-xl border-b-4 border-primary">
+          <span class="material-symbols-outlined text-primary mb-4">precision_manufacturing</span>
+          <h4 class="text-xl font-headline font-bold text-primary mb-2">Jobs &amp; Economy</h4>
+          <p class="text-on-surface-variant text-sm leading-relaxed">Sustainable growth that benefits Cornish people. Stronger partnerships between the council, colleges, and employers so young people can build careers here.</p>
+        </div>
+
+        {{/* Health & Care */}}
+        <div class="md:col-span-4 bg-surface-container-high p-8 rounded-xl border-b-4 border-primary">
+          <span class="material-symbols-outlined text-primary mb-4">medical_services</span>
+          <h4 class="text-xl font-headline font-bold text-primary mb-2">Health &amp; Social Care</h4>
+          <p class="text-on-surface-variant text-sm leading-relaxed">Adequate funding for adult social care, improved mental health services, and rural access to healthcare. Cornwall's recruitment crisis needs targeted, funded solutions.</p>
         </div>
       </div>
 
-      {{/* Environment — image card */}}
-      <div class="bg-surface-container-high p-8 rounded-xl flex flex-col justify-between min-h-[350px]">
-        <div class="relative overflow-hidden rounded-lg mb-6 h-48">
-          <img alt="Cornish coastline" class="object-cover w-full h-full" src="{{ "/images/coastline-cliffs.jpg" | relURL }}" />
+      {{/* Secondary Local Grid */}}
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+        <div class="p-8 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+          <h5 class="font-headline font-bold text-lg text-primary flex items-center gap-2 mb-3">
+            <span class="material-symbols-outlined">directions_bus</span> Transport
+          </h5>
+          <p class="text-secondary text-sm">Year-round, reliable public transport connecting rural communities. Fix the road maintenance backlog. Campaign for better rail services and fair pricing.</p>
         </div>
-        <div>
-          <h2 class="font-headline text-2xl font-bold text-primary mb-3">Environmental Stewardship</h2>
-          <p class="text-sm text-secondary leading-relaxed mb-6">
-            Protecting Cornwall's coastline, rivers, and countryside. We advocate for stronger protections against pollution, responsible development, and conservation that prioritises our natural heritage for future generations.
-          </p>
+        <div class="p-8 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+          <h5 class="font-headline font-bold text-lg text-primary flex items-center gap-2 mb-3">
+            <span class="material-symbols-outlined">school</span> Education &amp; Skills
+          </h5>
+          <p class="text-secondary text-sm">Stronger post-16 provision linked to local careers. Urgent improvement in SEND provision. Accessible, affordable childcare across the county.</p>
         </div>
-      </div>
-
-      {{/* Transport — split card */}}
-      <div class="lg:col-span-2 bg-white border-2 border-surface-container p-8 rounded-xl flex flex-col lg:flex-row gap-8">
-        <div class="lg:w-1/2">
-          <span class="material-symbols-outlined text-primary text-4xl mb-4">directions_bus</span>
-          <h2 class="font-headline text-3xl font-bold text-primary mb-4">Integrated Transport</h2>
-          <p class="text-secondary leading-relaxed mb-6">
-            Cornwall needs a connected, affordable transport network. We support better bus connectivity between rural communities and urban centres, investment in rail services, and infrastructure for electric vehicles.
-          </p>
-          <ul class="space-y-3">
-            <li class="flex items-center text-sm font-semibold text-primary">
-              <span class="material-symbols-outlined text-tertiary mr-2 text-base">check_circle</span> Rural Bus Connectivity
-            </li>
-            <li class="flex items-center text-sm font-semibold text-primary">
-              <span class="material-symbols-outlined text-tertiary mr-2 text-base">check_circle</span> EV Charging Infrastructure
-            </li>
-            <li class="flex items-center text-sm font-semibold text-primary">
-              <span class="material-symbols-outlined text-tertiary mr-2 text-base">check_circle</span> Rail Service Investment
-            </li>
-          </ul>
-        </div>
-        <div class="lg:w-1/2 bg-surface-container-low rounded-lg p-6 flex flex-col justify-center items-center text-center">
-          <span class="material-symbols-outlined text-primary text-5xl mb-4">map</span>
-          <p class="font-headline font-bold text-primary mb-2">Accountability</p>
-          <p class="text-xs text-secondary mb-6">Scrutinising Cornwall Council's transport spending and delivery</p>
-          <a href="{{ "/councillors/" | relURL }}" class="w-full py-3 bg-primary text-white rounded-md font-bold text-sm block text-center">OUR COUNCILLORS</a>
+        <div class="p-8 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+          <h5 class="font-headline font-bold text-lg text-primary flex items-center gap-2 mb-3">
+            <span class="material-symbols-outlined">account_balance</span> Governance
+          </h5>
+          <p class="text-secondary text-sm">Transparent decision-making. Stronger scrutiny committees with genuine power. Seriously consider the committee system over cabinet-style government.</p>
         </div>
       </div>
 
-      {{/* Governance — additional card */}}
-      <div class="bg-surface-container-lowest p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
-        <div>
-          <div class="mb-6">
-            <span class="material-symbols-outlined text-primary text-4xl">gavel</span>
-          </div>
-          <h2 class="font-headline text-2xl font-bold text-primary mb-4">Good Governance</h2>
-          <p class="text-on-surface-variant leading-relaxed mb-6">
-            Transparent decision-making, effective scrutiny, and holding the administration to account. CING councillors serve on key audit, standards, and oversight committees to ensure Cornwall Council works for its residents.
-          </p>
+      {{/* Additional Local Policy Cards */}}
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+        <div class="p-8 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+          <h5 class="font-headline font-bold text-lg text-primary flex items-center gap-2 mb-3">
+            <span class="material-symbols-outlined">domain</span> Planning
+          </h5>
+          <p class="text-secondary text-sm">Planning decisions that serve communities, not developers. Enforce conditions rigorously. The Local Plan must reflect Cornwall's needs, not Whitehall targets.</p>
+        </div>
+        <div class="p-8 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+          <h5 class="font-headline font-bold text-lg text-primary flex items-center gap-2 mb-3">
+            <span class="material-symbols-outlined">castle</span> Culture &amp; Heritage
+          </h5>
+          <p class="text-secondary text-sm">Cornwall's identity is a living heritage, not a tourism brand. Support for the Cornish language, mining heritage, and the festivals that bind communities together.</p>
+        </div>
+        <div class="p-8 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+          <h5 class="font-headline font-bold text-lg text-primary flex items-center gap-2 mb-3">
+            <span class="material-symbols-outlined">account_balance_wallet</span> Council Finances
+          </h5>
+          <p class="text-secondary text-sm">A fair funding deal from central government. Transparent budgeting with proper scrutiny. Council tax increases justified and proportionate.</p>
         </div>
       </div>
-
     </div>
   </section>
 
-  {{/* Community Anchor CTA */}}
-  <section class="mt-20 max-w-screen-2xl mx-auto px-6 lg:px-8">
-    <div class="bg-gradient-to-br from-primary to-primary-container p-12 lg:p-24 rounded-xl text-white relative overflow-hidden">
-      <div class="relative z-10 max-w-3xl">
-        <h2 class="font-headline text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-8">
-          Built on Granite,<br/>Focused on Horizon.
-        </h2>
-        <p class="text-xl md:text-2xl text-on-primary-container leading-relaxed mb-12">
-          Our policies are shaped by the communities we serve. We invite every Cornwall resident to share their views and help us get the priorities right.
-        </p>
-        <div class="flex flex-wrap gap-4">
-          <a href="{{ "/get-involved/" | relURL }}" class="px-8 py-4 bg-tertiary-container text-on-tertiary-container font-bold rounded-md shadow-lg">
-            Get Involved
-          </a>
-          <a href="{{ "/councillors/" | relURL }}" class="px-8 py-4 border border-white/30 hover:bg-white/10 transition-colors font-bold rounded-md">
-            Meet Our Councillors
-          </a>
+  {{/* Image Divider */}}
+  <div class="relative h-64 overflow-hidden">
+    <img alt="Cornish fishing harbour" class="w-full h-full object-cover" src="{{ "/images/harbour-boats.jpg" | relURL }}" />
+    <div class="absolute inset-0 bg-primary/40 backdrop-blur-[2px]"></div>
+  </div>
+
+  {{/* ── Part Two: Cornwall's Voice at Westminster ── */}}
+  <section class="py-24 bg-surface-container-low">
+    <div class="max-w-screen-xl mx-auto px-8">
+      <div class="text-center mb-20">
+        <h2 class="text-4xl md:text-5xl font-headline font-extrabold text-primary mb-6">Part Two: Cornwall's Voice at Westminster</h2>
+        <p class="text-secondary text-xl max-w-3xl mx-auto">Cornwall's interests are not being served by national parties. A CING MP would go to Parliament with one job: to fight for Cornwall.</p>
+      </div>
+
+      <div class="space-y-16">
+        {{/* A Fair Deal for Cornwall */}}
+        <div class="flex flex-col md:flex-row gap-12 items-center">
+          <div class="md:w-1/2">
+            <h3 class="text-3xl font-headline font-bold text-primary mb-6">A Fair Deal for Cornwall</h3>
+            <div class="space-y-4 text-on-surface-variant leading-relaxed text-lg">
+              <p>Cornwall consistently receives less per head in government funding than comparable areas. Funding formulas designed around urban centres systematically disadvantage rural, peripheral areas. A CING MP would make the case for fairness at every opportunity.</p>
+              <p class="font-bold text-primary italic">"We seek sustainable economic growth and improved job opportunities for Cornish people — backed by a funding formula that recognises rurality, deprivation, and distance."</p>
+            </div>
+          </div>
+          <div class="md:w-1/2 aspect-video rounded-xl overflow-hidden shadow-2xl">
+            <img alt="Cornwall coast" class="w-full h-full object-cover" src="{{ "/images/dramatic-coast.jpg" | relURL }}" />
+          </div>
+        </div>
+
+        {{/* Fishing, Farming & Food Security */}}
+        <div class="flex flex-col md:flex-row-reverse gap-12 items-center">
+          <div class="md:w-1/2">
+            <h3 class="text-3xl font-headline font-bold text-primary mb-6">Fishing, Farming &amp; Food Security</h3>
+            <p class="text-on-surface-variant leading-relaxed text-lg mb-6">
+              Post-Brexit promises to fishing and farming communities have not been kept. Cornwall's primary industries need practical support, fairer trade deals, and less red tape. Food security is national security — domestic producers deserve better.
+            </p>
+            <div class="grid grid-cols-2 gap-4">
+              <img alt="Cornish farmland" class="rounded-lg h-32 w-full object-cover" src="{{ "/images/cornish-garden.jpg" | relURL }}" />
+              <img alt="Fishing harbour" class="rounded-lg h-32 w-full object-cover" src="{{ "/images/fishing-village.jpg" | relURL }}" />
+            </div>
+          </div>
+          <div class="md:w-1/2">
+            <div class="bg-primary p-10 rounded-xl text-white">
+              <h4 class="text-xl font-headline font-bold mb-4 text-tertiary-fixed">Pragmatic National Positions</h4>
+              <ul class="space-y-6">
+                <li class="flex gap-4">
+                  <span class="material-symbols-outlined text-tertiary-fixed">diversity_3</span>
+                  <div>
+                    <span class="block font-bold">Immigration</span>
+                    <span class="text-sm text-white/70">The system is broken and unfair. We want pragmatic reform that enforces existing law — not performative and divisive outrage.</span>
+                  </div>
+                </li>
+                <li class="flex gap-4">
+                  <span class="material-symbols-outlined text-tertiary-fixed">account_balance_wallet</span>
+                  <div>
+                    <span class="block font-bold">Devolution</span>
+                    <span class="text-sm text-white/70">Cornwall deserves the right to decide its own governance. A fundamental change that must go to the people in a referendum.</span>
+                  </div>
+                </li>
+                <li class="flex gap-4">
+                  <span class="material-symbols-outlined text-tertiary-fixed">electric_bolt</span>
+                  <div>
+                    <span class="block font-bold">Cost of Living</span>
+                    <span class="text-sm text-white/70">Energy policy must work for rural homes. Fair wages, affordable housing, accessible services — the basics national parties keep failing to deliver.</span>
+                  </div>
+                </li>
+                <li class="flex gap-4">
+                  <span class="material-symbols-outlined text-tertiary-fixed">local_hospital</span>
+                  <div>
+                    <span class="block font-bold">Health</span>
+                    <span class="text-sm text-white/70">Targeted incentives to attract health professionals to rural areas. Genuine parity between mental and physical health services.</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="absolute -right-20 -bottom-20 w-96 h-96 bg-tertiary opacity-10 rounded-full blur-3xl"></div>
     </div>
   </section>
-</div>
+
+  {{/* CTA Section */}}
+  <section class="py-24 bg-primary text-white text-center relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-tertiary via-transparent to-transparent"></div>
+    </div>
+    <div class="relative z-10 max-w-4xl mx-auto px-8">
+      <h2 class="text-5xl md:text-7xl font-headline font-black mb-8 tracking-tighter">Join the Movement.</h2>
+      <p class="text-xl md:text-2xl text-white/80 mb-12 font-light leading-relaxed">
+        Cornwall deserves representatives who put Cornwall first. Stand with us, stand as a candidate, or just hold us to what we've said here.
+      </p>
+      <div class="flex flex-col md:flex-row gap-6 justify-center">
+        <a href="{{ "/documents/cing-manifesto.pdf" | relURL }}" download class="inline-flex items-center gap-3 px-12 py-5 bg-tertiary text-white font-headline font-extrabold text-lg rounded-md hover:bg-tertiary-container hover:text-on-tertiary-container transition-all transform hover:-translate-y-1">
+          <span class="material-symbols-outlined">download</span>
+          Download the Full Manifesto
+        </a>
+        <a href="{{ "/get-involved/" | relURL }}" class="px-12 py-5 border-2 border-white/30 text-white font-headline font-extrabold text-lg rounded-md hover:bg-white/10 transition-all">
+          Get Involved
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
 
 {{ end }}
