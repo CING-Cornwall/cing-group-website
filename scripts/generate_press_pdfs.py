@@ -152,6 +152,14 @@ RELEASES: list[Release] = [
         src_md=SOURCE_DIR / "11.4 Public Realm" / "CING_PR_Weedkiller_Nuclear_2026-04-21.md",
         image="glyphosate-weedkiller-halt.jpg",
     ),
+    Release(
+        slug="planning-public-trust",
+        category="Planning & Democracy",
+        title="Planning Decisions Must Command Public Trust",
+        strapline="Cllr Rowland O'Connor challenges Cornwall Council on transparency, consistency, and the weight given to local voices.",
+        src_md=SOURCE_DIR / "questions" / "press_release_planning_question_markdown.md",
+        image="planning-public-trust.jpg",
+    ),
 ]
 
 
@@ -181,10 +189,8 @@ def parse_markdown(md: str) -> list:
     lines = md.splitlines()
     i = 0
 
-    # skip leading H1 (used as title)
+    # leading blank-line skip
     while i < len(lines) and lines[i].strip() == "":
-        i += 1
-    if i < len(lines) and lines[i].startswith("# "):
         i += 1
 
     bullet_buffer: list[str] = []
@@ -239,6 +245,19 @@ def parse_markdown(md: str) -> list:
             i += 1
             continue
 
+        # skip any H1 — the article title is already in the banner, so H1s in the
+        # body are editorial cruft (e.g. "# PRESS RELEASE", "# Planning decisions must command public trust")
+        if stripped.startswith("# "):
+            i += 1
+            continue
+
+        # skip ENDS / FOR IMMEDIATE RELEASE in any heading level or bold form
+        # (matches "## FOR IMMEDIATE RELEASE", "**ENDS**", "FOR IMMEDIATE RELEASE", etc.)
+        _norm_header = stripped.upper().lstrip("#").strip(" *")
+        if _norm_header in {"FOR IMMEDIATE RELEASE", "ENDS"}:
+            i += 1
+            continue
+
         # H2
         if stripped.startswith("## "):
             flush_paragraph()
@@ -272,11 +291,6 @@ def parse_markdown(md: str) -> list:
             flush_paragraph()
             flush_quote()
             bullet_buffer.append(stripped[2:])
-            i += 1
-            continue
-
-        # skip ENDS marker and purely bold FOR IMMEDIATE RELEASE/date banner
-        if stripped.upper() in {"**ENDS**", "ENDS", "**FOR IMMEDIATE RELEASE**", "FOR IMMEDIATE RELEASE"}:
             i += 1
             continue
 

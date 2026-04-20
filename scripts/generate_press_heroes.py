@@ -231,11 +231,65 @@ def motif_leaf(draw: ImageDraw.ImageDraw, cx: int, cy: int, scale: float = 1.0):
     )
 
 
+def motif_house(draw: ImageDraw.ImageDraw, cx: int, cy: int, scale: float = 1.0):
+    """Stylised terrace of three houses + 'plan' grid behind — trust/planning motif."""
+    s = scale
+    gold = GOLD
+    w = max(2, int(6 * s))
+
+    # faint grid behind (blueprint feel)
+    grid = GOLD_DEEP
+    for i in range(-3, 4):
+        x = cx + int(i * 70 * s)
+        draw.line(
+            [(x, cy - int(220 * s)), (x, cy + int(220 * s))],
+            fill=grid, width=max(1, int(2 * s)),
+        )
+    for j in range(-3, 4):
+        y = cy + int(j * 60 * s)
+        draw.line(
+            [(cx - int(250 * s), y), (cx + int(250 * s), y)],
+            fill=grid, width=max(1, int(2 * s)),
+        )
+
+    # three house silhouettes forming a short terrace
+    # each house: base rectangle + triangular roof
+    # centre house is tallest, flanking houses step down
+    def house(ox: int, base_w: int, base_h: int, roof_h: int):
+        x0 = cx + int(ox * s) - int(base_w * s) // 2
+        x1 = x0 + int(base_w * s)
+        y1 = cy + int(120 * s)
+        y0 = y1 - int(base_h * s)
+        # walls
+        draw.rectangle([x0, y0, x1, y1], outline=gold, width=w)
+        # roof
+        apex = ((x0 + x1) // 2, y0 - int(roof_h * s))
+        draw.polygon([(x0, y0), apex, (x1, y0)], outline=gold)
+        # door
+        dw = int(22 * s)
+        dh = int(46 * s)
+        dx0 = (x0 + x1) // 2 - dw // 2
+        draw.rectangle([dx0, y1 - dh, dx0 + dw, y1], outline=gold, width=max(2, int(4 * s)))
+        # window
+        ww = int(20 * s)
+        wh = int(20 * s)
+        wx0 = x0 + int(18 * s)
+        wy0 = y0 + int(22 * s)
+        draw.rectangle([wx0, wy0, wx0 + ww, wy0 + wh], outline=gold, width=max(2, int(3 * s)))
+        wx1 = x1 - int(18 * s) - ww
+        draw.rectangle([wx1, wy0, wx1 + ww, wy0 + wh], outline=gold, width=max(2, int(3 * s)))
+
+    house(ox=-180, base_w=150, base_h=140, roof_h=60)
+    house(ox=0,    base_w=170, base_h=180, roof_h=80)
+    house(ox=180,  base_w=150, base_h=140, roof_h=60)
+
+
 MOTIFS = {
     "bus": motif_bus,
     "tooth": motif_tooth,
     "cornwall": motif_cornwall,
     "leaf": motif_leaf,
+    "house": motif_house,
 }
 
 
@@ -378,6 +432,12 @@ RELEASES: list[Release] = [
         overline="Motion to pause the chemical rollout",
         headline="Poison on Our Streets",
         motif="leaf",
+    ),
+    Release(
+        slug="planning-public-trust",
+        overline="Question on planning transparency & parish voice",
+        headline="Planning Must Earn Public Trust",
+        motif="house",
     ),
 ]
 
