@@ -20,8 +20,17 @@
 }
 </script>
 
-<div class="pt-32 pb-20">
-  <article class="max-w-3xl mx-auto px-6 lg:px-8">
+<div class="pt-20 pb-20">
+  {{/* Optional hero image (full-bleed banner) */}}
+  {{ with .Params.image }}
+  <section class="relative w-full mb-12">
+    <div class="aspect-[2/1] w-full overflow-hidden">
+      <img src="{{ . | relURL }}" alt="{{ $.Title }}" class="w-full h-full object-cover" />
+    </div>
+  </section>
+  {{ end }}
+
+  <article class="max-w-3xl mx-auto px-6 lg:px-8 {{ if not .Params.image }}pt-12{{ end }}">
     {{/* Back link */}}
     <a href="{{ "/press/" | relURL }}" class="inline-flex items-center gap-2 text-primary font-bold text-sm mb-12 hover:text-tertiary transition-colors">
       <span class="material-symbols-outlined text-lg">arrow_back</span> All Press Releases
@@ -29,13 +38,18 @@
 
     {{/* Header */}}
     <header class="mb-12">
-      <div class="flex items-center gap-4 mb-6">
+      <div class="flex items-center gap-4 mb-6 flex-wrap">
         {{ with .Params.category }}
         <span class="bg-primary text-white text-[10px] font-bold px-3 py-1 uppercase tracking-widest rounded">{{ . }}</span>
         {{ end }}
         <time class="text-secondary text-sm font-medium" datetime="{{ .Date.Format "2006-01-02" }}">
           {{ .Date.Format "2 January 2006" }}
         </time>
+        {{ with .Params.pdf }}
+        <a href="{{ . | relURL }}" class="inline-flex items-center gap-2 bg-tertiary-container text-on-tertiary-container text-[10px] font-black px-3 py-1 uppercase tracking-widest rounded hover:bg-tertiary transition-colors">
+          <span class="material-symbols-outlined text-sm">download</span> Download PDF
+        </a>
+        {{ end }}
       </div>
       <h1 class="font-headline text-3xl md:text-5xl font-extrabold text-primary tracking-tight leading-tight mb-6">
         {{ .Title }}

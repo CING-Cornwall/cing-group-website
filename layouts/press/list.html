@@ -27,8 +27,8 @@
       {{/* Left Column: Press Release List */}}
       <div class="lg:col-span-8">
 
-        {{/* Release List */}}
-        {{ $pages := .Pages.ByDate.Reverse }}
+        {{/* Release List — recursive so nested meeting sub-sections (e.g. /press/full-council-2026-04-21/) appear on the main /press/ page */}}
+        {{ $pages := .RegularPagesRecursive.ByDate.Reverse }}
         {{ if $pages }}
         <div class="space-y-12">
           {{ range $pages }}
