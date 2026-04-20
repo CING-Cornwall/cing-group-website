@@ -1,7 +1,7 @@
 ---
 title: "Mevagissey Families Denied Fair Access to School Transport"
 date: 2026-04-21T09:00:00+01:00
-publishDate: 2026-04-21T09:00:00+01:00
+publishDate: 2026-04-20T09:00:00+01:00
 category: "School Transport"
 excerpt: "CING backs a motion to fix an \"unfair and outdated\" school transport system in Mevagissey, where children on the same bus are treated differently depending on the school named on the form."
 image: "/images/press/mevagissey-school-transport.jpg"

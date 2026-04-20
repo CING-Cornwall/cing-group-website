@@ -1,7 +1,7 @@
 ---
 title: "Access to NHS Dental Care for Children in Cornwall"
 date: 2026-04-21T09:00:00+01:00
-publishDate: 2026-04-21T09:00:00+01:00
+publishDate: 2026-04-20T09:00:00+01:00
 category: "NHS Dentistry"
 excerpt: "Cllr Rowland O'Connor warns that too many children in Cornwall are going without routine NHS dental care, and backs a motion for preventative programmes, mobile services, and better access pathways."
 image: "/images/press/childrens-nhs-dental-care.jpg"

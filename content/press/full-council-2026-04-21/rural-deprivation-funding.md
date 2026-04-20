@@ -1,7 +1,7 @@
 ---
 title: "Cornwall Must Not Be Overlooked: Councillors Unite to Challenge \"Hidden Deprivation\" Funding Failure"
 date: 2026-04-21T09:00:00+01:00
-publishDate: 2026-04-21T09:00:00+01:00
+publishDate: 2026-04-20T09:00:00+01:00
 category: "Funding & Rural Equity"
 excerpt: "Not a single Cornish community has received funding from the £5.8bn \"Pride in Place\" programme. Councillors back a motion demanding urgent action on rural deprivation that national funding formulas systematically overlook."
 image: "/images/press/rural-deprivation-funding.jpg"

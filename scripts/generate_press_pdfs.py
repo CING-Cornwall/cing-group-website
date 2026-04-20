@@ -340,7 +340,7 @@ def draw_first_page(canvas, doc, release: Release):
     canvas.drawString(
         MARGIN_X + 6 * mm,
         PAGE_H - 14 * mm,
-        f"EMBARGOED UNTIL 21 APRIL 2026  ·  09:00 BST  ·  {release.category.upper()}",
+        f"FULL COUNCIL  ·  21 APRIL 2026  ·  {release.category.upper()}",
     )
 
     # Title (wrap to max 3 lines, shrink if long).

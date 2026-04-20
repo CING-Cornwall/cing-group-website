@@ -1,7 +1,7 @@
 ---
 title: "\"Poison on Our Streets\" Row Erupts as Council Pushes Weedkiller Return"
 date: 2026-04-21T09:00:00+01:00
-publishDate: 2026-04-21T09:00:00+01:00
+publishDate: 2026-04-20T09:00:00+01:00
 category: "Environment & Public Health"
 excerpt: "Cornwall Council faces growing backlash over plans to reintroduce glyphosate weedkiller. Cllr Anna Thomason-Kenyon backs calls to halt the rollout, warning of risks to public health, wildlife, and trust."
 image: "/images/press/glyphosate-weedkiller-halt.jpg"
