@@ -44,6 +44,11 @@
   {{/* Canonical URL */}}
   <link rel="canonical" href="{{ .Permalink }}" />
 
+  {{/* RSS auto-discovery */}}
+  {{ range .AlternativeOutputFormats -}}
+    <link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink | safeURL }}" title="{{ $.Site.Title }}" />
+  {{ end -}}
+
   {{/* Local SEO */}}
   <meta name="geo.region" content="GB-CON" />
   <meta name="geo.placename" content="Cornwall" />
