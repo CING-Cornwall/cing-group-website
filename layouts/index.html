@@ -202,16 +202,30 @@
       <p class="text-secondary text-xl mb-8 leading-relaxed">
         Join your neighbours in supporting independent, Cornwall-first representation. No party dues, no whip — just a commitment to your community.
       </p>
-      <form class="flex flex-col sm:flex-row gap-4 max-w-lg" action="https://formspree.io/f/{{ .Site.Params.formspreeId }}" method="POST">
-        <input
-          type="email"
-          name="email"
-          required
-          class="flex-grow bg-surface-container-low border-none focus:ring-2 focus:ring-primary rounded-md p-4 text-primary"
-          placeholder="Enter your email" />
-        <button type="submit" class="bg-primary text-white px-8 py-4 rounded-md font-bold hover:bg-primary-container transition-colors whitespace-nowrap">
-          Join Us
-        </button>
+      <form class="flex flex-col gap-4 max-w-lg" action="https://formspree.io/f/{{ .Site.Params.formspreeNewsletterId }}" method="POST">
+        <input type="hidden" name="_subject" value="Newsletter signup" />
+        {{/* Honeypot — bots fill this; real users never see it */}}
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <div class="flex flex-col sm:flex-row gap-4">
+          <input
+            type="email"
+            name="email"
+            required
+            class="flex-grow bg-surface-container-low border-none focus:ring-2 focus:ring-primary rounded-md p-4 text-primary"
+            placeholder="Enter your email" />
+          <button type="submit" class="bg-primary text-white px-8 py-4 rounded-md font-bold hover:bg-primary-container transition-colors whitespace-nowrap">
+            Join Us
+          </button>
+        </div>
+        {{/* PECR explicit-consent — checkbox unticked by default, required to submit */}}
+        <label class="flex items-start gap-3 text-sm text-on-surface-variant">
+          <input type="checkbox" name="marketing_consent" value="yes" required
+            class="mt-1 shrink-0" />
+          <span>
+            I agree to receive occasional email updates from CING. You can unsubscribe at any time.
+            See our <a href="{{ "/privacy/" | relURL }}" class="underline">privacy policy</a>.
+          </span>
+        </label>
       </form>
       <p class="text-xs text-on-surface-variant mt-4 opacity-70">
         By joining, you agree to our <a href="{{ "/privacy/" | relURL }}" class="underline">privacy policy</a>. We never sell your data.
