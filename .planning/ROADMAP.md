@@ -70,7 +70,7 @@ Plans:
 
 Plans:
 - [x] 03-01-PLAN.md — Image pipeline: assets/ migration + responsive-image partial + 10 templates + CI cache (IMG-01, IMG-02, IMG-03)
-- [ ] 03-02-PLAN.md — Councillor portrait parity (1024×1024) + JSON Schema gate + active flag (IMG-04, DATA-01, DATA-02)
+- [x] 03-02-PLAN.md — Councillor portrait parity (1024×1024) + JSON Schema gate + active flag (IMG-04, DATA-01, DATA-02)
 - [x] 03-03-PLAN.md — Press script reproducibility: requirements.txt + bundled SIL-OFL fonts + repo-relative paths (BUILD-02)
 
 ### Phase 4: Structural
@@ -99,7 +99,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 |-------|----------------|--------|-----------|
 | 1. Privacy & press toolchain | 2/2 | Complete | 2026-04-26 |
 | 2. Operational safety | 0/4 | Not started | - |
-| 3. Trust & performance | 2/3 | In progress | - |
+| 3. Trust & performance | 3/3 | Plans complete (verifying) | - |
 | 4. Structural | 0/3 | Not started | - |
 
 ---
