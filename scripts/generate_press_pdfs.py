@@ -34,7 +34,7 @@ from reportlab.platypus import (
 )
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE_DIR = ROOT / "content" / "press" / "_incoming"
+SOURCE_DIR = ROOT / "content" / "press" / "full-council-2026-04-21"
 OUT_DIR = ROOT / "static" / "documents" / "press" / "2026-04-21"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -125,7 +125,7 @@ RELEASES: list[Release] = [
         category="School Transport",
         title="Mevagissey Families Denied Fair Access to School Transport",
         strapline="Families face inconsistent rules despite children travelling on the same bus.",
-        src_md=SOURCE_DIR / "11.1 Mevagissey Families" / "2026-04-21_press-release_mevagissey-school-transport.md",
+        src_md=SOURCE_DIR / "mevagissey-school-transport.md",
         image="mevagissey-school-transport.jpg",
     ),
     Release(
@@ -133,7 +133,7 @@ RELEASES: list[Release] = [
         category="NHS Dentistry",
         title="Access to NHS Dental Care for Children in Cornwall",
         strapline="Cllr O'Connor warns too many children are going without routine dental care.",
-        src_md=SOURCE_DIR / "11.2 Dentistry" / "CING_Press_Release_BBC_Version.md",
+        src_md=SOURCE_DIR / "childrens-nhs-dental-care.md",
         image="childrens-nhs-dental-care.jpg",
     ),
     Release(
@@ -141,7 +141,7 @@ RELEASES: list[Release] = [
         category="Funding & Rural Equity",
         title="Cornwall Must Not Be Overlooked: Councillors Unite to Challenge \"Hidden Deprivation\" Funding Failure",
         strapline="Not a single Cornish community has received funding from the £5.8bn \"Pride in Place\" programme.",
-        src_md=SOURCE_DIR / "11.3 Deprivation" / "cing_press_release_cornwall_deprivation_motion.md",
+        src_md=SOURCE_DIR / "rural-deprivation-funding.md",
         image="rural-deprivation-funding.jpg",
     ),
     Release(
@@ -149,7 +149,7 @@ RELEASES: list[Release] = [
         category="Environment & Public Health",
         title="\"Poison on Our Streets\" Row Erupts as Council Pushes Weedkiller Return",
         strapline="Cornwall Council faces growing backlash over plans to reintroduce glyphosate.",
-        src_md=SOURCE_DIR / "11.4 Public Realm" / "CING_PR_Weedkiller_Nuclear_2026-04-21.md",
+        src_md=SOURCE_DIR / "glyphosate-weedkiller-halt.md",
         image="glyphosate-weedkiller-halt.jpg",
     ),
     Release(
@@ -157,7 +157,7 @@ RELEASES: list[Release] = [
         category="Planning & Democracy",
         title="Planning Decisions Must Command Public Trust",
         strapline="Cllr Rowland O'Connor challenges Cornwall Council on transparency, consistency, and the weight given to local voices.",
-        src_md=SOURCE_DIR / "questions" / "press_release_planning_question_markdown.md",
+        src_md=SOURCE_DIR / "planning-public-trust.md",
         image="planning-public-trust.jpg",
     ),
 ]
