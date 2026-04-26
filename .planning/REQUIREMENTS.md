@@ -25,9 +25,12 @@ Requirements for the four-wave remediation programme. Each maps to exactly one p
 
 ### Forms
 
-- [ ] **FORMS-01**: Every Formspree-backed form on the site includes a hidden `_gotcha` honeypot field
-- [ ] **FORMS-02**: Both newsletter forms include a `<input type="checkbox" required>` GDPR opt-in tickbox with text describing what the user is subscribing to
-- [ ] **FORMS-03**: Contact, newsletter, and press-list submissions route to three separate Formspree endpoints, each ID stored under `params.formspree*Id` in `hugo.toml`
+- [x] **FORMS-01
+**: Every Formspree-backed form on the site includes a hidden `_gotcha` honeypot field
+- [x] **FORMS-02
+**: Both newsletter forms include a `<input type="checkbox" required>` GDPR opt-in tickbox with text describing what the user is subscribing to
+- [x] **FORMS-03
+**: Contact, newsletter, and press-list submissions route to three separate Formspree endpoints, each ID stored under `params.formspree*Id` in `hugo.toml`
 
 ### Accessibility
 
