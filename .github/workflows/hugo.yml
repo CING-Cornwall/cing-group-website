@@ -6,6 +6,12 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    # UK morning press windows: 07:00, 09:00, 12:00, 17:00 Europe/London.
+    # GitHub Actions cron is always UTC; the build env sets TZ: Europe/London
+    # so Hugo's publishDate comparisons read in UK time. DST drift is acceptable
+    # for a 4-times-daily schedule.
+    - cron: "0 7,9,12,17 * * *"
 
 permissions:
   contents: read
@@ -54,7 +60,7 @@ jobs:
           path: ./public
 
   deploy:
-    if: github.event_name == 'push'
+    if: github.event_name == 'push' || github.event_name == 'schedule'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
