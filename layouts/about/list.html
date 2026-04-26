@@ -101,7 +101,8 @@
       <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
         {{/* Iterate over councillors from data */}}
         {{ $councillors := index hugo.Data "councillors" }}
-        {{ range $i, $c := $councillors }}
+        {{ $activeCouncillors := where $councillors "active" true }}
+        {{ range $i, $c := $activeCouncillors }}
         {{ if eq $i 0 }}
         {{/* Leader — large card spanning 2 cols and 2 rows */}}
         <div class="md:col-span-2 md:row-span-2 relative group overflow-hidden rounded-lg bg-surface-container-highest">

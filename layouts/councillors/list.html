@@ -64,7 +64,8 @@
 
   {{/* Councillor Card Grid */}}
   {{ $councillors := index hugo.Data "councillors" }}
-  {{ with $councillors }}
+  {{ $activeCouncillors := where $councillors "active" true }}
+  {{ with $activeCouncillors }}
   <section class="py-24 px-6 md:px-24 bg-surface">
     <div class="max-w-7xl mx-auto">
       <div class="mb-16">
