@@ -4,33 +4,30 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  {{/* Google Analytics with Consent Mode v2 — loads on every visit, but storage is denied until consent */}}
+  {{/* Google Analytics — gtag.js is injected only after the visitor accepts the cookie banner. UK PECR: no non-exempt scripts or pings before opt-in. */}}
   {{ if hugo.IsProduction }}
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     window.gtag = gtag;
 
-    gtag('consent', 'default', {
-      'ad_storage': 'denied',
-      'ad_user_data': 'denied',
-      'ad_personalization': 'denied',
-      'analytics_storage': 'denied',
-      'wait_for_update': 500
-    });
+    var GA_ID = 'G-Z1F4F1TRD0';
+    var gtagLoaded = false;
 
-    if (localStorage.getItem('cing-cookies') === 'accepted') {
-      gtag('consent', 'update', { 'analytics_storage': 'granted' });
-    }
-
-    (function() {
+    window.loadGtag = function() {
+      if (gtagLoaded) return;
+      gtagLoaded = true;
       var s = document.createElement('script');
       s.async = true;
-      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-Z1F4F1TRD0';
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
       document.head.appendChild(s);
-    })();
-    gtag('js', new Date());
-    gtag('config', 'G-Z1F4F1TRD0');
+      gtag('js', new Date());
+      gtag('config', GA_ID);
+    };
+
+    if (localStorage.getItem('cing-cookies') === 'accepted') {
+      window.loadGtag();
+    }
   </script>
   {{ end }}
   <title>{{ if .IsHome }}CING — Independent Councillors for Cornwall{{ else }}{{ .Title }} | CING{{ end }}</title>
@@ -247,16 +244,13 @@
       document.getElementById('cookie-accept').addEventListener('click', function() {
         localStorage.setItem('cing-cookies', 'accepted');
         document.getElementById('cookie-banner').classList.add('hidden');
-        if (typeof gtag === 'function') {
-          gtag('consent', 'update', { 'analytics_storage': 'granted' });
+        if (typeof window.loadGtag === 'function') {
+          window.loadGtag();
         }
       });
       document.getElementById('cookie-reject').addEventListener('click', function() {
         localStorage.setItem('cing-cookies', 'rejected');
         document.getElementById('cookie-banner').classList.add('hidden');
-        if (typeof gtag === 'function') {
-          gtag('consent', 'update', { 'analytics_storage': 'denied' });
-        }
       });
     })();
   </script>
