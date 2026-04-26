@@ -1,0 +1,51 @@
+{{ define "main" }}
+
+<div class="pt-32 pb-20">
+  {{/* ============================================
+        EDITORIAL HEADER — 404 announcement
+       ============================================ */}}
+  <header class="max-w-screen-2xl mx-auto px-6 lg:px-8 mb-12">
+    <div class="flex flex-col md:flex-row gap-12 items-end">
+      <div class="max-w-3xl">
+        <span class="font-label text-tertiary uppercase tracking-widest text-sm font-bold block mb-4">404 — Not Found</span>
+        <h1 class="font-headline text-4xl md:text-6xl lg:text-8xl font-extrabold tracking-tight text-primary leading-[0.9]">
+          This page has<br/>wandered off<br/><span class="text-tertiary">the map.</span>
+        </h1>
+      </div>
+      <div class="pb-4">
+        <p class="text-on-surface-variant max-w-md font-body leading-relaxed text-lg">
+          The link may be old, or the page may have moved. Try one of these instead.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  {{/* ============================================
+        THREE CTAs — home, news, councillors
+       ============================================ */}}
+  <section class="max-w-screen-2xl mx-auto px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+    <a href="{{ "/" | relURL }}" class="bg-primary text-white p-8 rounded-xl flex flex-col justify-between min-h-[180px] hover:bg-primary-container transition-colors group">
+      <span class="material-symbols-outlined text-tertiary-fixed text-4xl">home</span>
+      <div>
+        <h2 class="font-headline font-bold text-2xl mb-1">Home</h2>
+        <p class="text-on-primary-container text-sm">Back to the front page.</p>
+      </div>
+    </a>
+    <a href="{{ "/news/" | relURL }}" class="bg-surface-container-lowest editorial-shadow p-8 rounded-xl flex flex-col justify-between min-h-[180px] hover:bg-surface-container transition-colors">
+      <span class="material-symbols-outlined text-primary text-4xl">newspaper</span>
+      <div>
+        <h2 class="font-headline font-bold text-2xl text-primary mb-1">Latest News</h2>
+        <p class="text-on-surface-variant text-sm">What CING councillors are working on.</p>
+      </div>
+    </a>
+    <a href="{{ "/councillors/" | relURL }}" class="bg-tertiary-container p-8 rounded-xl flex flex-col justify-between min-h-[180px] hover:bg-tertiary hover:text-white transition-colors">
+      <span class="material-symbols-outlined text-on-tertiary-container text-4xl">groups</span>
+      <div>
+        <h2 class="font-headline font-bold text-2xl text-on-tertiary-container mb-1">Your Councillors</h2>
+        <p class="text-on-tertiary-container text-sm">Meet the independent voices for Cornwall.</p>
+      </div>
+    </a>
+  </section>
+</div>
+
+{{ end }}
