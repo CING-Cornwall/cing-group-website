@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: planning
-last_updated: "2026-04-26T14:15:32.734Z"
-last_activity: "2026-04-26 — Phase 1 verified PASS and shipped to production (PRs #6, #7 merged)"
+status: executing
+last_updated: "2026-04-26T14:52:14.361Z"
+last_activity: 2026-04-26
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 6
-  completed_plans: 0
-  percent: 0
+  completed_plans: 1
+  percent: 17
 ---
 
 # Project State
@@ -20,16 +20,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-26)
 
 **Core value:** Publish accurate, timely, professional-grade content under the group's name without leaking embargoed material, breaking privacy promises, or misrepresenting any councillor's record.
-**Current focus:** Phase 2 — Operational safety
+**Current focus:** Phase 02 — operational-safety
 
 ## Current Position
 
-Phase: 2 of 4 (Operational safety)
-Plan: 0 of 4 in current phase
-Status: Ready to plan
-Last activity: 2026-04-26 — Phase 1 verified PASS and shipped to production (PRs #6, #7 merged)
+Phase: 02 (operational-safety) — EXECUTING
+Plan: 2 of 4
+Status: Ready to execute
+Last activity: 2026-04-26
 
-Progress: [██▌░░░░░░░] 25% (1 of 4 phases complete)
+Progress: [██░░░░░░░░] 17%
 
 ## Performance Metrics
 
@@ -54,6 +54,7 @@ Progress: [██▌░░░░░░░] 25% (1 of 4 phases complete)
 - Trend: smooth — both plans PASS WITH NITS at plan-check, both verified empirically against `main`
 
 *Updated after each plan completion*
+| Phase 02 P01 | 6m | 3 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -67,6 +68,8 @@ Decisions are logged in PROJECT.md Key Decisions table. Recent decisions affecti
 - Initialization: Bootstrap GSD over the existing brownfield site rather than rebuild
 - Initialization: Organise active requirements by 4 delivery waves rather than 17 micro-phases
 - Pre-init: Branch protection on `main` with `build` required, admin-enforced, 0 approvals — shipped before initialization
+- Phase 2 Plan 01: Cron expressed in UTC with TZ: Europe/London on build env; DST drift accepted for 4x-daily cadence
+- Phase 2 Plan 01: Embargo guard uses md.parts membership check (not substring) to prevent _incoming-prefix bypass
 
 ### Pending Todos
 

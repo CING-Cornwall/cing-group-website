@@ -18,8 +18,10 @@ Requirements for the four-wave remediation programme. Each maps to exactly one p
 ### Embargo & press toolchain
 
 - [ ] **EMBARGO-01**: `scripts/generate_press_pdfs.py` runs without `FileNotFoundError` against the current published press release source paths
-- [ ] **EMBARGO-02**: Embargoed press release drafts never appear on `main` (or in `main`'s git history) before their `publishDate` — drafts live on a separate branch or in `_incoming/` until embargo lifts
-- [ ] **EMBARGO-03**: A scheduled GitHub Actions trigger rebuilds the site at least four times daily so post-dated content publishes when its `publishDate` passes, even without a new commit
+- [x] **EMBARGO-02
+**: Embargoed press release drafts never appear on `main` (or in `main`'s git history) before their `publishDate` — drafts live on a separate branch or in `_incoming/` until embargo lifts
+- [x] **EMBARGO-03
+**: A scheduled GitHub Actions trigger rebuilds the site at least four times daily so post-dated content publishes when its `publishDate` passes, even without a new commit
 
 ### Forms
 
