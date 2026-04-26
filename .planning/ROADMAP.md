@@ -66,12 +66,12 @@ Plans:
   5. `data/councillors.yaml` is validated against a schema in CI; introducing a malformed entry fails the build
   6. Each councillor entry has an `active` boolean; setting `active: false` removes that councillor from `/councillors/` and `/about/` without other edits
   7. `python scripts/generate_press_pdfs.py` runs successfully on a clean checkout where `/usr/share/fonts/...` does not exist
-**Plans:** TBD (estimated 3 plans)
+**Plans:** 3 plans
 
 Plans:
-- [ ] 03-01: Image pipeline (IMG-01, IMG-02, IMG-03)
-- [ ] 03-02: Councillor portrait standardisation + data validation + active flag (IMG-04, DATA-01, DATA-02)
-- [ ] 03-03: Press script reproducibility (BUILD-02)
+- [ ] 03-01-PLAN.md — Image pipeline: assets/ migration + responsive-image partial + 10 templates + CI cache (IMG-01, IMG-02, IMG-03)
+- [ ] 03-02-PLAN.md — Councillor portrait parity (1024×1024) + JSON Schema gate + active flag (IMG-04, DATA-01, DATA-02)
+- [ ] 03-03-PLAN.md — Press script reproducibility: requirements.txt + bundled SIL-OFL fonts + repo-relative paths (BUILD-02)
 
 ### Phase 4: Structural
 **Goal:** Replace the two structural shortcuts (Tailwind Play CDN, hand-maintained councillor data) with build-time and automation-time solutions, and add the CI safety nets that prevent regression on everything shipped in Phases 1-3.
