@@ -5,6 +5,7 @@ publishDate: 2026-04-20T09:00:00+01:00
 category: "Planning & Democracy"
 excerpt: "Cllr Rowland O'Connor has challenged Cornwall Council to demonstrate that its planning system is fair, transparent, and capable of commanding public trust — arguing that parish councils and residents must see their voices genuinely reflected in planning decisions."
 image: "/images/press/planning-public-trust.jpg"
+imageAlt: "A construction site on the edge of a Cornish village"
 pdf: "/documents/press/2026-04-21/planning-public-trust.pdf"
 ---
 

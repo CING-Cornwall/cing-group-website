@@ -3,6 +3,7 @@ title: "Upcoming Community Engagement Events"
 date: 2026-03-15
 category: "Community"
 image: "/images/fishing-village.jpg"
+imageAlt: "A Cornish harbour at dusk with lit-up village houses"
 excerpt: "Join us at upcoming community events across Cornwall to share your views and hear from your local CING councillors."
 ---
 

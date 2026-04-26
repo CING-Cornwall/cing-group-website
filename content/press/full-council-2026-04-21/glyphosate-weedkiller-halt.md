@@ -5,6 +5,7 @@ publishDate: 2026-04-20T09:00:00+01:00
 category: "Environment & Public Health"
 excerpt: "Cornwall Council faces growing backlash over plans to reintroduce glyphosate weedkiller. Cllr Anna Thomason-Kenyon backs calls to halt the rollout, warning of risks to public health, wildlife, and trust."
 image: "/images/press/glyphosate-weedkiller-halt.jpg"
+imageAlt: "A worker spraying weedkiller at a roadside"
 pdf: "/documents/press/2026-04-21/glyphosate-weedkiller-halt.pdf"
 ---
 

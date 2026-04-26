@@ -3,6 +3,7 @@ title: "Spring Council Session: Key Highlights"
 date: 2026-03-20
 category: "Council"
 image: "/images/community-meeting.jpg"
+imageAlt: "Residents reviewing maps around a table at a community meeting"
 excerpt: "A summary of CING's contributions during the spring session of Cornwall Council."
 ---
 
