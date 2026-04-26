@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-last_updated: "2026-04-26T15:05:40.927Z"
+status: verifying
+last_updated: "2026-04-26T15:13:07.880Z"
 last_activity: 2026-04-26
 progress:
   total_phases: 4
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 6
-  completed_plans: 3
-  percent: 50
+  completed_plans: 4
+  percent: 67
 ---
 
 # Project State
@@ -26,10 +26,10 @@ See: .planning/PROJECT.md (updated 2026-04-26)
 
 Phase: 02 (operational-safety) — EXECUTING
 Plan: 4 of 4
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-04-26
 
-Progress: [█████░░░░░] 50%
+Progress: [███████░░░] 67%
 
 ## Performance Metrics
 
@@ -57,6 +57,7 @@ Progress: [█████░░░░░] 50%
 | Phase 02 P01 | 6m | 3 tasks | 1 files |
 | Phase 02-operational-safety P04 | 4 | 2 tasks | 1 files |
 | Phase 02-operational-safety P02 | 8 | 3 tasks | 3 files |
+| Phase 02 P03 | ~50 minutes | 5 tasks | 18 files |
 
 ## Accumulated Context
 
@@ -77,6 +78,9 @@ Decisions are logged in PROJECT.md Key Decisions table. Recent decisions affecti
 - Phase 2 Plan 02: Tasks 1-2 (Formspree dashboard + hugo.toml params) pre-satisfied by commit 4dad5ce; executor proceeded without checkpoint pause despite plan's stale autonomous: false flag
 - Phase 2 Plan 02: get-involved newsletter uses dark-section variant (text-white/90); homepage CTA newsletter uses light-surface variant (text-on-surface-variant); press signup uses light-surface — chosen by reading actual section background classes per PLAN.md rule, contradicting prompt instructions in 2 of 3 cases
 - Phase 2 Plan 02: contact form's formspreeContactId resolves to 'mvzvgdbl' (legacy form repurposed as contact endpoint by maintainer); FORMS-03 satisfied by three distinct values (mvzvgdbl, xaqakgoy, myklvqwe) across the four forms
+- Article hero templates wrap .Params.imageAlt in {{ with }} so missing values render alt="" (decorative) instead of falling back to the title — fulfils CONTEXT D-06.
+- List/index range loops capture imageAlt into $pageImageAlt before entering {{ with .Params.image }} — required because the image with rebinds . to a string.
+- Archetype kept as TOML per PATTERNS §6 option (a); corpus stays YAML.
 
 ### Pending Todos
 
