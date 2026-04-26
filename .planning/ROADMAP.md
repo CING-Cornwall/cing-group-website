@@ -83,12 +83,12 @@ Plans:
   3. Lychee runs on every PR and fails on broken internal links
   4. pa11y-ci runs on every PR against the five canonical URLs with a zero-error budget
   5. Dependabot opens PRs for Hugo and GitHub Actions version bumps automatically
-**Plans:** TBD (estimated 3 plans)
+**Plans:** 3 plans
 
 Plans:
-- [ ] 04-01: Tailwind build pipeline (BUILD-01)
-- [ ] 04-02: Councillor data refresh cron (DATA-03)
-- [ ] 04-03: CI safety nets — link check + a11y scan + dependabot (CI-01, CI-02, BUILD-03)
+- [ ] 04-01-PLAN.md — Tailwind build pipeline: standalone CLI v4.2.4 + @theme tokens + Hugo Pipes fingerprinted CSS (BUILD-01)
+- [ ] 04-02-PLAN.md — Councillor data refresh cron: weekly Mon 06:00 UTC + ruamel.yaml round-trip + reviewable PR (DATA-03; closes Phase 3 WR-01)
+- [ ] 04-03-PLAN.md — CI safety nets: lychee link check + pa11y-ci a11y scan + dependabot weekly Mon 06:30 UTC (CI-01, CI-02, BUILD-03)
 
 ## Progress
 
