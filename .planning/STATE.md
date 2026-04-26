@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: verifying
-last_updated: "2026-04-26T15:13:07.880Z"
-last_activity: 2026-04-26
+status: ready
+last_updated: "2026-04-26T16:00:00.000Z"
+last_activity: "2026-04-26 — Phase 2 shipped to production (PR #9 merged, squashed into 901af9d)"
 progress:
   total_phases: 4
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 6
-  completed_plans: 4
-  percent: 67
+  completed_plans: 6
+  percent: 100
 ---
 
 # Project State
@@ -20,44 +20,53 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-26)
 
 **Core value:** Publish accurate, timely, professional-grade content under the group's name without leaking embargoed material, breaking privacy promises, or misrepresenting any councillor's record.
-**Current focus:** Phase 02 — operational-safety
+**Current focus:** Phase 3 — Trust & performance (ready to plan)
 
 ## Current Position
 
-Phase: 02 (operational-safety) — EXECUTING
-Plan: 4 of 4
-Status: Phase complete — ready for verification
-Last activity: 2026-04-26
+Phase: 02 (operational-safety) — COMPLETE
+Next: 03 (trust-performance) — ready to plan
+Plan: 4 of 4 in Phase 2 (all merged via PR #9)
+Status: Phase 2 shipped; awaiting Phase 3 planning
+Last activity: 2026-04-26 — Phase 2 verified PASS WITH NITS and merged to main
 
-Progress: [███████░░░] 67%
+Progress: [█████░░░░░] 50% (2 of 4 phases complete)
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 2 (Phase 1: 01-01, 01-02)
-- Average duration: ~30 min per plan (planning + execution + verification, single session)
-- Total execution time: ~1 hour
+- Total plans completed: 6 (Phase 1: 01-01, 01-02; Phase 2: 02-01, 02-02, 02-03, 02-04)
+- Average duration: ~17 min per plan (Phase 2 plans averaged 6/4/8/50 min — alt-text plan was the outlier at 50 min due to 18-file scope)
+- Total execution time: Phase 1 ~1 hour; Phase 2 ~70 min execution + verification
 
 **By Phase:**
 
 | Phase | Plans | Status |
 |-------|-------|--------|
-| 1. Privacy & press toolchain | 2/2 | Complete (verified PASS 2026-04-26) |
-| 2. Operational safety | 0/4 | Ready to plan |
-| 3. Trust & performance | 0/3 | Pending Phase 2 |
+| 1. Privacy & press toolchain | 2/2 | Complete (verified PASS 2026-04-26, PRs #6 #7 #8 merged) |
+| 2. Operational safety | 4/4 | Complete (verified PASS WITH NITS 2026-04-26, PR #9 merged squashed → 901af9d) |
+| 3. Trust & performance | 0/3 | Ready to plan |
 | 4. Structural | 0/3 | Pending Phase 3 |
 
 **Recent Trend:**
 
-- Last 2 plans: 01-01 (privacy bundle, 3 commits), 01-02 (press script, 1 commit) — both shipped same session
-- Trend: smooth — both plans PASS WITH NITS at plan-check, both verified empirically against `main`
+- Phase 2 shipped one all-in PR (vs Phase 1's split PRs) because plans 02-02 and 02-03 shared files (`layouts/index.html`, `layouts/get-involved/list.html`, `layouts/press/list.html`); cherry-picking would have produced non-buildable intermediate states.
+- All four Phase 2 plans passed first-attempt verification; one Rule-3 deviation logged in 02-03 (the `with .Params.image` block rebinds `.` to a string, requiring `$pageImageAlt` capture before entering it).
+- Cumulative trend across 6 plans: smooth — every plan landed PASS or PASS WITH NITS at verification, no FAIL, no remedial fix-plans needed.
 
 *Updated after each plan completion*
-| Phase 02 P01 | 6m | 3 tasks | 1 files |
-| Phase 02-operational-safety P04 | 4 | 2 tasks | 1 files |
-| Phase 02-operational-safety P02 | 8 | 3 tasks | 3 files |
-| Phase 02 P03 | ~50 minutes | 5 tasks | 18 files |
+
+**Plan execution log (this milestone):**
+
+| Plan | Duration | Tasks | Files | Notes |
+|------|----------|-------|-------|-------|
+| 01-01 | ~25 min | 3 | (privacy bundle) | shipped via PR #6 |
+| 01-02 | ~10 min | 1 | (press script) | shipped via PR #7 |
+| 02-01 | ~6 min | 3 | 1 | embargo guard + cron schedule |
+| 02-04 | ~4 min | 2 | 1 | branded 404 page |
+| 02-02 | ~8 min | 3 | 3 | forms compliance (tasks 1-2 pre-satisfied by `4dad5ce`) |
+| 02-03 | ~50 min | 5 | 18 | alt-text inversion (largest plan in milestone) |
 
 ## Accumulated Context
 
@@ -109,3 +118,4 @@ See: `.planning/config.json`
 *State initialized: 2026-04-26*
 
 **Planned Phase:** 02 (operational-safety) — 4 plans — 2026-04-26T14:15:32.731Z
+**Shipped Phase:** 02 (operational-safety) — squashed merge `901af9d` (PR #9) — 2026-04-26
