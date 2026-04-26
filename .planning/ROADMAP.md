@@ -14,7 +14,7 @@ Branch protection on `main` (the prerequisite for safely shipping any of this) w
 
 - [x] **Phase 1: Privacy & press toolchain** — Make the privacy claims true and unblock the press release pipeline
 - [ ] **Phase 2: Operational safety** — Embargo safeguards, form compliance, accessibility table-stakes
-- [ ] **Phase 3: Trust & performance** — Image pipeline, councillor data validation, reproducible scripts
+- [x] **Phase 3: Trust & performance** — Image pipeline, councillor data validation, reproducible scripts
 - [ ] **Phase 4: Structural** — Tailwind build pipeline, councillor data automation, CI safety nets
 
 ## Phase Details
@@ -99,7 +99,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 |-------|----------------|--------|-----------|
 | 1. Privacy & press toolchain | 2/2 | Complete | 2026-04-26 |
 | 2. Operational safety | 0/4 | Not started | - |
-| 3. Trust & performance | 3/3 | Plans complete (verifying) | - |
+| 3. Trust & performance | 3/3 | Complete (verified human_needed → approved 2026-04-26) | 2026-04-26 |
 | 4. Structural | 0/3 | Not started | - |
 
 ---

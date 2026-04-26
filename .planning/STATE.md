@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
+status: ready_to_plan
 last_updated: "2026-04-26T18:42:00.000Z"
 last_activity: 2026-04-26 -- Phase 03 all plans complete; running phase verification
 progress:
   total_phases: 4
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 9
   completed_plans: 7
-  percent: 78
+  percent: 50
 ---
 
 # Project State
@@ -24,11 +24,11 @@ See: .planning/PROJECT.md (updated 2026-04-26)
 
 ## Current Position
 
-Phase: 03 (trust-performance) — EXECUTING
+Phase: 4
 Next: 03 (trust-performance) — ready to plan
-Plan: 3 of 3 (all plans complete; phase verification pending)
-Status: Verifying Phase 03
-Last activity: 2026-04-26 -- Phase 03 all plans complete; running phase verification
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-04-26
 
 Progress: [█████░░░░░] 50% (2 of 4 phases complete)
 
@@ -36,9 +36,9 @@ Progress: [█████░░░░░] 50% (2 of 4 phases complete)
 
 **Velocity:**
 
-- Total plans completed: 6 (Phase 1: 01-01, 01-02; Phase 2: 02-01, 02-02, 02-03, 02-04)
-- Average duration: ~17 min per plan (Phase 2 plans averaged 6/4/8/50 min — alt-text plan was the outlier at 50 min due to 18-file scope)
-- Total execution time: Phase 1 ~1 hour; Phase 2 ~70 min execution + verification
+- Total plans completed: 9 (Phase 1: 01-01, 01-02; Phase 2: 02-01..04; Phase 3: 03-01, 03-02, 03-03)
+- Average duration: ~17 min per plan (Phase 3 plans averaged ~14 min: 03-01 35min image pipeline, 03-02 5min portraits+schema+active, 03-03 4min font bundling)
+- Total execution time: Phase 1 ~1 hour; Phase 2 ~70 min; Phase 3 ~45 min wall-clock (Wave 1 parallel: 35min, Wave 2 sequential: 5min, plus verification + review)
 
 **By Phase:**
 
@@ -46,8 +46,8 @@ Progress: [█████░░░░░] 50% (2 of 4 phases complete)
 |-------|-------|--------|
 | 1. Privacy & press toolchain | 2/2 | Complete (verified PASS 2026-04-26, PRs #6 #7 #8 merged) |
 | 2. Operational safety | 4/4 | Complete (verified PASS WITH NITS 2026-04-26, PR #9 merged squashed → 901af9d) |
-| 3. Trust & performance | 0/3 | Ready to plan |
-| 4. Structural | 0/3 | Pending Phase 3 |
+| 3. Trust & performance | 3/3 | Complete (verified human_needed → approved 2026-04-26; HUMAN-UAT.md pending visual checks; SC-1 partial-by-design pending IMG-05 photography procurement) |
+| 4. Structural | 0/3 | Ready to plan |
 
 **Recent Trend:**
 
@@ -67,6 +67,9 @@ Progress: [█████░░░░░] 50% (2 of 4 phases complete)
 | 02-04 | ~4 min | 2 | 1 | branded 404 page |
 | 02-02 | ~8 min | 3 | 3 | forms compliance (tasks 1-2 pre-satisfied by `4dad5ce`) |
 | 02-03 | ~50 min | 5 | 18 | alt-text inversion (largest plan in milestone) |
+| 03-01 | ~35 min | 3 | 14 | image pipeline: 26 images migrated, responsive-image partial, 10 templates rewired, CI cache |
+| 03-03 | ~4 min | 2 | 9 | press script reproducibility: bundled fonts + pinned deps (parallel with 03-01) |
+| 03-02 | ~5 min | 3 | 8 | portrait parity (1024×1024) + JSON Schema CI gate + active flag |
 
 ## Accumulated Context
 

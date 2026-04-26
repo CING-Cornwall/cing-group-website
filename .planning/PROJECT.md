@@ -29,6 +29,11 @@ The site must publish accurate, timely, professional-grade content under the gro
 - ✓ Privacy policy markdown renders all H2 sections as actual headings — Phase 1 (PRIVACY-02)
 - ✓ `scripts/generate_press_pdfs.py` runnable against published press release source paths — Phase 1 (EMBARGO-01)
 - ✓ `CLAUDE.md` and `INTEGRATIONS.md` describe the post-fix GA loading flow accurately — Phase 1 (PRIVACY-03)
+- ✓ Hugo Pipes responsive image pipeline: `responsive-image.html` partial emits `<picture>` with WebP+JPEG sources, explicit `width`/`height`, `loading="lazy"` outside the LCP slot; 26 images migrated to `assets/`; CI image cache via `actions/cache@v4` — Phase 3 (IMG-01, IMG-02, IMG-03)
+- ✓ Councillor portrait parity at 1024×1024 JPEG q86 with consistent headshot crop bias (Karen Knight flagged for IMG-04 stage 2 — visible upscale softness pending higher-resolution source) — Phase 3 (IMG-04 stage 1)
+- ✓ JSON Schema (Draft-07) gate for `data/councillors.yaml` validated in CI between embargo guard and Hugo build; `additionalProperties: false`, boolean `active` enforced — Phase 3 (DATA-01)
+- ✓ Per-councillor `active` boolean drives a `where ... "active" true` filter in `councillors/list.html` and `about/list.html`; setting `active: false` hides without deletion — Phase 3 (DATA-02)
+- ✓ Press script reproducibility: `scripts/requirements.txt` pins `reportlab==4.4.10` and `Pillow==12.2.0`; SIL-OFL Manrope + Public Sans bundled at `scripts/fonts/`; both scripts run from clean checkouts without `/usr/share/fonts/` — Phase 3 (BUILD-02)
 
 ### Active
 
@@ -41,12 +46,13 @@ The site must publish accurate, timely, professional-grade content under the gro
 - [ ] Branded `layouts/404.html` page — MEDIUM
 - [ ] Alt-text audit (decorative heroes get `alt=""`, news/press images get content-equivalent text) — MEDIUM
 
-**Wave 3 — Trust & performance (next month)**
+**Wave 3 — Trust & performance (shipped 2026-04-26 — see Validated above)**
 
-- [ ] Image optimisation pipeline (Hugo Pipes WebP/AVIF + responsive `srcset` + `loading="lazy"` + explicit `width`/`height`) — HIGH
-- [ ] Standardise councillor portraits at parity (resolution, crop, treatment) — MEDIUM
-- [ ] `councillors.yaml` JSON-Schema validation in CI + `active: true` flag — HIGH (partial)
-- [ ] Press script reproducibility: pinned `requirements.txt`, bundled fonts, relative paths — MEDIUM
+- [x] Image optimisation pipeline — Phase 3 (IMG-01, IMG-02, IMG-03)
+- [x] Councillor portrait parity at 1024×1024 (Stage 1; IMG-04 Stage 2 deferred pending higher-resolution source for Karen Knight)
+- [x] `councillors.yaml` JSON-Schema validation in CI + `active` flag — Phase 3 (DATA-01, DATA-02)
+- [x] Press script reproducibility — Phase 3 (BUILD-02)
+- [ ] IMG-05 (new backlog from 03-01): Procure ≥1920px hero photography to unlock the full responsive srcset curve — pipeline is ready, source assets are 512px placeholders
 
 **Wave 4 — Structural (next quarter)**
 
