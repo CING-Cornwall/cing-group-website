@@ -33,7 +33,8 @@ Requirements for the four-wave remediation programme. Each maps to exactly one p
 
 - [ ] **A11Y-01**: Decorative full-bleed hero images use `alt=""` and `role="presentation"` so screen readers skip them
 - [ ] **A11Y-02**: News and press article hero images use content-equivalent alt text (not duplication of the article title)
-- [ ] **A11Y-03**: A branded `layouts/404.html` page exists with the CING header, footer, and a "back to home / news / councillors" choice
+- [x] **A11Y-03
+**: A branded `layouts/404.html` page exists with the CING header, footer, and a "back to home / news / councillors" choice
 
 ### Images
 
@@ -97,7 +98,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FORMS-03 | Phase 2 | Pending |
 | A11Y-01 | Phase 2 | Pending |
 | A11Y-02 | Phase 2 | Pending |
-| A11Y-03 | Phase 2 | Pending |
+| A11Y-03 | Phase 2 | Complete |
 | IMG-01 | Phase 3 | Pending |
 | IMG-02 | Phase 3 | Pending |
 | IMG-03 | Phase 3 | Pending |

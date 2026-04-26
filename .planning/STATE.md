@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-last_updated: "2026-04-26T14:52:14.361Z"
+last_updated: "2026-04-26T14:58:36.452Z"
 last_activity: 2026-04-26
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 6
-  completed_plans: 1
-  percent: 17
+  completed_plans: 2
+  percent: 33
 ---
 
 # Project State
@@ -25,11 +25,11 @@ See: .planning/PROJECT.md (updated 2026-04-26)
 ## Current Position
 
 Phase: 02 (operational-safety) — EXECUTING
-Plan: 2 of 4
+Plan: 3 of 4
 Status: Ready to execute
 Last activity: 2026-04-26
 
-Progress: [██░░░░░░░░] 17%
+Progress: [███░░░░░░░] 33%
 
 ## Performance Metrics
 
@@ -55,6 +55,7 @@ Progress: [██░░░░░░░░] 17%
 
 *Updated after each plan completion*
 | Phase 02 P01 | 6m | 3 tasks | 1 files |
+| Phase 02-operational-safety P04 | 4 | 2 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -70,6 +71,8 @@ Decisions are logged in PROJECT.md Key Decisions table. Recent decisions affecti
 - Pre-init: Branch protection on `main` with `build` required, admin-enforced, 0 approvals — shipped before initialization
 - Phase 2 Plan 01: Cron expressed in UTC with TZ: Europe/London on build env; DST drift accepted for 4x-daily cadence
 - Phase 2 Plan 01: Embargo guard uses md.parts membership check (not substring) to prevent _incoming-prefix bypass
+- Phase 2 Plan 04: Branded 404 inherits chrome via {{ define "main" }} + baseof.html block — never inline-call header/footer partials in layouts that already use baseof. Pattern reusable for any future Hugo special-path surface.
+- Phase 2 Plan 04: 404 page is content (not analytics) — no hugo.IsProduction gate. Verified by running --environment development build, which produces an equivalent public/404.html.
 
 ### Pending Todos
 

@@ -52,7 +52,7 @@ Plans:
 - [ ] 02-01-PLAN.md — Embargo workflow safeguard: schedule trigger + CI guard for future-dated press (EMBARGO-02, EMBARGO-03)
 - [ ] 02-02-PLAN.md — Form compliance: honeypot on all four forms + PECR consent on newsletters/press + three-way Formspree endpoint split (FORMS-01, FORMS-02, FORMS-03)
 - [ ] 02-03-PLAN.md — Accessibility: decorative-hero alt inversion + article-hero imageAlt pattern + 8-post backfill (A11Y-01, A11Y-02)
-- [ ] 02-04-PLAN.md — Branded 404 layout: editorial header + three CTAs, inherits CING chrome (A11Y-03)
+- [x] 02-04-PLAN.md — Branded 404 layout: editorial header + three CTAs, inherits CING chrome (A11Y-03)
 
 ### Phase 3: Trust & performance
 **Goal:** Raise the trust signals visitors and search engines use to judge the site — fast, sharp, validated. Image weight comes down by ~80%, councillor data gains a schema gate, the press toolchain becomes reproducible across machines.
