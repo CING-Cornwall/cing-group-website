@@ -87,6 +87,40 @@ jobs:
               sys.exit(1)
           print("Embargo guard: no future-dated press files outside _incoming/.")
           PY
+      - name: Validate councillors.yaml schema
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, sys, pathlib
+          import jsonschema
+          try:
+              import yaml
+          except ImportError:
+              import subprocess
+              subprocess.run([sys.executable, "-m", "pip", "install", "pyyaml"], check=True)
+              import yaml
+
+          schema_path = pathlib.Path("schemas/councillors.schema.json")
+          data_path   = pathlib.Path("data/councillors.yaml")
+
+          with schema_path.open() as f:
+              schema = json.load(f)
+          with data_path.open() as f:
+              data = yaml.safe_load(f)
+
+          validator = jsonschema.Draft7Validator(schema)
+          errors = sorted(validator.iter_errors(data), key=lambda e: list(e.path))
+
+          if not errors:
+              print(f"Schema valid: {data_path}")
+              sys.exit(0)
+
+          print(f"Schema validation FAILED: {data_path}", file=sys.stderr)
+          for err in errors:
+              path = " -> ".join(str(p) for p in err.absolute_path) or "(root)"
+              print(f"  [{path}] {err.message}", file=sys.stderr)
+          sys.exit(1)
+          PY
       - name: Build with Hugo
         env:
           HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
