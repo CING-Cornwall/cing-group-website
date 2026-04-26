@@ -19,10 +19,15 @@
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-0 overflow-hidden rounded-xl bg-surface-container-lowest editorial-shadow">
       <div class="lg:col-span-7 relative h-[300px] lg:h-[600px]">
         {{ with .Params.image }}
-        <img
-          src="{{ . | relURL }}"
-          alt="{{ with $pageImageAlt }}{{ . }}{{ end }}"
-          class="absolute inset-0 w-full h-full object-cover" />
+        {{ $heroSrc := strings.TrimPrefix "/" . }}
+        {{ partial "responsive-image.html" (dict
+          "src"     $heroSrc
+          "alt"     ($pageImageAlt | default "")
+          "sizes"   "100vw"
+          "loading" "eager"
+          "widths"  (slice 320 480 512)
+          "class"   "absolute inset-0 w-full h-full object-cover"
+        ) }}
         {{ else }}
         <div class="absolute inset-0 bg-surface-container-high flex items-center justify-center">
           <span class="material-symbols-outlined text-8xl text-outline-variant">newspaper</span>
@@ -63,10 +68,15 @@
       <a href="{{ .RelPermalink }}" class="block">
         <div class="aspect-[16/10] mb-6 overflow-hidden rounded-lg bg-surface-container-high">
           {{ with .Params.image }}
-          <img
-            src="{{ . | relURL }}"
-            alt="{{ with $pageImageAlt }}{{ . }}{{ end }}"
-            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+          {{ $gridSrc := strings.TrimPrefix "/" . }}
+          {{ partial "responsive-image.html" (dict
+            "src"     $gridSrc
+            "alt"     ($pageImageAlt | default "")
+            "sizes"   "(max-width: 768px) 100vw, 33vw"
+            "loading" "lazy"
+            "widths"  (slice 320 480 512)
+            "class"   "w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          ) }}
           {{ else }}
           <div class="w-full h-full flex items-center justify-center">
             <span class="material-symbols-outlined text-6xl text-outline-variant">article</span>

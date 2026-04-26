@@ -25,7 +25,15 @@
   {{ with .Params.image }}
   <section class="relative w-full mb-12">
     <div class="aspect-[2/1] w-full overflow-hidden">
-      <img src="{{ . | relURL }}" alt="{{ with $.Params.imageAlt }}{{ . }}{{ end }}" class="w-full h-full object-cover" />
+      {{ $pressSrc := strings.TrimPrefix "/" . }}
+      {{ partial "responsive-image.html" (dict
+        "src"     $pressSrc
+        "alt"     ($.Params.imageAlt | default "")
+        "sizes"   "100vw"
+        "loading" "eager"
+        "widths"  (slice 480 768 1024 1280 1600)
+        "class"   "w-full h-full object-cover"
+      ) }}
     </div>
   </section>
   {{ end }}

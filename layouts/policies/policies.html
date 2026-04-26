@@ -3,7 +3,14 @@
 {{/* Hero Section — full-bleed background image */}}
 <header class="relative min-h-[70vh] flex items-center pt-20 overflow-hidden bg-primary">
   <div class="absolute inset-0 z-0">
-    <img alt="" role="presentation" class="w-full h-full object-cover opacity-60 scale-105" src="{{ "/images/cliffside-dusk.jpg" | relURL }}" />
+    {{ partial "responsive-image.html" (dict
+      "src"     "images/cliffside-dusk.jpg"
+      "alt"     ""
+      "sizes"   "100vw"
+      "loading" "eager"
+      "widths"  (slice 320 480 512)
+      "class"   "w-full h-full object-cover opacity-60 scale-105"
+    ) }}
     <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/40 to-transparent"></div>
   </div>
   <div class="relative z-10 max-w-screen-xl mx-auto px-8 w-full">
@@ -55,7 +62,14 @@
               </ul>
             </div>
             <div class="h-64 md:h-full overflow-hidden">
-              <img alt="Sustainable Cornish housing" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="{{ "/images/eco-building.jpg" | relURL }}" />
+              {{ partial "responsive-image.html" (dict
+                "src"     "images/eco-building.jpg"
+                "alt"     "Sustainable Cornish housing"
+                "sizes"   "(max-width: 768px) 100vw, 50vw"
+                "loading" "lazy"
+                "widths"  (slice 320 480 512)
+                "class"   "w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+              ) }}
             </div>
           </div>
         </div>
@@ -69,7 +83,14 @@
               Cornwall's coastline, moorland, rivers, and hedgerows are assets and responsibilities. Any green transition must come with practical, fully costed support — not just targets.
             </p>
           </div>
-          <img alt="Cornish moorland" class="w-full h-48 object-cover rounded-lg shadow-lg" src="{{ "/images/moorland-hills.jpg" | relURL }}" />
+          {{ partial "responsive-image.html" (dict
+            "src"     "images/moorland-hills.jpg"
+            "alt"     "Cornish moorland"
+            "sizes"   "100vw"
+            "loading" "lazy"
+            "widths"  (slice 320 480 512)
+            "class"   "w-full h-48 object-cover rounded-lg shadow-lg"
+          ) }}
         </div>
 
         {{/* Cost of Living */}}
@@ -142,7 +163,14 @@
 
   {{/* Image Divider */}}
   <div class="relative h-64 overflow-hidden">
-    <img alt="Cornish fishing harbour" class="w-full h-full object-cover" src="{{ "/images/harbour-boats.jpg" | relURL }}" />
+    {{ partial "responsive-image.html" (dict
+      "src"     "images/harbour-boats.jpg"
+      "alt"     "Cornish fishing harbour"
+      "sizes"   "100vw"
+      "loading" "lazy"
+      "widths"  (slice 320 480 512)
+      "class"   "w-full h-full object-cover"
+    ) }}
     <div class="absolute inset-0 bg-primary/40 backdrop-blur-[2px]"></div>
   </div>
 
@@ -165,7 +193,14 @@
             </div>
           </div>
           <div class="md:w-1/2 aspect-video rounded-xl overflow-hidden shadow-2xl">
-            <img alt="Cornwall coast" class="w-full h-full object-cover" src="{{ "/images/dramatic-coast.jpg" | relURL }}" />
+            {{ partial "responsive-image.html" (dict
+              "src"     "images/dramatic-coast.jpg"
+              "alt"     "Cornwall coast"
+              "sizes"   "(max-width: 768px) 100vw, 50vw"
+              "loading" "lazy"
+              "widths"  (slice 320 480 512)
+              "class"   "w-full h-full object-cover"
+            ) }}
           </div>
         </div>
 
@@ -177,8 +212,22 @@
               Post-Brexit promises to fishing and farming communities have not been kept. Cornwall's primary industries need practical support, fairer trade deals, and less red tape. Food security is national security — domestic producers deserve better.
             </p>
             <div class="grid grid-cols-2 gap-4">
-              <img alt="Cornish farmland" class="rounded-lg h-32 w-full object-cover" src="{{ "/images/cornish-garden.jpg" | relURL }}" />
-              <img alt="Fishing harbour" class="rounded-lg h-32 w-full object-cover" src="{{ "/images/fishing-village.jpg" | relURL }}" />
+              {{ partial "responsive-image.html" (dict
+                "src"     "images/cornish-garden.jpg"
+                "alt"     "Cornish farmland"
+                "sizes"   "(max-width: 768px) 50vw, 25vw"
+                "loading" "lazy"
+                "widths"  (slice 320 480 512)
+                "class"   "rounded-lg h-32 w-full object-cover"
+              ) }}
+              {{ partial "responsive-image.html" (dict
+                "src"     "images/fishing-village.jpg"
+                "alt"     "Fishing harbour"
+                "sizes"   "(max-width: 768px) 50vw, 25vw"
+                "loading" "lazy"
+                "widths"  (slice 320 480 512)
+                "class"   "rounded-lg h-32 w-full object-cover"
+              ) }}
             </div>
           </div>
           <div class="md:w-1/2">
