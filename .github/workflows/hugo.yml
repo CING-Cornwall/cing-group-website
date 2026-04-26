@@ -1,5 +1,12 @@
 name: Deploy Hugo site to GitHub Pages
 
+# Embargo workflow:
+#   - Drafts live in content/press/_incoming/ (cascade build.render: never).
+#   - The "Embargo guard" step below fails the build if any file outside
+#     _incoming/ has a future publishDate (prevents direct-to-main bypass).
+#   - The schedule: trigger fires four times daily so post-dated press
+#     publishes when its publishDate passes, without a human commit.
+
 on:
   push:
     branches: [main]
