@@ -86,7 +86,7 @@ News posts live in `content/news/` as markdown files with front matter: `title`,
 
 ### Analytics and cookie consent
 
-Google Analytics (`G-Z1F4F1TRD0`) is loaded only in production builds (`hugo.IsProduction`) and only after the user accepts cookies via the consent banner. The consent choice is stored in `localStorage` (key: `cing-cookies`, values: `accepted` or `rejected`). The `loadGtag()` function in `baseof.html` dynamically injects the gtag script. The cookie banner and consent logic are both in `baseof.html`, gated behind `hugo.IsProduction` so local dev is unaffected.
+Google Analytics (`G-Z1F4F1TRD0`) is loaded only in production builds (`hugo.IsProduction`) and only after the user accepts cookies via the consent banner — the `<script src="https://www.googletagmanager.com/gtag/js?...">` tag is not injected at all until consent is granted, so rejecting (or not yet choosing) results in zero requests to `googletagmanager.com` and `google-analytics.com`. The consent choice is stored in `localStorage` (key: `cing-cookies`, values: `accepted` or `rejected`). The `window.loadGtag()` function in `baseof.html` dynamically injects the gtag script and is called from two places: at page load if the stored choice is already `accepted`, and from the cookie banner's Accept button handler. The function is idempotent (a `gtagLoaded` flag prevents double-loading). The cookie banner and consent logic are both in `baseof.html`, gated behind `hugo.IsProduction` so local dev is unaffected.
 
 ### Manifesto
 

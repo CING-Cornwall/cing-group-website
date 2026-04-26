@@ -18,10 +18,9 @@
 
 **Analytics:**
 - **Google Analytics 4 (gtag.js)** - Privacy-aware, consent-gated traffic analytics.
-  - Measurement ID `G-Z1F4F1TRD0`, hard-coded twice in `layouts/_default/baseof.html:29` (script src) and `layouts/_default/baseof.html:33` (`gtag('config', ...)`).
-  - Implementation: Google Consent Mode v2. Default consent state for `ad_storage`, `ad_user_data`, `ad_personalization`, `analytics_storage` is `denied` (`baseof.html:14-20`); upgraded to `granted` for `analytics_storage` only when the user accepts the cookie banner (`baseof.html:22-24`, and again in the banner click handler at `baseof.html:250-252`).
-  - Production-only: entire snippet wrapped in `{{ if hugo.IsProduction }}` (`baseof.html:8` and `baseof.html:35`), so local `hugo server` builds never load gtag.
-  - Script source: `https://www.googletagmanager.com/gtag/js?id=G-Z1F4F1TRD0` injected dynamically (`baseof.html:26-31`).
+  - Measurement ID `G-Z1F4F1TRD0`, declared once as a `GA_ID` constant inside the `window.loadGtag()` function in `layouts/_default/baseof.html` and used both as the `<script>` src parameter and the `gtag('config', ...)` argument.
+  - Implementation: strict script-load gating. The `gtag/js` `<script>` tag is not injected at all until the visitor clicks Accept on the cookie banner — pre-consent (and after Reject) the page makes zero requests to `googletagmanager.com` or `google-analytics.com`. `loadGtag()` is called from two places: at page load if `localStorage.getItem('cing-cookies') === 'accepted'`, and from the cookie banner's Accept handler. A `gtagLoaded` flag makes the function idempotent.
+  - Production-only: entire snippet wrapped in `{{ if hugo.IsProduction }}`, so local `hugo server` builds never load gtag at all.
 
 **Fonts (third-party CDNs):**
 - **Google Fonts (Manrope, Public Sans)** - Headline and body typography.
