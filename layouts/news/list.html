@@ -14,7 +14,6 @@
   {{/* Featured story (first post) in bento layout */}}
   {{ with first 1 $pages }}
   {{ range . }}
-  {{ $pageTitle := .Title }}
   {{ $pageImageAlt := .Params.imageAlt }}
   <section class="mb-24">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-0 overflow-hidden rounded-xl bg-surface-container-lowest editorial-shadow">
@@ -59,7 +58,6 @@
   {{ if $remaining }}
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
     {{ range $remaining }}
-    {{ $pageTitle := .Title }}
     {{ $pageImageAlt := .Params.imageAlt }}
     <article class="group">
       <a href="{{ .RelPermalink }}" class="block">
