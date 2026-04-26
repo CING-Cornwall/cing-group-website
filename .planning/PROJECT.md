@@ -25,17 +25,14 @@ The site must publish accurate, timely, professional-grade content under the gro
 - ✓ Press release branded PDF + hero image generation pipeline (Python/reportlab/Pillow) — existing
 - ✓ Custom domain `www.cingparty.uk` via GitHub Pages CNAME — existing
 - ✓ CI build on every push and pull request to `main`; deploy gated to push events; branch protection enforcing `build` status check — existing (this milestone)
+- ✓ GA `gtag/js` script gated on consent acceptance; rejecting (or no choice) results in zero requests to `googletagmanager.com` / `google-analytics.com` — Phase 1 (PRIVACY-01)
+- ✓ Privacy policy markdown renders all H2 sections as actual headings — Phase 1 (PRIVACY-02)
+- ✓ `scripts/generate_press_pdfs.py` runnable against published press release source paths — Phase 1 (EMBARGO-01)
+- ✓ `CLAUDE.md` and `INTEGRATIONS.md` describe the post-fix GA loading flow accurately — Phase 1 (PRIVACY-03)
 
 ### Active
 
 <!-- Current scope. Drawn from .planning/codebase/CONCERNS.md, organised by Wave. -->
-
-**Wave 1 — Legal & reputation (this week)**
-
-- [ ] Make analytics behaviour match the privacy policy (gate `gtag/js` script injection on consent) — HIGH
-- [ ] Fix malformed `##` headings in `content/privacy/_index.md` — MEDIUM
-- [ ] Repoint `scripts/generate_press_pdfs.py` to live source markdown so PDFs remain regenerable — MEDIUM
-- [ ] Update `CLAUDE.md` to describe the actual GA loading flow (sync with privacy fix) — MEDIUM
 
 **Wave 2 — Operational safety (next 2 weeks)**
 
