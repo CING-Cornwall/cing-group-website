@@ -1,0 +1,41 @@
+{{- /*
+  responsive-image.html
+  Params:
+    src      — asset path relative to assets/, e.g. "images/hero-coastline.jpg" (NO leading slash)
+    alt      — alt text string (pass "" for decorative images; caller is responsible for imageAlt)
+    sizes    — sizes attribute value, e.g. "100vw" or "(max-width: 768px) 100vw, 50vw"
+    loading  — "lazy" or "eager" (default: "lazy")
+    widths   — slice of integer widths, e.g. (slice 320 480 512); default (slice 480 512)
+    class    — optional CSS class string for the <img> element
+*/ -}}
+{{- $img := resources.Get .src -}}
+{{- if $img -}}
+  {{- $loading := .loading | default "lazy" -}}
+  {{- $widths := .widths | default (slice 480 512) -}}
+  {{- $webpSrcset := "" -}}
+  {{- $jpegSrcset := "" -}}
+  {{- $fallback := $img -}}
+  {{- range $widths -}}
+    {{- $w := . -}}
+    {{- $ww := $img.Process (printf "resize %dx webp q80" $w) -}}
+    {{- $wj := $img.Process (printf "resize %dx jpeg q86" $w) -}}
+    {{- $webpSrcset = printf "%s%s %dw, " $webpSrcset $ww.RelPermalink $ww.Width -}}
+    {{- $jpegSrcset = printf "%s%s %dw, " $jpegSrcset $wj.RelPermalink $wj.Width -}}
+    {{- $fallback = $wj -}}
+  {{- end -}}
+<picture>
+  <source type="image/webp"
+    srcset="{{ $webpSrcset | strings.TrimRight ", " }}"
+    sizes="{{ .sizes | default "100vw" }}">
+  <source type="image/jpeg"
+    srcset="{{ $jpegSrcset | strings.TrimRight ", " }}"
+    sizes="{{ .sizes | default "100vw" }}">
+  <img
+    src="{{ $fallback.RelPermalink }}"
+    width="{{ $fallback.Width }}"
+    height="{{ $fallback.Height }}"
+    loading="{{ $loading }}"
+    alt="{{ .alt }}"
+    {{- with .class }} class="{{ . }}"{{ end }}>
+</picture>
+{{- end -}}
