@@ -5,6 +5,7 @@ publishDate: 2026-04-20T09:00:00+01:00
 category: "Funding & Rural Equity"
 excerpt: "Not a single Cornish community has received funding from the £5.8bn \"Pride in Place\" programme. Councillors back a motion demanding urgent action on rural deprivation that national funding formulas systematically overlook."
 image: "/images/press/rural-deprivation-funding.jpg"
+imageAlt: "A quiet lane in a rural Cornish hamlet"
 pdf: "/documents/press/2026-04-21/rural-deprivation-funding.pdf"
 ---
 

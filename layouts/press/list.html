@@ -4,7 +4,7 @@
   {{/* Hero Section — grayscale coastline */}}
   <section class="relative h-[60vh] min-h-[500px] flex items-end overflow-hidden">
     <div class="absolute inset-0 z-0">
-      <img alt="Cornish Coastline" class="w-full h-full object-cover grayscale contrast-125" src="{{ "/images/press-hero-cliffs.jpg" | relURL }}" />
+      <img alt="" role="presentation" class="w-full h-full object-cover grayscale contrast-125" src="{{ "/images/press-hero-cliffs.jpg" | relURL }}" />
       <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/60 to-transparent"></div>
     </div>
     <div class="max-w-7xl mx-auto px-6 lg:px-8 pb-16 relative z-10 w-full">
@@ -144,9 +144,20 @@
         <div class="border-2 border-primary-container p-10 rounded-xl">
           <h3 class="font-headline text-xl font-bold text-primary mb-4 tracking-tight">Stay Informed</h3>
           <p class="text-sm text-on-surface-variant mb-6">Receive our latest statements directly in your inbox.</p>
-          <form class="space-y-4" action="https://formspree.io/f/{{ .Site.Params.formspreeId }}" method="POST">
+          <form class="space-y-4" action="https://formspree.io/f/{{ .Site.Params.formspreePressId }}" method="POST">
             <input type="hidden" name="_subject" value="Press newsletter signup" />
+            {{/* Honeypot — bots fill this; real users never see it */}}
+            <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true" />
             <input class="w-full p-4 bg-surface border-none border-b-2 border-outline-variant focus:border-primary focus:ring-0 text-sm rounded-md" placeholder="Email Address" type="email" name="email" required />
+            {{/* PECR explicit-consent — press contacts only */}}
+            <label class="flex items-start gap-3 text-sm text-on-surface-variant">
+              <input type="checkbox" name="marketing_consent" value="yes" required
+                class="mt-1 shrink-0" />
+              <span>
+                I'm a journalist or press contact and would like to receive CING press releases.
+                See our <a href="{{ "/privacy/" | relURL }}" class="underline">privacy policy</a>.
+              </span>
+            </label>
             <button class="w-full bg-primary text-white py-4 font-black uppercase tracking-widest text-xs hover:bg-primary-container transition-all rounded-md" type="submit">Subscribe</button>
           </form>
         </div>
@@ -172,7 +183,7 @@
         </div>
       </div>
       <div class="hidden lg:block w-96 h-96 relative">
-        <img alt="Granite Texture" class="w-full h-full object-cover rounded-xl opacity-40 mix-blend-overlay" src="{{ "/images/granite-texture.jpg" | relURL }}" />
+        <img alt="" role="presentation" class="w-full h-full object-cover rounded-xl opacity-40 mix-blend-overlay" src="{{ "/images/granite-texture.jpg" | relURL }}" />
         <div class="absolute inset-0 border-[20px] border-white/5 rounded-xl -m-6"></div>
       </div>
     </div>

@@ -18,20 +18,28 @@ Requirements for the four-wave remediation programme. Each maps to exactly one p
 ### Embargo & press toolchain
 
 - [ ] **EMBARGO-01**: `scripts/generate_press_pdfs.py` runs without `FileNotFoundError` against the current published press release source paths
-- [ ] **EMBARGO-02**: Embargoed press release drafts never appear on `main` (or in `main`'s git history) before their `publishDate` — drafts live on a separate branch or in `_incoming/` until embargo lifts
-- [ ] **EMBARGO-03**: A scheduled GitHub Actions trigger rebuilds the site at least four times daily so post-dated content publishes when its `publishDate` passes, even without a new commit
+- [x] **EMBARGO-02
+**: Embargoed press release drafts never appear on `main` (or in `main`'s git history) before their `publishDate` — drafts live on a separate branch or in `_incoming/` until embargo lifts
+- [x] **EMBARGO-03
+**: A scheduled GitHub Actions trigger rebuilds the site at least four times daily so post-dated content publishes when its `publishDate` passes, even without a new commit
 
 ### Forms
 
-- [ ] **FORMS-01**: Every Formspree-backed form on the site includes a hidden `_gotcha` honeypot field
-- [ ] **FORMS-02**: Both newsletter forms include a `<input type="checkbox" required>` GDPR opt-in tickbox with text describing what the user is subscribing to
-- [ ] **FORMS-03**: Contact, newsletter, and press-list submissions route to three separate Formspree endpoints, each ID stored under `params.formspree*Id` in `hugo.toml`
+- [x] **FORMS-01
+**: Every Formspree-backed form on the site includes a hidden `_gotcha` honeypot field
+- [x] **FORMS-02
+**: Both newsletter forms include a `<input type="checkbox" required>` GDPR opt-in tickbox with text describing what the user is subscribing to
+- [x] **FORMS-03
+**: Contact, newsletter, and press-list submissions route to three separate Formspree endpoints, each ID stored under `params.formspree*Id` in `hugo.toml`
 
 ### Accessibility
 
-- [ ] **A11Y-01**: Decorative full-bleed hero images use `alt=""` and `role="presentation"` so screen readers skip them
-- [ ] **A11Y-02**: News and press article hero images use content-equivalent alt text (not duplication of the article title)
-- [ ] **A11Y-03**: A branded `layouts/404.html` page exists with the CING header, footer, and a "back to home / news / councillors" choice
+- [x] **A11Y-01
+**: Decorative full-bleed hero images use `alt=""` and `role="presentation"` so screen readers skip them
+- [x] **A11Y-02
+**: News and press article hero images use content-equivalent alt text (not duplication of the article title)
+- [x] **A11Y-03
+**: A branded `layouts/404.html` page exists with the CING header, footer, and a "back to home / news / councillors" choice
 
 ### Images
 
@@ -95,7 +103,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FORMS-03 | Phase 2 | Pending |
 | A11Y-01 | Phase 2 | Pending |
 | A11Y-02 | Phase 2 | Pending |
-| A11Y-03 | Phase 2 | Pending |
+| A11Y-03 | Phase 2 | Complete |
 | IMG-01 | Phase 3 | Pending |
 | IMG-02 | Phase 3 | Pending |
 | IMG-03 | Phase 3 | Pending |

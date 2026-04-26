@@ -53,7 +53,7 @@
     <div class="aspect-[16/9] overflow-hidden rounded-xl">
       <img
         src="{{ . | relURL }}"
-        alt="{{ $.Title }}"
+        alt="{{ with $.Params.imageAlt }}{{ . }}{{ end }}"
         class="w-full h-full object-cover" />
     </div>
   </div>

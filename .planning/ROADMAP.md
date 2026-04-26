@@ -46,13 +46,13 @@ Plans:
   5. Contact, newsletter, and press-list submissions arrive at three distinct Formspree inboxes
   6. Decorative hero images present `alt=""` to screen readers; news/press article images present content-equivalent alt text
   7. A 404 hit on the production site renders the CING header, footer, and a navigation choice instead of GitHub's default error
-**Plans:** TBD (estimated 4 plans)
+**Plans:** 4 plans
 
 Plans:
-- [ ] 02-01: Embargo workflow safeguard (EMBARGO-02, EMBARGO-03)
-- [ ] 02-02: Form compliance — honeypot, GDPR consent, endpoint split (FORMS-01, FORMS-02, FORMS-03)
-- [ ] 02-03: Accessibility — alt-text audit (A11Y-01, A11Y-02)
-- [ ] 02-04: Branded 404 page (A11Y-03)
+- [ ] 02-01-PLAN.md — Embargo workflow safeguard: schedule trigger + CI guard for future-dated press (EMBARGO-02, EMBARGO-03)
+- [ ] 02-02-PLAN.md — Form compliance: honeypot on all four forms + PECR consent on newsletters/press + three-way Formspree endpoint split (FORMS-01, FORMS-02, FORMS-03)
+- [ ] 02-03-PLAN.md — Accessibility: decorative-hero alt inversion + article-hero imageAlt pattern + 8-post backfill (A11Y-01, A11Y-02)
+- [x] 02-04-PLAN.md — Branded 404 layout: editorial header + three CTAs, inherits CING chrome (A11Y-03)
 
 ### Phase 3: Trust & performance
 **Goal:** Raise the trust signals visitors and search engines use to judge the site — fast, sharp, validated. Image weight comes down by ~80%, councillor data gains a schema gate, the press toolchain becomes reproducible across machines.

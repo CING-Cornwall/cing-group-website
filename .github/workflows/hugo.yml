@@ -1,11 +1,24 @@
 name: Deploy Hugo site to GitHub Pages
 
+# Embargo workflow:
+#   - Drafts live in content/press/_incoming/ (cascade build.render: never).
+#   - The "Embargo guard" step below fails the build if any file outside
+#     _incoming/ has a future publishDate (prevents direct-to-main bypass).
+#   - The schedule: trigger fires four times daily so post-dated press
+#     publishes when its publishDate passes, without a human commit.
+
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    # UK morning press windows: 07:00, 09:00, 12:00, 17:00 Europe/London.
+    # GitHub Actions cron is always UTC; the build env sets TZ: Europe/London
+    # so Hugo's publishDate comparisons read in UK time. DST drift is acceptable
+    # for a 4-times-daily schedule.
+    - cron: "0 7,9,12,17 * * *"
 
 permissions:
   contents: read
@@ -38,6 +51,35 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
+      - name: Embargo guard — fail on future-dated press outside _incoming/
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import datetime, pathlib, re, sys
+          now = datetime.datetime.now(datetime.timezone.utc)
+          root = pathlib.Path("content/press")
+          violations = []
+          for md in root.rglob("*.md"):
+              if "_incoming" in md.parts:
+                  continue
+              text = md.read_text(encoding="utf-8")
+              m = re.search(r"^publishDate:\s*(\S+)", text, re.MULTILINE)
+              if not m:
+                  continue
+              try:
+                  pd = datetime.datetime.fromisoformat(m.group(1).replace("Z", "+00:00"))
+              except ValueError:
+                  continue
+              if pd.tzinfo is None:
+                  pd = pd.replace(tzinfo=datetime.timezone.utc)
+              if pd > now:
+                  violations.append(f"{md}: publishDate {pd.isoformat()} is in the future")
+          if violations:
+              print("Embargo guard failed:", file=sys.stderr)
+              for v in violations: print("  " + v, file=sys.stderr)
+              sys.exit(1)
+          print("Embargo guard: no future-dated press files outside _incoming/.")
+          PY
       - name: Build with Hugo
         env:
           HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
@@ -54,7 +96,7 @@ jobs:
           path: ./public
 
   deploy:
-    if: github.event_name == 'push'
+    if: github.event_name == 'push' || github.event_name == 'schedule'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

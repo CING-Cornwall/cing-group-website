@@ -3,6 +3,7 @@ title: "Welcome to the New CING Website"
 date: 2026-03-27
 category: "Announcement"
 image: "/images/st-pirans-flag.jpg"
+imageAlt: "Saint Piran's flag, the white cross of Cornwall, rippling in the wind"
 excerpt: "We're pleased to launch our new website, making it easier than ever to follow the work of CING councillors on Cornwall Council."
 ---
 

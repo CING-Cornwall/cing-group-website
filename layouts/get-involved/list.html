@@ -24,7 +24,8 @@
     <div class="md:col-span-8 bg-primary rounded-xl overflow-hidden relative min-h-[400px] md:min-h-[500px] flex items-end p-8 md:p-12">
       <img
         src="{{ "/images/cliffside-dusk.jpg" | relURL }}"
-        alt="Cornwall coastline"
+        alt=""
+        role="presentation"
         class="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-overlay" />
       <div class="relative z-10 max-w-2xl">
         <h2 class="text-3xl md:text-4xl font-headline font-bold text-white mb-6">Join CING</h2>
@@ -105,7 +106,9 @@
         Whether you want to join, volunteer, or just ask a question, we would love to hear from you.
       </p>
 
-      <form action="https://formspree.io/f/{{ .Site.Params.formspreeId }}" method="POST" class="space-y-6">
+      <form action="https://formspree.io/f/{{ .Site.Params.formspreeContactId }}" method="POST" class="space-y-6">
+        {{/* Honeypot — bots fill this; real users never see it */}}
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true" />
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
             <label for="name" class="block text-sm font-bold text-primary mb-2">Name</label>
@@ -152,13 +155,26 @@
         <p class="text-lg text-slate-300 font-body mb-10 leading-relaxed">
           Get updates from your CING councillors delivered to your inbox. Community news, council decisions, and ways to get involved.
         </p>
-        <form action="https://formspree.io/f/{{ .Site.Params.formspreeId }}" method="POST" class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
+        <form action="https://formspree.io/f/{{ .Site.Params.formspreeNewsletterId }}" method="POST" class="flex flex-col gap-4 max-w-lg mx-auto">
           <input type="hidden" name="_subject" value="Newsletter signup" />
-          <input type="email" name="email" required placeholder="Your email address"
-            class="flex-grow bg-white/10 border-none focus:ring-2 focus:ring-tertiary rounded-md p-4 text-white placeholder:text-slate-400" />
-          <button type="submit" class="bg-tertiary text-on-tertiary px-8 py-4 rounded-md font-bold hover:bg-tertiary-container transition-colors whitespace-nowrap">
-            Subscribe
-          </button>
+          {{/* Honeypot — bots fill this; real users never see it */}}
+          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <div class="flex flex-col sm:flex-row gap-4">
+            <input type="email" name="email" required placeholder="Your email address"
+              class="flex-grow bg-white/10 border-none focus:ring-2 focus:ring-tertiary rounded-md p-4 text-white placeholder:text-slate-400" />
+            <button type="submit" class="bg-tertiary text-on-tertiary px-8 py-4 rounded-md font-bold hover:bg-tertiary-container transition-colors whitespace-nowrap">
+              Subscribe
+            </button>
+          </div>
+          {{/* PECR explicit-consent — checkbox unticked by default, required to submit */}}
+          <label class="flex items-start gap-3 text-sm text-white/90">
+            <input type="checkbox" name="marketing_consent" value="yes" required
+              class="mt-1 shrink-0 rounded border-white/30 bg-white/10 focus:ring-tertiary" />
+            <span>
+              I agree to receive occasional email updates from CING. You can unsubscribe at any time.
+              See our <a href="{{ "/privacy/" | relURL }}" class="underline text-tertiary-fixed">privacy policy</a>.
+            </span>
+          </label>
         </form>
       </div>
       {{/* Decorative blob */}}

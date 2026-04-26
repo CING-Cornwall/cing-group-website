@@ -5,7 +5,12 @@ copyright = "© 2026 Cornish Independent NonAligned Group. Built for Cornwall."
 
 [params]
   description = "The Cornish Independent NonAligned Group — independent councillors serving Cornwall's unique needs on Cornwall Council."
+  # Formspree endpoints. Three forms in the dashboard, three IDs here.
+  # Legacy single-endpoint id retained as alias until migration completes.
   formspreeId = "mvzvgdbl"
+  formspreeContactId = "mvzvgdbl"
+  formspreeNewsletterId = "xaqakgoy"
+  formspreePressId = "myklvqwe"
   ogImage = "/images/og-default.jpg"
 
 [menus]
