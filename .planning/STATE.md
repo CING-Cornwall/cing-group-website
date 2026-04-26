@@ -5,33 +5,36 @@
 See: .planning/PROJECT.md (updated 2026-04-26)
 
 **Core value:** Publish accurate, timely, professional-grade content under the group's name without leaking embargoed material, breaking privacy promises, or misrepresenting any councillor's record.
-**Current focus:** Phase 1 — Privacy & press toolchain
+**Current focus:** Phase 2 — Operational safety
 
 ## Current Position
 
-Phase: 1 of 4 (Privacy & press toolchain)
-Plan: 0 of 2 in current phase
+Phase: 2 of 4 (Operational safety)
+Plan: 0 of 4 in current phase
 Status: Ready to plan
-Last activity: 2026-04-26 — Project initialized via /gsd-new-project
+Last activity: 2026-04-26 — Phase 1 verified PASS and shipped to production (PRs #6, #7 merged)
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [██▌░░░░░░░] 25% (1 of 4 phases complete)
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 0
-- Average duration: —
-- Total execution time: —
+- Total plans completed: 2 (Phase 1: 01-01, 01-02)
+- Average duration: ~30 min per plan (planning + execution + verification, single session)
+- Total execution time: ~1 hour
 
 **By Phase:**
 
-| Phase | Plans | Total | Avg/Plan |
-|-------|-------|-------|----------|
-| — | — | — | — |
+| Phase | Plans | Status |
+|-------|-------|--------|
+| 1. Privacy & press toolchain | 2/2 | Complete (verified PASS 2026-04-26) |
+| 2. Operational safety | 0/4 | Ready to plan |
+| 3. Trust & performance | 0/3 | Pending Phase 2 |
+| 4. Structural | 0/3 | Pending Phase 3 |
 
 **Recent Trend:**
-- Last 5 plans: —
-- Trend: — (no data yet)
+- Last 2 plans: 01-01 (privacy bundle, 3 commits), 01-02 (press script, 1 commit) — both shipped same session
+- Trend: smooth — both plans PASS WITH NITS at plan-check, both verified empirically against `main`
 
 *Updated after each plan completion*
 
@@ -41,6 +44,9 @@ Progress: [░░░░░░░░░░] 0%
 
 Decisions are logged in PROJECT.md Key Decisions table. Recent decisions affecting current work:
 
+- Phase 1: GA gating uses script-load denial (not Consent Mode v2 default-deny) — required by the "zero requests" success criterion under UK PECR/ICO 2025-2026 guidance
+- Phase 1: Press script repointing kept minimum-change to leave Phase 2's EMBARGO-02 source-of-truth question open
+- Phase 1: Regenerated PDFs deliberately not committed — existing PDFs are the authoritative shipped artefacts
 - Initialization: Bootstrap GSD over the existing brownfield site rather than rebuild
 - Initialization: Organise active requirements by 4 delivery waves rather than 17 micro-phases
 - Pre-init: Branch protection on `main` with `build` required, admin-enforced, 0 approvals — shipped before initialization

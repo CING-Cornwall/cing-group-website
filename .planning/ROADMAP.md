@@ -12,7 +12,7 @@ Branch protection on `main` (the prerequisite for safely shipping any of this) w
 - Integer phases (1, 2, 3, 4): Planned remediation waves
 - Decimal phases (e.g. 2.1) reserved for urgent insertions if they arise
 
-- [ ] **Phase 1: Privacy & press toolchain** — Make the privacy claims true and unblock the press release pipeline
+- [x] **Phase 1: Privacy & press toolchain** — Make the privacy claims true and unblock the press release pipeline
 - [ ] **Phase 2: Operational safety** — Embargo safeguards, form compliance, accessibility table-stakes
 - [ ] **Phase 3: Trust & performance** — Image pipeline, councillor data validation, reproducible scripts
 - [ ] **Phase 4: Structural** — Tailwind build pipeline, councillor data automation, CI safety nets
@@ -97,7 +97,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Privacy & press toolchain | 0/2 | Not started | - |
+| 1. Privacy & press toolchain | 2/2 | Complete | 2026-04-26 |
 | 2. Operational safety | 0/4 | Not started | - |
 | 3. Trust & performance | 0/3 | Not started | - |
 | 4. Structural | 0/3 | Not started | - |

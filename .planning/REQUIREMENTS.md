@@ -84,10 +84,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PRIVACY-01 | Phase 1 | Pending |
-| PRIVACY-02 | Phase 1 | Pending |
-| PRIVACY-03 | Phase 1 | Pending |
-| EMBARGO-01 | Phase 1 | Pending |
+| PRIVACY-01 | Phase 1 | Complete |
+| PRIVACY-02 | Phase 1 | Complete |
+| PRIVACY-03 | Phase 1 | Complete |
+| EMBARGO-01 | Phase 1 | Complete |
 | EMBARGO-02 | Phase 2 | Pending |
 | EMBARGO-03 | Phase 2 | Pending |
 | FORMS-01 | Phase 2 | Pending |
