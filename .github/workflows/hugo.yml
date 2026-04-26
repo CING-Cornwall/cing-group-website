@@ -44,6 +44,35 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
+      - name: Embargo guard — fail on future-dated press outside _incoming/
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import datetime, pathlib, re, sys
+          now = datetime.datetime.now(datetime.timezone.utc)
+          root = pathlib.Path("content/press")
+          violations = []
+          for md in root.rglob("*.md"):
+              if "_incoming" in md.parts:
+                  continue
+              text = md.read_text(encoding="utf-8")
+              m = re.search(r"^publishDate:\s*(\S+)", text, re.MULTILINE)
+              if not m:
+                  continue
+              try:
+                  pd = datetime.datetime.fromisoformat(m.group(1).replace("Z", "+00:00"))
+              except ValueError:
+                  continue
+              if pd.tzinfo is None:
+                  pd = pd.replace(tzinfo=datetime.timezone.utc)
+              if pd > now:
+                  violations.append(f"{md}: publishDate {pd.isoformat()} is in the future")
+          if violations:
+              print("Embargo guard failed:", file=sys.stderr)
+              for v in violations: print("  " + v, file=sys.stderr)
+              sys.exit(1)
+          print("Embargo guard: no future-dated press files outside _incoming/.")
+          PY
       - name: Build with Hugo
         env:
           HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
