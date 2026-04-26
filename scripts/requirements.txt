@@ -1,0 +1,4 @@
+# Pinned dependencies for the CING press toolchain.
+# Verified against PyPI at execution time. Bump via Dependabot once Phase 4 BUILD-03 lands.
+reportlab==4.4.10
+Pillow==12.2.0
