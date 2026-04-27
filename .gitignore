@@ -7,3 +7,6 @@ resources/
 !static/apple-touch-icon.png
 .playwright-mcp/
 .claude/
+
+# Phase 4 BUILD-01 — Tailwind compile output (generated in CI from assets/css/main.css)
+assets/css/compiled.css

@@ -38,6 +38,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       HUGO_VERSION: 0.159.1
+      TAILWIND_VERSION: 4.2.4
+      TAILWIND_SHA256: cabeef049cdeab61a5fa6b65ea28a3e8e53b8a85e58883947868c730fc48bdec
     steps:
       - name: Install Hugo CLI
         run: |
@@ -58,6 +60,19 @@ jobs:
           key: hugo-${{ runner.os }}-${{ hashFiles('assets/**') }}
           restore-keys: |
             hugo-${{ runner.os }}-
+      - name: Install Tailwind CLI (standalone v4 — no Node, no package.json)
+        run: |
+          set -euo pipefail
+          # Pinned version + checksum from RESEARCH.md §04-01. Bump quarterly per docs/MAINTENANCE.md.
+          curl -fsSL -o tailwindcss \
+            "https://github.com/tailwindlabs/tailwindcss/releases/download/v${TAILWIND_VERSION}/tailwindcss-linux-x64"
+          echo "${TAILWIND_SHA256}  tailwindcss" | sha256sum -c -
+          chmod +x tailwindcss
+          sudo mv tailwindcss /usr/local/bin/
+      - name: Compile Tailwind CSS
+        run: |
+          set -euo pipefail
+          tailwindcss -i assets/css/main.css -o assets/css/compiled.css --minify
       - name: Embargo guard — fail on future-dated press outside _incoming/
         run: |
           set -euo pipefail
