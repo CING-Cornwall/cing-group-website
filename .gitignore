@@ -22,3 +22,11 @@ assets/css/compiled.css
 .venv*/
 __pycache__/
 *.pyc
+
+# Beads (bd) issue tracker — local-only working space.
+# Canonical issue specs live in .planning/REQUIREMENTS.md cross-referenced
+# by their bd ID (e.g. cing-938). The Dolt backend keeps history in
+# .beads/dolt/ which is gitignored by Beads itself; the wrapper folder
+# is gitignored here so untracked files don't accumulate.
+.beads/
+AGENTS.md
