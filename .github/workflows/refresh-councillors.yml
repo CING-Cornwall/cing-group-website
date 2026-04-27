@@ -1,0 +1,68 @@
+name: Refresh councillor data
+
+# Phase 4 DATA-03: Weekly cron that scrapes Cornwall Council member pages
+# and opens a PR proposing diffs to data/councillors.yaml. No auto-merge —
+# operator reviews via standard PR flow (D-10: council source is truth).
+
+on:
+  schedule:
+    # Weekly Monday 06:00 UTC (D-11). Cron-collision check (D-26):
+    # - hugo.yml embargo cron earliest = 07:00 UTC (verified hugo.yml:21)
+    # - dependabot runs Mon 06:30 UTC (30-min offset)
+    # 06:00 has 30 minutes of clear runway before dependabot and 60 min
+    # before the first embargo run. No collision.
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          pip install -r scripts/requirements.txt
+
+      - name: Compute ISO week token (D-08 PR title)
+        id: weektoken
+        run: |
+          set -euo pipefail
+          # `date -u +%G-W%V` emits ISO-8601 year + week (e.g. 2026-W17). Used in
+          # the PR title format `data: refresh councillor data (YYYY-Www)` per D-08.
+          WEEK=$(date -u +%G-W%V)
+          echo "week=${WEEK}" >> "$GITHUB_OUTPUT"
+          echo "Computed ISO week token: ${WEEK}"
+
+      - name: Refresh councillor data
+        run: |
+          set -euo pipefail
+          # Writes data/councillors.yaml AND emits .refresh-summary.md (markdown
+          # diff table consumed by the PR body via body-path below — D-08).
+          python scripts/refresh_councillors.py
+
+      - name: Open PR if diff exists
+        uses: peter-evans/create-pull-request@v8
+        with:
+          commit-message: "data: refresh councillor data (${{ steps.weektoken.outputs.week }})"
+          # PR title format mandated by CONTEXT D-08: `data: refresh councillor data (YYYY-Www)`.
+          title: "data: refresh councillor data (${{ steps.weektoken.outputs.week }})"
+          # PR body is the per-councillor markdown diff table emitted by
+          # scripts/refresh_councillors.py → `.refresh-summary.md` (D-08).
+          body-path: .refresh-summary.md
+          branch: data/refresh-councillors-${{ steps.weektoken.outputs.week }}
+          delete-branch: true
+          add-paths: data/councillors.yaml
+          labels: data,automated
