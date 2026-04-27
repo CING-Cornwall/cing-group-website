@@ -85,3 +85,23 @@ pull the latest compatible patch on each run; majors require manual review.
 - `07:00` — Embargo cron earliest fire (`.github/workflows/hugo.yml`)
 
 Operator's Monday review session covers all three within ~30 minutes typically.
+
+### Temporary pa11y-ci ignore list (A11Y-04 carry-forward)
+
+`.pa11yci.json` carries a per-URL ignore list for 9 pre-existing WCAG2AA
+violations the new gate surfaced on first run. The ignores are scoped per-URL
+so they do NOT silence regressions — a NEW contrast issue or missing-name
+issue on `/news/` (no ignores) or on any new URL would still fail CI.
+
+The 9 violations and their planned remediation are tracked as **A11Y-04** in
+`.planning/REQUIREMENTS.md` Backlog (v2). When A11Y-04 ships:
+1. Remove the per-URL `ignore` arrays from `.pa11yci.json` (revert URLs back
+   to plain strings).
+2. Confirm `npx pa11y-ci --config .pa11yci.json` exits 0 against a fresh
+   `hugo --gc --minify` build served on `localhost:8080`.
+3. Mark A11Y-04 complete in `REQUIREMENTS.md`.
+
+Specific codes currently ignored:
+- `WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Fail` (small-text contrast) — `/`
+- `WCAG2AA.Principle1.Guideline1_4.1_4_3.G145.Fail` (large-text contrast) — `/`, `/about/`, `/councillors/`
+- `WCAG2AA.Principle4.Guideline4_1.4_1_2.H91.InputEmail.Name` (input lacks accessible name) — `/`, `/get-involved/`
