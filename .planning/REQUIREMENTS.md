@@ -52,7 +52,8 @@ Requirements for the four-wave remediation programme. Each maps to exactly one p
 
 - [ ] **DATA-01**: `data/councillors.yaml` is validated against a JSON-Schema (or YAML schema) on every PR — schema check fails CI on missing/extra fields or malformed values
 - [ ] **DATA-02**: Each councillor entry in `data/councillors.yaml` carries an `active: true|false` flag; only `active: true` councillors render on the public site
-- [ ] **DATA-03**: Cornwall Council attendance and committee membership are refreshed weekly via a GitHub Actions cron job that opens a PR with the diff (no auto-merge)
+- [x] **DATA-03
+**: Cornwall Council attendance and committee membership are refreshed weekly via a GitHub Actions cron job that opens a PR with the diff (no auto-merge)
 
 ### Build & dependencies
 

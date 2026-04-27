@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v4.2.4
 milestone_name: milestone
 status: executing
-last_updated: "2026-04-27T07:04:00.376Z"
+last_updated: "2026-04-27T07:17:15.633Z"
 last_activity: 2026-04-27
 progress:
   total_phases: 4
   completed_phases: 2
   total_plans: 12
-  completed_plans: 8
-  percent: 67
+  completed_plans: 9
+  percent: 75
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-04-26)
 
 Phase: 04 (structural) — EXECUTING
 Next: 03 (trust-performance) — ready to plan
-Plan: 2 of 3
+Plan: 3 of 3
 Status: Ready to execute
 Last activity: 2026-04-27
 
-Progress: [███████░░░] 67%
+Progress: [████████░░] 75%
 
 ## Performance Metrics
 
@@ -71,6 +71,7 @@ Progress: [███████░░░] 67%
 | 03-03 | ~4 min | 2 | 9 | press script reproducibility: bundled fonts + pinned deps (parallel with 03-01) |
 | 03-02 | ~5 min | 3 | 8 | portrait parity (1024×1024) + JSON Schema CI gate + active flag |
 | Phase 04 P01 | 5min | 8 tasks | 8 files |
+| Phase 04-structural P02 | 8min | 5 tasks | 13 files |
 
 ## Accumulated Context
 
@@ -96,6 +97,10 @@ Decisions are logged in PROJECT.md Key Decisions table. Recent decisions affecti
 - Archetype kept as TOML per PATTERNS §6 option (a); corpus stays YAML.
 - Phase 4 BUILD-01: Tailwind v4.2.4 standalone binary in CI (SHA-pinned cabeef04...bdec); Hugo Pipes serves fingerprinted /css/compiled.<sha>.css with integrity=sha256-... SRI; tokens relocated verbatim to assets/css/theme.css (47 MD3 colours, 3 fonts, 4 radii). No Node introduced.
 - Phase 4 BUILD-01: @tailwindcss/typography deferred to v2 backlog as TYPOGRAPHY-01 — D-04 POC requires visual-baseline diff that auto-mode cannot perform; conservative defer preserves D-03 byte-identity contract.
+- Phase 4 plan 02: Parser uses mgBulletList <ul> + mgExpiredMembershipEntry[A-Z] class filter (NOT <h3>Current appointments> heading) — Cornwall Council uses JS-toggled buttons + class-based hide on expired entries. Without the filter, stale roles like 'Audit Committee (Vice-Chair)' would ship to the public site.
+- Phase 4 plan 02: ruamel.yaml round-trip uses width=4096 + indent(mapping=2, sequence=4, offset=2) — first cron run normalises top-level dash indentation as a one-time formatting PR; subsequent runs are byte-stable and produce no PR if no refreshable values changed (idempotency contract enforced by test_round_trip_is_idempotent).
+- Phase 4 plan 02: Closes Phase 3 review WR-01 in same PR — actions/setup-python@v5 + pip install -r scripts/requirements.txt replaces the inline try/except ImportError + subprocess.run pip install pyyaml shim in hugo.yml. jsonschema and PyYAML now flow from the same pinned-deps file as the press toolchain.
+- Phase 4 plan 02: Task 5 bootstrap (live workflow_dispatch + reviewable PR) deferred to operator per plan's checkpoint protocol — auto-mode does NOT auto-approve production-state operations (real PR creation, real GitHub Actions trigger). Documented in 04-02-SUMMARY.md 'Pending Operator Action'.
 
 ### Pending Todos
 
