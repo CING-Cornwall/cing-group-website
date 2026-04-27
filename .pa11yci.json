@@ -8,7 +8,10 @@
     },
     "timeout": 30000,
     "wait": 500,
-    "ignore": []
+    "ignore": [],
+    "chromeLaunchConfig": {
+      "args": ["--no-sandbox"]
+    }
   },
   "urls": [
     {
