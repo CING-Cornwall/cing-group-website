@@ -56,7 +56,8 @@ Requirements for the four-wave remediation programme. Each maps to exactly one p
 
 ### Build & dependencies
 
-- [ ] **BUILD-01**: Tailwind CSS is compiled at build time (Hugo Pipes or pre-built static asset) with the Play CDN script removed from `baseof.html`
+- [x] **BUILD-01
+**: Tailwind CSS is compiled at build time (Hugo Pipes or pre-built static asset) with the Play CDN script removed from `baseof.html`
 - [ ] **BUILD-02**: Python scripts in `scripts/` declare dependencies via a pinned `requirements.txt`, bundle their fonts under `scripts/fonts/`, and use repo-relative font paths
 - [ ] **BUILD-03**: A `.github/dependabot.yml` configuration file opens automated PRs for Hugo and GitHub Actions version updates
 
@@ -115,7 +116,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | BUILD-02 | Phase 3 | Pending |
 | DATA-01 | Phase 3 | Pending |
 | DATA-02 | Phase 3 | Pending |
-| BUILD-01 | Phase 4 | Pending |
+| BUILD-01 | Phase 4 | Complete |
 | DATA-03 | Phase 4 | Pending |
 | CI-01 | Phase 4 | Pending |
 | CI-02 | Phase 4 | Pending |

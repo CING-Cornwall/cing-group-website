@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v4.2.4
 milestone_name: milestone
-status: planning
-last_updated: "2026-04-26T22:48:37.888Z"
-last_activity: 2026-04-26
+status: executing
+last_updated: "2026-04-27T07:04:00.376Z"
+last_activity: 2026-04-27
 progress:
   total_phases: 4
   completed_phases: 2
   total_plans: 12
-  completed_plans: 7
-  percent: 58
+  completed_plans: 8
+  percent: 67
 ---
 
 # Project State
@@ -20,17 +20,17 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-26)
 
 **Core value:** Publish accurate, timely, professional-grade content under the group's name without leaking embargoed material, breaking privacy promises, or misrepresenting any councillor's record.
-**Current focus:** Phase 03 — trust-performance
+**Current focus:** Phase 04 — structural
 
 ## Current Position
 
-Phase: 4
+Phase: 04 (structural) — EXECUTING
 Next: 03 (trust-performance) — ready to plan
-Plan: Not started
-Status: Ready to plan
-Last activity: 2026-04-26
+Plan: 2 of 3
+Status: Ready to execute
+Last activity: 2026-04-27
 
-Progress: [█████░░░░░] 50% (2 of 4 phases complete)
+Progress: [███████░░░] 67%
 
 ## Performance Metrics
 
@@ -70,6 +70,7 @@ Progress: [█████░░░░░] 50% (2 of 4 phases complete)
 | 03-01 | ~35 min | 3 | 14 | image pipeline: 26 images migrated, responsive-image partial, 10 templates rewired, CI cache |
 | 03-03 | ~4 min | 2 | 9 | press script reproducibility: bundled fonts + pinned deps (parallel with 03-01) |
 | 03-02 | ~5 min | 3 | 8 | portrait parity (1024×1024) + JSON Schema CI gate + active flag |
+| Phase 04 P01 | 5min | 8 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -93,6 +94,8 @@ Decisions are logged in PROJECT.md Key Decisions table. Recent decisions affecti
 - Article hero templates wrap .Params.imageAlt in {{ with }} so missing values render alt="" (decorative) instead of falling back to the title — fulfils CONTEXT D-06.
 - List/index range loops capture imageAlt into $pageImageAlt before entering {{ with .Params.image }} — required because the image with rebinds . to a string.
 - Archetype kept as TOML per PATTERNS §6 option (a); corpus stays YAML.
+- Phase 4 BUILD-01: Tailwind v4.2.4 standalone binary in CI (SHA-pinned cabeef04...bdec); Hugo Pipes serves fingerprinted /css/compiled.<sha>.css with integrity=sha256-... SRI; tokens relocated verbatim to assets/css/theme.css (47 MD3 colours, 3 fonts, 4 radii). No Node introduced.
+- Phase 4 BUILD-01: @tailwindcss/typography deferred to v2 backlog as TYPOGRAPHY-01 — D-04 POC requires visual-baseline diff that auto-mode cannot perform; conservative defer preserves D-03 byte-identity contract.
 
 ### Pending Todos
 
