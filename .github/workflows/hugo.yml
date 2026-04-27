@@ -152,6 +152,58 @@ jobs:
             --gc \
             --minify \
             --baseURL "https://www.cingparty.uk/"
+
+      - name: Restore lychee cache
+        uses: actions/cache@v4
+        with:
+          path: .lycheecache
+          key: cache-lychee-${{ github.sha }}
+          restore-keys: cache-lychee-
+
+      - name: Link check (internal only — lychee)
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --offline
+            --root-dir ./public
+            --cache
+            --max-cache-age 1d
+            --include-fragments
+            --no-progress
+            ./public
+          fail: true
+
+      - name: Setup Node (a11y job only — ephemeral CI tool, not a project dep)
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install pa11y-ci and http-server (no package.json introduced)
+        run: |
+          set -euo pipefail
+          npm install --no-save pa11y-ci@^4.1.0 http-server@^14
+
+      - name: Run pa11y-ci against built site
+        run: |
+          set -euo pipefail
+          # Serve the built site on localhost:8080 in the background so pa11y/Puppeteer
+          # gets a real HTTP origin (file:// URLs choke on CSS/JS resolution).
+          npx http-server ./public -p 8080 --silent &
+          SERVER_PID=$!
+          # Wait up to 10 seconds for the server to be ready.
+          for i in $(seq 1 20); do
+            if curl -fsSL http://localhost:8080/ > /dev/null 2>&1; then break; fi
+            sleep 0.5
+          done
+          # Run pa11y-ci against the 5 canonical URLs (.pa11yci.json) — zero-error budget.
+          set +e
+          npx pa11y-ci --config .pa11yci.json
+          PA11Y_EXIT=$?
+          set -e
+          # Always stop the server, even on a11y failure.
+          kill $SERVER_PID 2>/dev/null || true
+          exit $PA11Y_EXIT
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
