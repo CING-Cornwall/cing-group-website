@@ -73,6 +73,10 @@ Deferred to a future milestone. Tracked but not in the current roadmap.
 
 - **TAXONOMY-01**: Re-enable Hugo `category` taxonomy and add `layouts/_default/taxonomy.html` + `term.html` to provide `/topics/<slug>/` indexes — triggered when news or press archives exceed ~10 posts each
 
+## Backlog (v2)
+
+- **TYPOGRAPHY-01**: Wire @tailwindcss/typography plugin and audit prose defaults against brand type scale (deferred from Phase 4 BUILD-01 POC, 2026-04-26)
+
 ## Out of Scope
 
 Explicitly excluded — see `PROJECT.md` for full reasoning.
