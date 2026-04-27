@@ -13,9 +13,9 @@ Branch protection on `main` (the prerequisite for safely shipping any of this) w
 - Decimal phases (e.g. 2.1) reserved for urgent insertions if they arise
 
 - [x] **Phase 1: Privacy & press toolchain** — Make the privacy claims true and unblock the press release pipeline
-- [ ] **Phase 2: Operational safety** — Embargo safeguards, form compliance, accessibility table-stakes
-- [ ] **Phase 3: Trust & performance** — Image pipeline, councillor data validation, reproducible scripts
-- [ ] **Phase 4: Structural** — Tailwind build pipeline, councillor data automation, CI safety nets
+- [x] **Phase 2: Operational safety** — Embargo safeguards, form compliance, accessibility table-stakes — complete 2026-04-26 (PR #9, squash-merged as 901af9d)
+- [x] **Phase 3: Trust & performance** — Image pipeline, councillor data validation, reproducible scripts
+- [x] **Phase 4: Structural** — Tailwind build pipeline, councillor data automation, CI safety nets — complete 2026-04-27
 
 ## Phase Details
 
@@ -49,10 +49,10 @@ Plans:
 **Plans:** 4 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — Embargo workflow safeguard: schedule trigger + CI guard for future-dated press (EMBARGO-02, EMBARGO-03)
-- [ ] 02-02-PLAN.md — Form compliance: honeypot on all four forms + PECR consent on newsletters/press + three-way Formspree endpoint split (FORMS-01, FORMS-02, FORMS-03)
-- [ ] 02-03-PLAN.md — Accessibility: decorative-hero alt inversion + article-hero imageAlt pattern + 8-post backfill (A11Y-01, A11Y-02)
-- [x] 02-04-PLAN.md — Branded 404 layout: editorial header + three CTAs, inherits CING chrome (A11Y-03)
+- [x] 02-01-PLAN.md — Embargo workflow safeguard: schedule trigger + CI guard for future-dated press (EMBARGO-02, EMBARGO-03) — complete 2026-04-26 (PR #9)
+- [x] 02-02-PLAN.md — Form compliance: honeypot on all four forms + PECR consent on newsletters/press + three-way Formspree endpoint split (FORMS-01, FORMS-02, FORMS-03) — complete 2026-04-26 (PR #9)
+- [x] 02-03-PLAN.md — Accessibility: decorative-hero alt inversion + article-hero imageAlt pattern + 8-post backfill (A11Y-01, A11Y-02) — complete 2026-04-26 (PR #9)
+- [x] 02-04-PLAN.md — Branded 404 layout: editorial header + three CTAs, inherits CING chrome (A11Y-03) — complete 2026-04-26 (PR #9)
 
 ### Phase 3: Trust & performance
 **Goal:** Raise the trust signals visitors and search engines use to judge the site — fast, sharp, validated. Image weight comes down by ~80%, councillor data gains a schema gate, the press toolchain becomes reproducible across machines.
@@ -66,12 +66,12 @@ Plans:
   5. `data/councillors.yaml` is validated against a schema in CI; introducing a malformed entry fails the build
   6. Each councillor entry has an `active` boolean; setting `active: false` removes that councillor from `/councillors/` and `/about/` without other edits
   7. `python scripts/generate_press_pdfs.py` runs successfully on a clean checkout where `/usr/share/fonts/...` does not exist
-**Plans:** TBD (estimated 3 plans)
+**Plans:** 3 plans
 
 Plans:
-- [ ] 03-01: Image pipeline (IMG-01, IMG-02, IMG-03)
-- [ ] 03-02: Councillor portrait standardisation + data validation + active flag (IMG-04, DATA-01, DATA-02)
-- [ ] 03-03: Press script reproducibility (BUILD-02)
+- [x] 03-01-PLAN.md — Image pipeline: assets/ migration + responsive-image partial + 10 templates + CI cache (IMG-01, IMG-02, IMG-03)
+- [x] 03-02-PLAN.md — Councillor portrait parity (1024×1024) + JSON Schema gate + active flag (IMG-04, DATA-01, DATA-02)
+- [x] 03-03-PLAN.md — Press script reproducibility: requirements.txt + bundled SIL-OFL fonts + repo-relative paths (BUILD-02)
 
 ### Phase 4: Structural
 **Goal:** Replace the two structural shortcuts (Tailwind Play CDN, hand-maintained councillor data) with build-time and automation-time solutions, and add the CI safety nets that prevent regression on everything shipped in Phases 1-3.
@@ -83,12 +83,12 @@ Plans:
   3. Lychee runs on every PR and fails on broken internal links
   4. pa11y-ci runs on every PR against the five canonical URLs with a zero-error budget
   5. Dependabot opens PRs for Hugo and GitHub Actions version bumps automatically
-**Plans:** TBD (estimated 3 plans)
+**Plans:** 3 plans
 
 Plans:
-- [ ] 04-01: Tailwind build pipeline (BUILD-01)
-- [ ] 04-02: Councillor data refresh cron (DATA-03)
-- [ ] 04-03: CI safety nets — link check + a11y scan + dependabot (CI-01, CI-02, BUILD-03)
+- [x] 04-01-PLAN.md — Tailwind build pipeline: standalone CLI v4.2.4 + @theme tokens + Hugo Pipes fingerprinted CSS (BUILD-01) — complete 2026-04-27
+- [x] 04-02-PLAN.md — Councillor data refresh cron: weekly Mon 06:00 UTC + ruamel.yaml round-trip + reviewable PR (DATA-03; closes Phase 3 WR-01) — complete 2026-04-27 (Task 5 bootstrap deferred to operator)
+- [x] 04-03-PLAN.md — CI safety nets: lychee link check + pa11y-ci a11y scan + dependabot weekly Mon 06:30 UTC (CI-01, CI-02, BUILD-03) — complete 2026-04-27 (Task 5 negative-test verification deferred to operator)
 
 ## Progress
 
@@ -98,9 +98,9 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Privacy & press toolchain | 2/2 | Complete | 2026-04-26 |
-| 2. Operational safety | 0/4 | Not started | - |
-| 3. Trust & performance | 0/3 | Not started | - |
-| 4. Structural | 0/3 | Not started | - |
+| 2. Operational safety | 4/4 | Complete (PR #9, squash-merged as 901af9d; ROADMAP boxes reconciled 2026-04-27) | 2026-04-26 |
+| 3. Trust & performance | 3/3 | Complete (verified human_needed → approved 2026-04-26) | 2026-04-26 |
+| 4. Structural | 3/3 | Complete (04-01, 04-02, 04-03 complete 2026-04-27; 04-02 bootstrap + 04-03 negative-test verification pending operator) | 2026-04-27 |
 
 ---
 *Roadmap created: 2026-04-26*

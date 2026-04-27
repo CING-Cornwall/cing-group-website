@@ -1,0 +1,54 @@
+# Phase 4 BUILD-03 — Dependabot config (Hugo NOT tracked: not a real ecosystem
+# in this repo's shape; manual quarterly bump documented in docs/MAINTENANCE.md).
+#
+# Cron-collision check (D-26 / RESEARCH §04-03):
+#   06:00 UTC Mon — DATA-03 cron (.github/workflows/refresh-councillors.yml)
+#   06:30 UTC Mon — dependabot (this file)         ← 30-min offset
+#   07:00 UTC Mon — embargo cron earliest fire (hugo.yml:21)
+#
+# Grouping rationale (D-24): minor+patch grouped per ecosystem (usually
+# safe to merge en bloc); majors stay separate (need review attention).
+# Up to ~4 PRs/week max — keeps the operator's Monday review session focused.
+
+version: 2
+updates:
+  # GitHub Actions (D-21 — required by SC-5)
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:30"
+      timezone: "Etc/UTC"
+    labels:
+      - "dependencies"
+    open-pull-requests-limit: 5
+    groups:
+      github-actions-minor-patch:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+      # Major bumps stay UNGROUPED — Dependabot's default is one PR per
+      # major bump per package, which is what D-24 specifies for review attention.
+
+  # Python pip — scripts/requirements.txt (D-21 — catches Pillow/reportlab/
+  # requests/bs4/ruamel.yaml/jsonschema security advisories)
+  - package-ecosystem: "pip"
+    directory: "/scripts"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:30"
+      timezone: "Etc/UTC"
+    labels:
+      - "dependencies"
+    open-pull-requests-limit: 5
+    groups:
+      pip-minor-patch:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"

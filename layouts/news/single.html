@@ -51,10 +51,15 @@
   {{ with .Params.image }}
   <div class="max-w-4xl mx-auto px-6 lg:px-8 mb-12">
     <div class="aspect-[16/9] overflow-hidden rounded-xl">
-      <img
-        src="{{ . | relURL }}"
-        alt="{{ with $.Params.imageAlt }}{{ . }}{{ end }}"
-        class="w-full h-full object-cover" />
+      {{ $articleSrc := strings.TrimPrefix "/" . }}
+      {{ partial "responsive-image.html" (dict
+        "src"     $articleSrc
+        "alt"     ($.Params.imageAlt | default "")
+        "sizes"   "100vw"
+        "loading" "eager"
+        "widths"  (slice 320 480 512)
+        "class"   "w-full h-full object-cover"
+      ) }}
     </div>
   </div>
   {{ end }}

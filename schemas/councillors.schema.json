@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CING Councillors Roster",
+  "description": "Validates data/councillors.yaml — single source of truth for councillor cards on /councillors/ and /about/.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["name", "role", "division", "photo", "email", "attendance", "bio", "committees", "active"],
+    "additionalProperties": false,
+    "properties": {
+      "name":           { "type": "string",  "minLength": 1, "description": "Display name of the councillor" },
+      "role":           { "type": "string",  "enum": ["Group Leader", "Deputy Leader", "Member"], "description": "Seniority role within CING" },
+      "division":       { "type": "string",  "minLength": 1, "description": "Cornwall Council electoral division" },
+      "photo":          { "type": "string",  "pattern": "^/images/councillors/.+\\.jpg$", "description": "Site-root-absolute path to portrait JPG; Hugo Pipes serves the processed variant" },
+      "email":          { "type": "string",  "pattern": "^cllr\\..+@cornwall\\.gov\\.uk$", "description": "Cornwall Council email address" },
+      "attendance":     { "type": "integer", "minimum": 0, "maximum": 100, "description": "Attendance percentage (0-100)" },
+      "bio":            { "type": "string",  "minLength": 10, "description": "Short biographical paragraph" },
+      "committees":     { "type": "array",   "items": { "type": "string" }, "minItems": 1, "description": "Committee memberships (must have at least one)" },
+      "outside_bodies": { "type": "array",   "items": { "type": "string" }, "description": "External body appointments (optional — Anna currently has none)" },
+      "active":         { "type": "boolean", "description": "Set false to hide councillor from public site without deleting the record. Belt-and-braces: schema enforces boolean type; templates filter via where active true." }
+    }
+  }
+}

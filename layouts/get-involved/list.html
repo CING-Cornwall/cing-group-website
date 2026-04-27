@@ -22,11 +22,14 @@
   <section class="max-w-screen-2xl mx-auto px-6 lg:px-8 grid grid-cols-1 md:grid-cols-12 gap-6">
     {{/* Large card: Join CING */}}
     <div class="md:col-span-8 bg-primary rounded-xl overflow-hidden relative min-h-[400px] md:min-h-[500px] flex items-end p-8 md:p-12">
-      <img
-        src="{{ "/images/cliffside-dusk.jpg" | relURL }}"
-        alt=""
-        role="presentation"
-        class="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-overlay" />
+      {{ partial "responsive-image.html" (dict
+        "src"     "images/cliffside-dusk.jpg"
+        "alt"     ""
+        "sizes"   "100vw"
+        "loading" "lazy"
+        "widths"  (slice 320 480 512)
+        "class"   "absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-overlay"
+      ) }}
       <div class="relative z-10 max-w-2xl">
         <h2 class="text-3xl md:text-4xl font-headline font-bold text-white mb-6">Join CING</h2>
         <p class="text-on-primary-container text-lg mb-8 leading-relaxed">
@@ -93,7 +96,14 @@
         </ul>
       </div>
       <div class="md:w-1/2 rounded-lg overflow-hidden h-64 w-full bg-surface-container-high">
-        <img src="{{ "/images/community-discussion.jpg" | relURL }}" alt="Community members in discussion" class="w-full h-full object-cover" />
+        {{ partial "responsive-image.html" (dict
+          "src"     "images/community-discussion.jpg"
+          "alt"     "Community members in discussion"
+          "sizes"   "(max-width: 768px) 100vw, 50vw"
+          "loading" "lazy"
+          "widths"  (slice 320 480 512)
+          "class"   "w-full h-full object-cover"
+        ) }}
       </div>
     </div>
   </section>

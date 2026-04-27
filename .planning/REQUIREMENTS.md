@@ -52,18 +52,23 @@ Requirements for the four-wave remediation programme. Each maps to exactly one p
 
 - [ ] **DATA-01**: `data/councillors.yaml` is validated against a JSON-Schema (or YAML schema) on every PR — schema check fails CI on missing/extra fields or malformed values
 - [ ] **DATA-02**: Each councillor entry in `data/councillors.yaml` carries an `active: true|false` flag; only `active: true` councillors render on the public site
-- [ ] **DATA-03**: Cornwall Council attendance and committee membership are refreshed weekly via a GitHub Actions cron job that opens a PR with the diff (no auto-merge)
+- [x] **DATA-03
+**: Cornwall Council attendance and committee membership are refreshed weekly via a GitHub Actions cron job that opens a PR with the diff (no auto-merge)
 
 ### Build & dependencies
 
-- [ ] **BUILD-01**: Tailwind CSS is compiled at build time (Hugo Pipes or pre-built static asset) with the Play CDN script removed from `baseof.html`
+- [x] **BUILD-01
+**: Tailwind CSS is compiled at build time (Hugo Pipes or pre-built static asset) with the Play CDN script removed from `baseof.html`
 - [ ] **BUILD-02**: Python scripts in `scripts/` declare dependencies via a pinned `requirements.txt`, bundle their fonts under `scripts/fonts/`, and use repo-relative font paths
-- [ ] **BUILD-03**: A `.github/dependabot.yml` configuration file opens automated PRs for Hugo and GitHub Actions version updates
+- [x] **BUILD-03
+**: A `.github/dependabot.yml` configuration file opens automated PRs for Hugo and GitHub Actions version updates
 
 ### CI safety nets
 
-- [ ] **CI-01**: A link checker (e.g. lychee) runs on every PR against the built `public/` directory and fails CI on any broken internal link
-- [ ] **CI-02**: A pa11y-ci accessibility scan runs on every PR against five canonical URLs (home, about, councillors, news, get-involved) with a zero-error budget
+- [x] **CI-01
+**: A link checker (e.g. lychee) runs on every PR against the built `public/` directory and fails CI on any broken internal link
+- [x] **CI-02
+**: A pa11y-ci accessibility scan runs on every PR against five canonical URLs (home, about, councillors, news, get-involved) with a zero-error budget
 
 ## v2 Requirements
 
@@ -72,6 +77,12 @@ Deferred to a future milestone. Tracked but not in the current roadmap.
 ### Taxonomy
 
 - **TAXONOMY-01**: Re-enable Hugo `category` taxonomy and add `layouts/_default/taxonomy.html` + `term.html` to provide `/topics/<slug>/` indexes — triggered when news or press archives exceed ~10 posts each
+
+## Backlog (v2)
+
+- **TYPOGRAPHY-01**: Wire @tailwindcss/typography plugin and audit prose defaults against brand type scale (deferred from Phase 4 BUILD-01 POC, 2026-04-26)
+- **A11Y-04**: Resolve 9 pre-existing WCAG2AA violations surfaced by the Phase 4 pa11y-ci gate — hero `<span>Local Action.</span>` contrast 2.41:1 (recommend `#00060b` or restyle), email input on `/get-involved/` missing accessible name, plus 6 others across `/`, `/about/`, `/councillors/`. Until resolved the gate will fail every PR; consider a temporary rule-ignore list in `.pa11yci.json` if blocking. Surfaced 2026-04-27 by Phase 4 UAT. (A11Y-01..03 already used by Phase 2.)
+- **DATA-03-WATCH**: After first weekly DATA-03 PR opens, monitor cadence: are PRs landing clean, are diffs reviewable, does the parser need updates as Cornwall Council's HTML evolves? Decide whether `Cornwall Council` itself should be filtered from the committees list (currently every councillor gains it on first run because the council page lists each member's headline body alongside their committees). Surfaced 2026-04-27 by Phase 4 UAT.
 
 ## Out of Scope
 
@@ -111,7 +122,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | BUILD-02 | Phase 3 | Pending |
 | DATA-01 | Phase 3 | Pending |
 | DATA-02 | Phase 3 | Pending |
-| BUILD-01 | Phase 4 | Pending |
+| BUILD-01 | Phase 4 | Complete |
 | DATA-03 | Phase 4 | Pending |
 | CI-01 | Phase 4 | Pending |
 | CI-02 | Phase 4 | Pending |

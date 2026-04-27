@@ -38,10 +38,13 @@ IVORY = (246, 250, 255)          # surface #f6faff
 STONE = (193, 199, 206)          # outline-variant
 
 # ---------- Fonts ----------
-POPPINS_BLACK = "/usr/share/fonts/truetype/google-fonts/Poppins-Bold.ttf"
-POPPINS_MEDIUM = "/usr/share/fonts/truetype/google-fonts/Poppins-Medium.ttf"
-LATO_BOLD = "/usr/share/fonts/truetype/lato/Lato-Bold.ttf"
-LATO_REG = "/usr/share/fonts/truetype/lato/Lato-Regular.ttf"
+# Fonts bundled under scripts/fonts/ (SIL-OFL 1.1).
+# Constant names kept; only the right-hand-side paths change.
+_F = Path(__file__).parent / "fonts"
+POPPINS_BLACK  = str(_F / "Manrope-Bold.ttf")
+POPPINS_MEDIUM = str(_F / "Manrope-Regular.ttf")
+LATO_BOLD      = str(_F / "PublicSans-Bold.ttf")
+LATO_REG       = str(_F / "PublicSans-Regular.ttf")
 
 
 def font(path: str, size: int) -> ImageFont.FreeTypeFont:

@@ -1,0 +1,37 @@
+/* assets/css/main.css
+ * Tailwind v4 entry point. Compiled by the standalone CLI to assets/css/compiled.css
+ * via the GitHub Actions workflow step (no Node, no package.json).
+ *
+ * Plugin status:
+ *   @tailwindcss/forms      — bundled in v4 standalone (PR #15028); REQUIRED (drives form styling).
+ *   typography plugin       — bundled but gated on Task 5 POC; NOT loaded by default.
+ *   container queries          — built into v4 core; no plugin directive needed.
+ */
+
+@import "tailwindcss";
+@import "./theme.css";
+
+@plugin "@tailwindcss/forms";
+
+/* Custom utilities — relocated VERBATIM from layouts/_default/baseof.html lines 176-198 */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+.text-editorial-balance {
+  text-wrap: balance;
+}
+.editorial-shadow {
+  box-shadow: 0 8px 40px rgba(23, 28, 32, 0.04);
+}
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

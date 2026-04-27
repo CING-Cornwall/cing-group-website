@@ -15,6 +15,7 @@
   email: "cllr.rowland.oconnor@cornwall.gov.uk"
   attendance: 90
   bio: "Group Leader of CING. Serving St Columb Major, St Mawgan & St Wenn, Rowland sits on a wide range of scrutiny and governance committees, holding the administration to account on finance, standards, and audit."
+  active: true
 
 - name: "Anna Thomason-Kenyon"
   role: "Deputy Leader"
@@ -28,7 +29,9 @@
   email: "cllr.anna.thomason-kenyon@cornwall.gov.uk"
   attendance: 95
   bio: "Deputy Leader of CING. Representing Constantine, Mabe & Mawnan, Anna brings strong local knowledge to planning and governance committees with a 95% attendance record."
+  active: true
 
+# TODO(IMG-04-stage-2): replace karen-knight.jpg with ≥1024px source when available
 - name: "Karen Knight"
   role: "Member"
   division: "Camborne West & Treswithian"
@@ -42,3 +45,4 @@
   email: "cllr.karen.knight@cornwall.gov.uk"
   attendance: 89
   bio: "Representing Camborne West & Treswithian, Karen serves on five committees with particular focus on licensing, families, and local planning decisions."
+  active: true

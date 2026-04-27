@@ -7,3 +7,18 @@ resources/
 !static/apple-touch-icon.png
 .playwright-mcp/
 .claude/
+
+# Phase 4 BUILD-01 — Tailwind compile output (generated in CI from assets/css/main.css)
+assets/css/compiled.css
+# Tailwind standalone CLI binary, downloaded locally for two-terminal dev workflow
+# (see docs/MAINTENANCE.md). Never committed; CI re-downloads from pinned release.
+/tailwindcss
+
+# Phase 4 DATA-03 — generated build artefacts from scripts/refresh_councillors.py
+# (re-emitted on every cron run; consumed by peter-evans/create-pull-request via body-path)
+.refresh-summary.md
+
+# Python virtual environments + caches (local-dev convenience for scripts/)
+.venv*/
+__pycache__/
+*.pyc

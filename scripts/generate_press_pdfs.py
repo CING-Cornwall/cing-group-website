@@ -50,15 +50,19 @@ ON_SURFACE = HexColor("#171c20")
 ON_SURFACE_VARIANT = HexColor("#41474d")
 
 # ---------- Fonts ----------
-FONT_DIR_POPPINS = Path("/usr/share/fonts/truetype/google-fonts")
-FONT_DIR_LATO = Path("/usr/share/fonts/truetype/lato")
+# Face names kept as-is (Poppins*/Lato) for compatibility with downstream
+# ParagraphStyle / canvas.setFont references; files are now Manrope (Bold/Regular)
+# and Public Sans (Bold/Regular/Italic), both SIL-OFL 1.1, bundled under
+# scripts/fonts/. Do not "tidy" the face-name mismatch without also updating
+# every fontName= reference in this file. See scripts/README.md.
+FONTS = Path(__file__).parent / "fonts"
 
-pdfmetrics.registerFont(TTFont("Poppins-Black", str(FONT_DIR_POPPINS / "Poppins-Bold.ttf")))
-pdfmetrics.registerFont(TTFont("Poppins-Medium", str(FONT_DIR_POPPINS / "Poppins-Medium.ttf")))
-pdfmetrics.registerFont(TTFont("Poppins-Regular", str(FONT_DIR_POPPINS / "Poppins-Regular.ttf")))
-pdfmetrics.registerFont(TTFont("Lato", str(FONT_DIR_LATO / "Lato-Regular.ttf")))
-pdfmetrics.registerFont(TTFont("Lato-Bold", str(FONT_DIR_LATO / "Lato-Bold.ttf")))
-pdfmetrics.registerFont(TTFont("Lato-Italic", str(FONT_DIR_LATO / "Lato-Italic.ttf")))
+pdfmetrics.registerFont(TTFont("Poppins-Black",   str(FONTS / "Manrope-Bold.ttf")))
+pdfmetrics.registerFont(TTFont("Poppins-Medium",  str(FONTS / "Manrope-Regular.ttf")))
+pdfmetrics.registerFont(TTFont("Poppins-Regular", str(FONTS / "Manrope-Regular.ttf")))
+pdfmetrics.registerFont(TTFont("Lato",            str(FONTS / "PublicSans-Regular.ttf")))
+pdfmetrics.registerFont(TTFont("Lato-Bold",       str(FONTS / "PublicSans-Bold.ttf")))
+pdfmetrics.registerFont(TTFont("Lato-Italic",     str(FONTS / "PublicSans-Italic.ttf")))
 
 
 # ---------- Styles ----------

@@ -38,6 +38,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       HUGO_VERSION: 0.159.1
+      TAILWIND_VERSION: 4.2.4
+      TAILWIND_SHA256: cabeef049cdeab61a5fa6b65ea28a3e8e53b8a85e58883947868c730fc48bdec
     steps:
       - name: Install Hugo CLI
         run: |
@@ -51,6 +53,37 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
+      - name: Cache Hugo resources
+        uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}/hugo_cache
+          key: hugo-${{ runner.os }}-${{ hashFiles('assets/**') }}
+          restore-keys: |
+            hugo-${{ runner.os }}-
+      - name: Install Tailwind CLI (standalone v4 — no Node, no package.json)
+        run: |
+          set -euo pipefail
+          # Pinned version + checksum from RESEARCH.md §04-01. Bump quarterly per docs/MAINTENANCE.md.
+          curl -fsSL -o tailwindcss \
+            "https://github.com/tailwindlabs/tailwindcss/releases/download/v${TAILWIND_VERSION}/tailwindcss-linux-x64"
+          echo "${TAILWIND_SHA256}  tailwindcss" | sha256sum -c -
+          chmod +x tailwindcss
+          sudo mv tailwindcss /usr/local/bin/
+      - name: Compile Tailwind CSS
+        run: |
+          set -euo pipefail
+          tailwindcss -i assets/css/main.css -o assets/css/compiled.css --minify
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          pip install -r scripts/requirements.txt
+
       - name: Embargo guard — fail on future-dated press outside _incoming/
         run: |
           set -euo pipefail
@@ -80,6 +113,35 @@ jobs:
               sys.exit(1)
           print("Embargo guard: no future-dated press files outside _incoming/.")
           PY
+      - name: Validate councillors.yaml schema
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, sys, pathlib
+          import jsonschema
+          import yaml   # both installed via scripts/requirements.txt in the previous step
+
+          schema_path = pathlib.Path("schemas/councillors.schema.json")
+          data_path   = pathlib.Path("data/councillors.yaml")
+
+          with schema_path.open() as f:
+              schema = json.load(f)
+          with data_path.open() as f:
+              data = yaml.safe_load(f)
+
+          validator = jsonschema.Draft7Validator(schema)
+          errors = sorted(validator.iter_errors(data), key=lambda e: list(e.path))
+
+          if not errors:
+              print(f"Schema valid: {data_path}")
+              sys.exit(0)
+
+          print(f"Schema validation FAILED: {data_path}", file=sys.stderr)
+          for err in errors:
+              path = " -> ".join(str(p) for p in err.absolute_path) or "(root)"
+              print(f"  [{path}] {err.message}", file=sys.stderr)
+          sys.exit(1)
+          PY
       - name: Build with Hugo
         env:
           HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
@@ -90,6 +152,59 @@ jobs:
             --gc \
             --minify \
             --baseURL "https://www.cingparty.uk/"
+
+      - name: Restore lychee cache
+        uses: actions/cache@v4
+        with:
+          path: .lycheecache
+          key: cache-lychee-${{ github.sha }}
+          restore-keys: cache-lychee-
+
+      - name: Link check (internal only — lychee)
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --offline
+            --root-dir ./public
+            --cache
+            --max-cache-age 1d
+            --include-fragments
+            --index-files index.html
+            --no-progress
+            ./public
+          fail: true
+
+      - name: Setup Node (a11y job only — ephemeral CI tool, not a project dep)
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install pa11y-ci and http-server (no package.json introduced)
+        run: |
+          set -euo pipefail
+          npm install --no-save pa11y-ci@^4.1.0 http-server@^14
+
+      - name: Run pa11y-ci against built site
+        run: |
+          set -euo pipefail
+          # Serve the built site on localhost:8080 in the background so pa11y/Puppeteer
+          # gets a real HTTP origin (file:// URLs choke on CSS/JS resolution).
+          npx http-server ./public -p 8080 --silent &
+          SERVER_PID=$!
+          # Wait up to 10 seconds for the server to be ready.
+          for i in $(seq 1 20); do
+            if curl -fsSL http://localhost:8080/ > /dev/null 2>&1; then break; fi
+            sleep 0.5
+          done
+          # Run pa11y-ci against the 5 canonical URLs (.pa11yci.json) — zero-error budget.
+          set +e
+          npx pa11y-ci --config .pa11yci.json
+          PA11Y_EXIT=$?
+          set -e
+          # Always stop the server, even on a11y failure.
+          kill $SERVER_PID 2>/dev/null || true
+          exit $PA11Y_EXIT
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
