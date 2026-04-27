@@ -250,6 +250,11 @@ def refresh(data_path: Path = DATA_PATH) -> None:
     yaml = YAML(typ="rt")
     yaml.preserve_quotes = True
     yaml.indent(mapping=2, sequence=4, offset=2)
+    # Disable line wrapping — bio strings would otherwise be wrapped at 80 cols
+    # on first run, producing a noisy diff that obscures the actual data
+    # changes. With width=4096 the round-trip becomes idempotent (verified by
+    # tests/test_refresh_councillors.py::test_round_trip_is_idempotent).
+    yaml.width = 4096
 
     with data_path.open("r", encoding="utf-8") as f:
         data = yaml.load(f)
