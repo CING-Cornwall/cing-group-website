@@ -169,6 +169,7 @@ jobs:
             --cache
             --max-cache-age 1d
             --include-fragments
+            --index-files index.html
             --no-progress
             ./public
           fail: true
