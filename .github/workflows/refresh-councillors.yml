@@ -56,6 +56,12 @@ jobs:
       - name: Open PR if diff exists
         uses: peter-evans/create-pull-request@v8
         with:
+          # Use a fine-grained PAT (Contents: write, Pull requests: write — repo-scoped)
+          # instead of GITHUB_TOKEN. Reason: PRs created with GITHUB_TOKEN do NOT trigger
+          # `pull_request` workflow runs (GitHub's anti-loop guard), so the required
+          # `build` status check on `main` would never fire and the PR would be unmergeable.
+          # Using a PAT bypasses the guard so CI runs normally on each weekly cron PR.
+          token: ${{ secrets.PAT_FOR_REFRESH }}
           commit-message: "data: refresh councillor data (${{ steps.weektoken.outputs.week }})"
           # PR title format mandated by CONTEXT D-08: `data: refresh councillor data (YYYY-Www)`.
           title: "data: refresh councillor data (${{ steps.weektoken.outputs.week }})"
