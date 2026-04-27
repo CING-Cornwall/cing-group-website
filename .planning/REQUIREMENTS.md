@@ -81,6 +81,8 @@ Deferred to a future milestone. Tracked but not in the current roadmap.
 ## Backlog (v2)
 
 - **TYPOGRAPHY-01**: Wire @tailwindcss/typography plugin and audit prose defaults against brand type scale (deferred from Phase 4 BUILD-01 POC, 2026-04-26)
+- **A11Y-01**: Resolve 9 pre-existing WCAG2AA violations surfaced by the Phase 4 pa11y-ci gate — hero `<span>Local Action.</span>` contrast 2.41:1 (recommend `#00060b` or restyle), email input on `/get-involved/` missing accessible name, plus 6 others across `/`, `/about/`, `/councillors/`. Until resolved the gate will fail every PR; consider a temporary rule-ignore list in `.pa11yci.json` if blocking. Surfaced 2026-04-27 by Phase 4 UAT.
+- **DATA-03-WATCH**: After first weekly DATA-03 PR opens, monitor cadence: are PRs landing clean, are diffs reviewable, does the parser need updates as Cornwall Council's HTML evolves? Decide whether `Cornwall Council` itself should be filtered from the committees list (currently every councillor gains it on first run because the council page lists each member's headline body alongside their committees). Surfaced 2026-04-27 by Phase 4 UAT.
 
 ## Out of Scope
 
