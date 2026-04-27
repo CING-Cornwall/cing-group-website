@@ -58,3 +58,30 @@ hugo server --baseURL http://localhost:1313/ --disableFastRender
   ecosystem). No manual action needed.
 - **Bundled fonts (`scripts/fonts/*.ttf`)** are SIL-OFL 1.1 vendored copies;
   manual bump only if Manrope or Public Sans ships a face change.
+
+## Phase 4 carry-forward — CI safety net tools
+
+The Phase 4 BUILD-03 plan added Dependabot tracking for `github-actions` and
+`pip` ecosystems. Two CI-only tools are NOT tracked by Dependabot because
+they're consumed via `npm install --no-save` from inside the workflow (no
+`package.json` exists in this repo by design — see CLAUDE.md). They need
+manual review when CI surfaces breakage:
+
+| Tool | Pinned in | Review trigger |
+|------|-----------|----------------|
+| `lycheeverse/lychee-action` | `.github/workflows/hugo.yml` (`@v2` floating major) | If CI fails with "lychee" in the step name and dependabot has bumped the action version |
+| `pa11y-ci` (npm) | `.github/workflows/hugo.yml` (`@^4.1.0`) | If CI fails with "pa11y" in the step name; check https://github.com/pa11y/pa11y-ci/releases |
+| `http-server` (npm) | `.github/workflows/hugo.yml` (`@^14`) | Rare — only relevant if the `npx http-server` step fails to start |
+| `actions/setup-node` | `.github/workflows/hugo.yml` (`@v4` floating major) | Tracked by Dependabot github-actions ecosystem |
+
+**Why pa11y-ci/http-server aren't in dependabot:** They are installed via
+`npm install --no-save` ephemerally in CI; there is no `package.json` for
+Dependabot to read. The floating SemVer caret (`^4.1.0`) lets `npm install`
+pull the latest compatible patch on each run; majors require manual review.
+
+**Cron timing map (Monday UTC):**
+- `06:00` — DATA-03 councillor refresh (`.github/workflows/refresh-councillors.yml`)
+- `06:30` — Dependabot opens its weekly batch (`.github/dependabot.yml`)
+- `07:00` — Embargo cron earliest fire (`.github/workflows/hugo.yml`)
+
+Operator's Monday review session covers all three within ~30 minutes typically.

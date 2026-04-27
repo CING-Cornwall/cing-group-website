@@ -19,7 +19,7 @@ hugo --gc --minify --baseURL "https://www.cingparty.uk/"
 hugo new content/news/my-post-title.md
 ```
 
-Deployment is automatic via GitHub Actions on push to `main`. No npm/Node dependencies — Hugo is the only build tool.
+Deployment is automatic via GitHub Actions on push to `main`. No npm/Node dependencies — Hugo is the only build tool. (Exception: the pa11y-ci CI job uses `actions/setup-node` and `npm install --no-save` ephemerally inside a single workflow step. Node is a CI-only tool, never a project dependency — there is no `package.json` and `git clone && hugo` works on a fresh machine without Node installed.)
 
 ## Architecture
 
