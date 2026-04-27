@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v4.2.4
 milestone_name: milestone
-status: executing
-last_updated: "2026-04-27T07:17:15.633Z"
+status: verifying
+last_updated: "2026-04-27T07:24:46.761Z"
 last_activity: 2026-04-27
 progress:
   total_phases: 4
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 12
-  completed_plans: 9
-  percent: 75
+  completed_plans: 10
+  percent: 83
 ---
 
 # Project State
@@ -27,10 +27,10 @@ See: .planning/PROJECT.md (updated 2026-04-26)
 Phase: 04 (structural) — EXECUTING
 Next: 03 (trust-performance) — ready to plan
 Plan: 3 of 3
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-04-27
 
-Progress: [████████░░] 75%
+Progress: [████████░░] 83%
 
 ## Performance Metrics
 
@@ -72,6 +72,7 @@ Progress: [████████░░] 75%
 | 03-02 | ~5 min | 3 | 8 | portrait parity (1024×1024) + JSON Schema CI gate + active flag |
 | Phase 04 P01 | 5min | 8 tasks | 8 files |
 | Phase 04-structural P02 | 8min | 5 tasks | 13 files |
+| Phase 04-structural P03 | 3min | 4 of 5 (T5 deferred) tasks | 5 files |
 
 ## Accumulated Context
 
@@ -101,6 +102,8 @@ Decisions are logged in PROJECT.md Key Decisions table. Recent decisions affecti
 - Phase 4 plan 02: ruamel.yaml round-trip uses width=4096 + indent(mapping=2, sequence=4, offset=2) — first cron run normalises top-level dash indentation as a one-time formatting PR; subsequent runs are byte-stable and produce no PR if no refreshable values changed (idempotency contract enforced by test_round_trip_is_idempotent).
 - Phase 4 plan 02: Closes Phase 3 review WR-01 in same PR — actions/setup-python@v5 + pip install -r scripts/requirements.txt replaces the inline try/except ImportError + subprocess.run pip install pyyaml shim in hugo.yml. jsonschema and PyYAML now flow from the same pinned-deps file as the press toolchain.
 - Phase 4 plan 02: Task 5 bootstrap (live workflow_dispatch + reviewable PR) deferred to operator per plan's checkpoint protocol — auto-mode does NOT auto-approve production-state operations (real PR creation, real GitHub Actions trigger). Documented in 04-02-SUMMARY.md 'Pending Operator Action'.
+- Phase 4 plan 03 (CI safety nets): Lychee --offline + pa11y-ci WCAG2AA htmlcs against 5 canonical URLs + Dependabot (gha + pip /scripts) Mon 06:30 UTC. CLAUDE.md 'no Node' invariant preserved via npm install --no-save (no package.json). Hugo NOT tracked by Dependabot — manual quarterly bump in MAINTENANCE.md. Cron timing 06:00/06:30/07:00 UTC Mon — no collisions.
+- Phase 4 plan 03 Task 5 (CI gate negative tests, autonomous: false): DEFERRED per checkpoint protocol — running negative tests requires real branches+PRs+CI consumption against the live repo (production-state operation). Same precedent as Plan 04-02 Task 5. Static config inspection confirms fail-on-error wiring (lychee fail: true; pa11y exit $PA11Y_EXIT). First real broken-link/a11y violation in a future PR will exercise the gates.
 
 ### Pending Todos
 

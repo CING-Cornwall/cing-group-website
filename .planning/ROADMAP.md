@@ -15,7 +15,7 @@ Branch protection on `main` (the prerequisite for safely shipping any of this) w
 - [x] **Phase 1: Privacy & press toolchain** — Make the privacy claims true and unblock the press release pipeline
 - [ ] **Phase 2: Operational safety** — Embargo safeguards, form compliance, accessibility table-stakes
 - [x] **Phase 3: Trust & performance** — Image pipeline, councillor data validation, reproducible scripts
-- [ ] **Phase 4: Structural** — Tailwind build pipeline, councillor data automation, CI safety nets
+- [x] **Phase 4: Structural** — Tailwind build pipeline, councillor data automation, CI safety nets — complete 2026-04-27
 
 ## Phase Details
 
@@ -88,7 +88,7 @@ Plans:
 Plans:
 - [x] 04-01-PLAN.md — Tailwind build pipeline: standalone CLI v4.2.4 + @theme tokens + Hugo Pipes fingerprinted CSS (BUILD-01) — complete 2026-04-27
 - [x] 04-02-PLAN.md — Councillor data refresh cron: weekly Mon 06:00 UTC + ruamel.yaml round-trip + reviewable PR (DATA-03; closes Phase 3 WR-01) — complete 2026-04-27 (Task 5 bootstrap deferred to operator)
-- [ ] 04-03-PLAN.md — CI safety nets: lychee link check + pa11y-ci a11y scan + dependabot weekly Mon 06:30 UTC (CI-01, CI-02, BUILD-03)
+- [x] 04-03-PLAN.md — CI safety nets: lychee link check + pa11y-ci a11y scan + dependabot weekly Mon 06:30 UTC (CI-01, CI-02, BUILD-03) — complete 2026-04-27 (Task 5 negative-test verification deferred to operator)
 
 ## Progress
 
@@ -100,7 +100,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | 1. Privacy & press toolchain | 2/2 | Complete | 2026-04-26 |
 | 2. Operational safety | 0/4 | Not started | - |
 | 3. Trust & performance | 3/3 | Complete (verified human_needed → approved 2026-04-26) | 2026-04-26 |
-| 4. Structural | 2/3 | In progress (04-01, 04-02 complete 2026-04-27; 04-02 Task 5 bootstrap pending operator) | - |
+| 4. Structural | 3/3 | Complete (04-01, 04-02, 04-03 complete 2026-04-27; 04-02 bootstrap + 04-03 negative-test verification pending operator) | 2026-04-27 |
 
 ---
 *Roadmap created: 2026-04-26*

@@ -60,12 +60,15 @@ Requirements for the four-wave remediation programme. Each maps to exactly one p
 - [x] **BUILD-01
 **: Tailwind CSS is compiled at build time (Hugo Pipes or pre-built static asset) with the Play CDN script removed from `baseof.html`
 - [ ] **BUILD-02**: Python scripts in `scripts/` declare dependencies via a pinned `requirements.txt`, bundle their fonts under `scripts/fonts/`, and use repo-relative font paths
-- [ ] **BUILD-03**: A `.github/dependabot.yml` configuration file opens automated PRs for Hugo and GitHub Actions version updates
+- [x] **BUILD-03
+**: A `.github/dependabot.yml` configuration file opens automated PRs for Hugo and GitHub Actions version updates
 
 ### CI safety nets
 
-- [ ] **CI-01**: A link checker (e.g. lychee) runs on every PR against the built `public/` directory and fails CI on any broken internal link
-- [ ] **CI-02**: A pa11y-ci accessibility scan runs on every PR against five canonical URLs (home, about, councillors, news, get-involved) with a zero-error budget
+- [x] **CI-01
+**: A link checker (e.g. lychee) runs on every PR against the built `public/` directory and fails CI on any broken internal link
+- [x] **CI-02
+**: A pa11y-ci accessibility scan runs on every PR against five canonical URLs (home, about, councillors, news, get-involved) with a zero-error budget
 
 ## v2 Requirements
 
