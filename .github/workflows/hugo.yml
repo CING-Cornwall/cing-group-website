@@ -25,10 +25,6 @@ permissions:
   pages: write
   id-token: write
 
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
 defaults:
   run:
     shell: bash
@@ -212,6 +208,13 @@ jobs:
 
   deploy:
     if: github.event_name == 'push' || github.event_name == 'schedule'
+    # Pages allows only one concurrent deploy. Scope the lock to this job
+    # (not the whole workflow) so PR builds don't fight each other for the
+    # same group. cancel-in-progress: false so a queued schedule-driven
+    # deploy isn't dropped by a fresh push to main.
+    concurrency:
+      group: pages
+      cancel-in-progress: false
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
