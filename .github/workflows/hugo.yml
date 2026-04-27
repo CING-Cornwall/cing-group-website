@@ -50,7 +50,7 @@ jobs:
         id: pages
         uses: actions/configure-pages@v6
       - name: Cache Hugo resources
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ${{ runner.temp }}/hugo_cache
           key: hugo-${{ runner.os }}-${{ hashFiles('assets/**') }}
@@ -150,7 +150,7 @@ jobs:
             --baseURL "https://www.cingparty.uk/"
 
       - name: Restore lychee cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: .lycheecache
           key: cache-lychee-${{ github.sha }}
