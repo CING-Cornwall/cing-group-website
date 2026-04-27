@@ -73,6 +73,17 @@ jobs:
         run: |
           set -euo pipefail
           tailwindcss -i assets/css/main.css -o assets/css/compiled.css --minify
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          pip install -r scripts/requirements.txt
+
       - name: Embargo guard — fail on future-dated press outside _incoming/
         run: |
           set -euo pipefail
@@ -108,12 +119,7 @@ jobs:
           python3 - <<'PY'
           import json, sys, pathlib
           import jsonschema
-          try:
-              import yaml
-          except ImportError:
-              import subprocess
-              subprocess.run([sys.executable, "-m", "pip", "install", "pyyaml"], check=True)
-              import yaml
+          import yaml   # both installed via scripts/requirements.txt in the previous step
 
           schema_path = pathlib.Path("schemas/councillors.schema.json")
           data_path   = pathlib.Path("data/councillors.yaml")
