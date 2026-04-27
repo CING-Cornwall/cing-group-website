@@ -13,7 +13,7 @@ Branch protection on `main` (the prerequisite for safely shipping any of this) w
 - Decimal phases (e.g. 2.1) reserved for urgent insertions if they arise
 
 - [x] **Phase 1: Privacy & press toolchain** — Make the privacy claims true and unblock the press release pipeline
-- [ ] **Phase 2: Operational safety** — Embargo safeguards, form compliance, accessibility table-stakes
+- [x] **Phase 2: Operational safety** — Embargo safeguards, form compliance, accessibility table-stakes — complete 2026-04-26 (PR #9, squash-merged as 901af9d)
 - [x] **Phase 3: Trust & performance** — Image pipeline, councillor data validation, reproducible scripts
 - [x] **Phase 4: Structural** — Tailwind build pipeline, councillor data automation, CI safety nets — complete 2026-04-27
 
@@ -49,10 +49,10 @@ Plans:
 **Plans:** 4 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — Embargo workflow safeguard: schedule trigger + CI guard for future-dated press (EMBARGO-02, EMBARGO-03)
-- [ ] 02-02-PLAN.md — Form compliance: honeypot on all four forms + PECR consent on newsletters/press + three-way Formspree endpoint split (FORMS-01, FORMS-02, FORMS-03)
-- [ ] 02-03-PLAN.md — Accessibility: decorative-hero alt inversion + article-hero imageAlt pattern + 8-post backfill (A11Y-01, A11Y-02)
-- [x] 02-04-PLAN.md — Branded 404 layout: editorial header + three CTAs, inherits CING chrome (A11Y-03)
+- [x] 02-01-PLAN.md — Embargo workflow safeguard: schedule trigger + CI guard for future-dated press (EMBARGO-02, EMBARGO-03) — complete 2026-04-26 (PR #9)
+- [x] 02-02-PLAN.md — Form compliance: honeypot on all four forms + PECR consent on newsletters/press + three-way Formspree endpoint split (FORMS-01, FORMS-02, FORMS-03) — complete 2026-04-26 (PR #9)
+- [x] 02-03-PLAN.md — Accessibility: decorative-hero alt inversion + article-hero imageAlt pattern + 8-post backfill (A11Y-01, A11Y-02) — complete 2026-04-26 (PR #9)
+- [x] 02-04-PLAN.md — Branded 404 layout: editorial header + three CTAs, inherits CING chrome (A11Y-03) — complete 2026-04-26 (PR #9)
 
 ### Phase 3: Trust & performance
 **Goal:** Raise the trust signals visitors and search engines use to judge the site — fast, sharp, validated. Image weight comes down by ~80%, councillor data gains a schema gate, the press toolchain becomes reproducible across machines.
@@ -98,7 +98,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Privacy & press toolchain | 2/2 | Complete | 2026-04-26 |
-| 2. Operational safety | 0/4 | Not started | - |
+| 2. Operational safety | 4/4 | Complete (PR #9, squash-merged as 901af9d; ROADMAP boxes reconciled 2026-04-27) | 2026-04-26 |
 | 3. Trust & performance | 3/3 | Complete (verified human_needed → approved 2026-04-26) | 2026-04-26 |
 | 4. Structural | 3/3 | Complete (04-01, 04-02, 04-03 complete 2026-04-27; 04-02 bootstrap + 04-03 negative-test verification pending operator) | 2026-04-27 |
 
