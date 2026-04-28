@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from scripts.refresh_councillors import (  # noqa: E402
+    CPW_SLUGS_BY_NAME,
     UIDS_BY_NAME,
     parse_attendance_percentage,
     parse_committees_and_bodies,
@@ -135,6 +136,15 @@ def test_uid_constants_match_data_yaml():
     assert not missing, f"Active councillors without UID mapping: {missing}"
 
 
+def test_cpw_slug_constants_match_data_yaml():
+    """Every active councillor in YAML must have a CPW slug mapping (cing-938)."""
+    yaml = YAML(typ="safe")
+    data = yaml.load(DATA_PATH.read_text(encoding="utf-8"))
+    active_names = {entry["name"] for entry in data if entry.get("active") is True}
+    missing = active_names - set(CPW_SLUGS_BY_NAME.keys())
+    assert not missing, f"Active councillors without CPW slug mapping: {missing}"
+
+
 # ---------- Committee/body parsing ----------
 
 def test_parse_committees_5756_rowland():
@@ -180,6 +190,29 @@ def test_parse_committees_strips_role_suffix():
     assert committees == ["Audit Committee", "Standards Committee", "Plain Committee"], committees
 
 
+def test_parse_committees_filters_cornwall_council():
+    """The headline 'Cornwall Council' entry on a councillor's mgUserInfo
+    page is filtered from the committees list (cing-938). It's not a
+    meaningful 'committee' — it's the body each councillor sits on, which
+    appears in the council site's committee-appointments markup but isn't
+    what the YAML's `committees` field is meant to represent."""
+    html = """
+    <html><body>
+      <h2>Committee appointments</h2>
+      <ul class="mgBulletList">
+        <li><a href="x">Audit Committee</a></li>
+        <li><a href="y">Cornwall Council</a></li>
+        <li><a href="z">Standards Committee</a></li>
+      </ul>
+    </body></html>
+    """
+    committees, _ = parse_committees_and_bodies(html, 0)
+    assert "Cornwall Council" not in committees, (
+        f"'Cornwall Council' must be filtered from committees; got {committees!r}"
+    )
+    assert committees == ["Audit Committee", "Standards Committee"], committees
+
+
 def test_parse_anna_outside_bodies_handling():
     """Anna's fixture has NO 'Appointments to outside bodies' section
     (verified 2026-04-27). The parser must return an empty list (not
@@ -193,21 +226,47 @@ def test_parse_anna_outside_bodies_handling():
     )
 
 
-# ---------- Attendance parsing ----------
+# ---------- Attendance parsing (CPW source — cing-938) ----------
 
-def test_parse_attendance_5756_rowland():
-    html = (FIXTURES / "cornwall_member_5756_attendance.html").read_text(encoding="utf-8")
-    pct = parse_attendance_percentage(html, 5756)
-    assert isinstance(pct, int)
-    assert 0 <= pct <= 100
+def test_parse_attendance_rowland_cpw():
+    """CPW shows 'X% overall attendance' for Rowland — must extract the
+    integer headline figure, not a per-committee or rolling-window number."""
+    html = (FIXTURES / "cpw_rowland_oconnor.html").read_text(encoding="utf-8")
+    pct = parse_attendance_percentage(html, "rowland-oconnor")
+    assert pct == 91, (
+        f"Rowland's CPW headline shows 91% as of fixture capture (2026-04-28); "
+        f"got {pct}"
+    )
 
 
-def test_parse_attendance_6345_karen():
-    """Closes RESEARCH Open Question #4 — Karen's page wasn't directly probed in research."""
-    html = (FIXTURES / "cornwall_member_6345_attendance.html").read_text(encoding="utf-8")
-    pct = parse_attendance_percentage(html, 6345)
-    assert isinstance(pct, int)
-    assert 0 <= pct <= 100
+def test_parse_attendance_anna_cpw():
+    html = (FIXTURES / "cpw_anna_thomason_kenyon.html").read_text(encoding="utf-8")
+    pct = parse_attendance_percentage(html, "anna-thomason-kenyon")
+    assert pct == 95, f"Anna's CPW headline shows 95% as of fixture capture; got {pct}"
+
+
+def test_parse_attendance_karen_cpw():
+    html = (FIXTURES / "cpw_karen_knight.html").read_text(encoding="utf-8")
+    pct = parse_attendance_percentage(html, "karen-knight")
+    assert pct == 89, f"Karen's CPW headline shows 89% as of fixture capture; got {pct}"
+
+
+def test_parse_attendance_picks_overall_not_per_committee():
+    """CPW pages contain BOTH the headline 'X% overall attendance' AND
+    per-committee attendance rates (e.g. 'Audit Committee 3 2 67 %').
+    The parser must anchor on the 'overall attendance' label, not the first
+    percentage in the document, otherwise it would pick a per-committee
+    rate which has no general meaning."""
+    # Synthetic page with a per-committee 67% appearing FIRST in document
+    # order, then the headline 91% later.
+    html = """
+    <html><body>
+      <table><tr><td>Audit Committee</td><td>3</td><td>2</td><td>67%</td></tr></table>
+      <span class="text-positive">91<!-- -->%</span><span class="text-muted">overall attendance</span>
+    </body></html>
+    """
+    pct = parse_attendance_percentage(html, "synthetic")
+    assert pct == 91, f"Parser must pick the 'overall attendance' value (91), not 67; got {pct}"
 
 
 # ---------- Fail-loud contract (D-09) ----------
@@ -218,7 +277,10 @@ def test_fail_loud_on_missing_committees_section():
         parse_committees_and_bodies(html, 9999)
 
 
-def test_fail_loud_on_missing_attendance_row():
-    html = "<html><body><table><tr><td>Other row</td></tr></table></body></html>"
-    with pytest.raises(RuntimeError, match="not found"):
-        parse_attendance_percentage(html, 9999)
+def test_fail_loud_on_missing_overall_attendance_span():
+    """If CPW restructures the headline span (loses the 'overall attendance'
+    label), the parser must raise rather than silently fall back to 0 or to
+    a per-committee rate."""
+    html = "<html><body><p>No CPW headline span here.</p></body></html>"
+    with pytest.raises(RuntimeError, match="overall attendance"):
+        parse_attendance_percentage(html, "missing-slug")

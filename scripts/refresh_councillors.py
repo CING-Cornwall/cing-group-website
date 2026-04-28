@@ -1,14 +1,38 @@
 #!/usr/bin/env python3
-"""Weekly refresh of councillor data from Cornwall Council member pages.
+"""Weekly refresh of councillor data.
 
-Reads `data/councillors.yaml`, scrapes the official mgUserInfo + mgAttendance
-pages on `democracy.cornwall.gov.uk` for each active councillor, and writes
-back ONLY the three refreshable fields (attendance, committees,
-outside_bodies). All other fields are preserved verbatim via a ruamel.yaml
-round-trip that also keeps comments, quoting, and key order intact.
+Hybrid sources (cing-938, 2026-04-28):
 
-Phase 4 DATA-03. Cron schedule: weekly Monday 06:00 UTC (see
-.github/workflows/refresh-councillors.yml).
+  - **Attendance %** comes from Cornwall Political Watch
+    (`cornwallpoliticalwatch.com/councillors/{slug}`). CPW reports the
+    all-time aggregate ("X% overall attendance"), which is what the YAML
+    represents and what the public site shows. The Cornwall Council
+    `mgAttendance.aspx` page only reports a rolling ~6-month window
+    (5/8 = 62% for Rowland on 03/11/2025–28/04/2026 at the time of
+    cing-938) — the wrong figure for a long-term scorecard.
+
+  - **Committees + outside bodies** come from Cornwall Council
+    `mgUserInfo.aspx?UID={uid}`. CPW's per-committee table is
+    "meetings attended", which includes meetings the councillor
+    attended as an observer (e.g. Cabinet) — not their official
+    memberships. The council page is the source-of-truth for memberships,
+    with expired-membership filtering already in place.
+
+  - "Cornwall Council" itself, listed as a committee on the council page
+    headline body, is filtered out — it's not a meaningful "committee".
+
+PRD §6 ("Use CPW data directly on the CING site") motivated this hybrid:
+DATA-03's original plan put council site as source-of-truth for everything,
+which was correct for memberships but wrong for the displayed attendance
+figure. PR #22 (first cron run) made the divergence visible.
+
+Reads `data/councillors.yaml` and writes back ONLY the three refreshable
+fields (attendance, committees, outside_bodies). All other fields are
+preserved verbatim via a ruamel.yaml round-trip that also keeps comments,
+quoting, and key order intact.
+
+Cron schedule: weekly Monday 06:00 UTC
+(see .github/workflows/refresh-councillors.yml).
 
 Failure mode: fail loud (D-09). Any parser miss raises RuntimeError → script
 exits non-zero → GitHub Actions emails the workflow author.
@@ -30,11 +54,27 @@ DATA_PATH = ROOT / "data" / "councillors.yaml"
 
 # ---------- Cornwall Council UIDs (one-time bootstrap, D-13) ----------
 # Verified against democracy.cornwall.gov.uk/mgMemberIndex.aspx 2026-04-26.
+# Used for committees + outside bodies (mgUserInfo.aspx?UID=...).
 UIDS_BY_NAME = {
     "Rowland O'Connor": 5756,
     "Anna Thomason-Kenyon": 6351,
     "Karen Knight": 6345,
 }
+
+# ---------- Cornwall Political Watch slugs (cing-938, 2026-04-28) ----------
+# Used for attendance % (cornwallpoliticalwatch.com/councillors/{slug}).
+# CPW URLs verified 2026-04-28.
+CPW_SLUGS_BY_NAME = {
+    "Rowland O'Connor": "rowland-oconnor",
+    "Anna Thomason-Kenyon": "anna-thomason-kenyon",
+    "Karen Knight": "karen-knight",
+}
+
+# Committee names filtered from the council-page committees list.
+# "Cornwall Council" is the headline body each councillor sits on; it appears
+# in the council's own committee-appointments markup but isn't a "committee"
+# in the colloquial sense the YAML represents.
+_COMMITTEE_FILTER = {"Cornwall Council"}
 
 UA = "CING refresh-bot (+https://www.cingparty.uk/) requests/python"
 HEADERS = {"User-Agent": UA}
@@ -124,11 +164,18 @@ def _extract_appointment_names(ul) -> List[str]:
 
 
 def parse_committees_and_bodies(html: str, uid: int) -> Tuple[List[str], List[str]]:
-    """Pure-function parser — accepts raw HTML. Used by cron AND fixture tests."""
+    """Pure-function parser — accepts raw HTML. Used by cron AND fixture tests.
+
+    Filters _COMMITTEE_FILTER (currently {"Cornwall Council"}) from the
+    committees list — these are headline-body entries on the council site
+    that aren't meaningful committee memberships. Outside bodies are NOT
+    filtered.
+    """
     soup = BeautifulSoup(html, "html.parser")
-    committees = _extract_appointment_names(
+    committees_raw = _extract_appointment_names(
         _find_current_appointments_ul(soup, "Committee appointments")
     )
+    committees = [c for c in committees_raw if c not in _COMMITTEE_FILTER]
     outside_bodies = _extract_appointment_names(
         _find_current_appointments_ul(soup, "Appointments to outside bodies")
     )
@@ -139,22 +186,29 @@ def parse_committees_and_bodies(html: str, uid: int) -> Tuple[List[str], List[st
     return committees, outside_bodies
 
 
-def parse_attendance_percentage(html: str, uid: int) -> int:
-    """Pure-function parser for attendance %."""
-    soup = BeautifulSoup(html, "html.parser")
-    for tr in soup.find_all("tr"):
-        cells = [td.get_text(strip=True) for td in tr.find_all(["td", "th"])]
-        if not cells:
-            continue
-        if "Present as expected" in cells[0]:
-            for cell in cells:
-                m = re.search(r"(\d+)\s*%", cell)
-                if m:
-                    return int(m.group(1))
-    raise RuntimeError(
-        f"UID={uid}: 'Present as expected' attendance row not found — "
-        "page structure may have changed"
-    )
+# CPW renders the headline attendance via React: a span carrying the integer
+# percentage, immediately followed by an empty React comment node, then the
+# `%` literal, then a sibling span carrying the label. Concrete shape:
+#
+#   <span class="... tabular-nums text-...">91<!-- -->%</span>
+#   <span class="text-sm text-muted">overall attendance</span>
+#
+# We anchor on the literal "overall attendance" label (stable user-facing
+# text) and look back to the preceding "<int><!-- -->%</span>" for the value.
+_CPW_ATTENDANCE_RE = re.compile(
+    r'<span[^>]*>(\d+)<!--\s*-->%</span>\s*<span[^>]*>overall attendance</span>'
+)
+
+
+def parse_attendance_percentage(html: str, slug: str) -> int:
+    """Pure-function parser for the all-time attendance % from a CPW page."""
+    m = _CPW_ATTENDANCE_RE.search(html)
+    if m is None:
+        raise RuntimeError(
+            f"slug={slug}: 'overall attendance' span not found in CPW page — "
+            "page structure may have changed"
+        )
+    return int(m.group(1))
 
 
 # ---------- HTTP fetch wrappers ----------
@@ -166,11 +220,11 @@ def fetch_committees_and_bodies(uid: int) -> Tuple[List[str], List[str]]:
     return parse_committees_and_bodies(resp.text, uid)
 
 
-def fetch_attendance_percentage(uid: int) -> int:
-    url = f"https://democracy.cornwall.gov.uk/mgAttendance.aspx?UID={uid}"
+def fetch_attendance_percentage(slug: str) -> int:
+    url = f"https://cornwallpoliticalwatch.com/councillors/{slug}"
     resp = requests.get(url, headers=HEADERS, timeout=TIMEOUT)
     resp.raise_for_status()
-    return parse_attendance_percentage(resp.text, uid)
+    return parse_attendance_percentage(resp.text, slug)
 
 
 # ---------- Round-trip refresh ----------
@@ -230,11 +284,12 @@ def write_summary(rows, summary_path: Path = SUMMARY_PATH) -> None:
         "",
         "### How to review",
         "1. Read the diff in `data/councillors.yaml`.",
-        "2. For any unexpected change, open the councillor's mgUserInfo / mgAttendance page and confirm the council site agrees.",
-        "3. If the diff matches council source, approve and merge — D-10 (\"council source is truth\") permits acceptance once verified.",
-        "4. If the diff is wrong (e.g. council page reporting lag, or HTML structure changed), close the PR; either wait for next week or investigate `scripts/refresh_councillors.py`.",
+        "2. For any unexpected attendance change, open `cornwallpoliticalwatch.com/councillors/{slug}` and confirm CPW agrees.",
+        "3. For any unexpected committee or outside-body change, open `democracy.cornwall.gov.uk/mgUserInfo.aspx?UID={uid}` and confirm the council site agrees.",
+        "4. If the diff matches both sources, approve and merge.",
+        "5. If the diff is wrong (e.g. CPW reporting lag, or HTML structure changed on either site), close the PR; either wait for next week or investigate `scripts/refresh_councillors.py`.",
         "",
-        "**No auto-merge** — public political site, regression visibility matters (CONTEXT D-10).",
+        "**No auto-merge** — public political site, regression visibility matters.",
     ]
     summary_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(f"wrote {summary_path.relative_to(ROOT)}")
@@ -269,15 +324,24 @@ def refresh(data_path: Path = DATA_PATH) -> None:
                 f"councillors.yaml entry '{name}' has no UID mapping in "
                 "UIDS_BY_NAME — add it before enabling refresh for this councillor"
             )
+        if name not in CPW_SLUGS_BY_NAME:
+            raise RuntimeError(
+                f"councillors.yaml entry '{name}' has no CPW slug mapping in "
+                "CPW_SLUGS_BY_NAME — add it before enabling refresh for this councillor"
+            )
         uid = UIDS_BY_NAME[name]
+        cpw_slug = CPW_SLUGS_BY_NAME[name]
 
         # Capture BEFORE state for the diff table.
         attendance_before = entry.get("attendance")
         committees_before = list(entry.get("committees") or [])
         outside_bodies_before = list(entry.get("outside_bodies") or [])
 
+        # Hybrid sources (cing-938): committees + outside bodies from
+        # council mgUserInfo (official memberships); attendance % from
+        # CPW (all-time aggregate, what the public site shows).
         committees, outside_bodies = fetch_committees_and_bodies(uid)
-        attendance = fetch_attendance_percentage(uid)
+        attendance = fetch_attendance_percentage(cpw_slug)
 
         entry["attendance"] = attendance
         entry["committees"] = committees
