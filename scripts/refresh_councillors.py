@@ -249,10 +249,12 @@ def write_summary(rows, summary_path: Path = SUMMARY_PATH) -> None:
       outside_bodies_before, outside_bodies_after
     """
     lines = [
-        "Automated weekly refresh from Cornwall Council member pages.",
+        "Automated weekly refresh of councillor data.",
         "",
         "**Scope of refresh:** `attendance`, `committees`, `outside_bodies`.",
-        "**Source:** democracy.cornwall.gov.uk/{mgUserInfo,mgAttendance}.aspx",
+        "**Sources** (cing-938 hybrid):",
+        "- attendance % from `cornwallpoliticalwatch.com/councillors/{slug}` (all-time aggregate)",
+        "- committees + outside bodies from `democracy.cornwall.gov.uk/mgUserInfo.aspx?UID={uid}` (official memberships, expired-filtered)",
         "",
         "### Per-councillor diff",
         "",
