@@ -1,48 +1,51 @@
-- name: "Rowland O'Connor"
-  role: "Group Leader"
-  division: "St Columb Major, St Mawgan & St Wenn"
-  photo: "/images/councillors/rowland-oconnor.jpg"
-  committees:
-    - "Audit Committee"
-    - "Budget Development Overview & Scrutiny Committee"
-    - "Chief Officers Employment Committee"
-    - "Constitution & Governance Committee"
-    - "Corporate Finance & Performance Overview & Scrutiny Committee"
-    - "Miscellaneous Licensing Committee"
-    - "Standards Committee"
-  outside_bodies:
-    - "Cornwall Airport Newquay Consultative Forum"
-  email: "cllr.rowland.oconnor@cornwall.gov.uk"
-  attendance: 90
-  bio: "Group Leader of CING. Serving St Columb Major, St Mawgan & St Wenn, Rowland sits on a wide range of scrutiny and governance committees, holding the administration to account on finance, standards, and audit."
-  active: true
+  - name: "Rowland O'Connor"
+    role: "Group Leader"
+    division: "St Columb Major, St Mawgan & St Wenn"
+    photo: "/images/councillors/rowland-oconnor.jpg"
+    committees:
+      - Budget Development Overview and Scrutiny Committee
+      - Chief Officers Employment Committee
+      - Constitution and Governance Committee
+      - Corporate Finance and Performance Overview and Scrutiny Committee
+      - Miscellaneous Licensing Committee
+      - Standards Committee
+      - Urgent Driver/Operator/Vehicle Sub Committee
+    outside_bodies:
+      - Cornwall Airport Newquay Consultative Forum
+    email: "cllr.rowland.oconnor@cornwall.gov.uk"
+    attendance: 91
+    bio: "Group Leader of CING. Serving St Columb Major, St Mawgan & St Wenn, Rowland sits on a wide range of scrutiny and governance committees, holding the administration to account on finance, standards, and audit."
+    active: true
 
-- name: "Anna Thomason-Kenyon"
-  role: "Deputy Leader"
-  division: "Constantine, Mabe & Mawnan"
-  photo: "/images/councillors/anna-thomason-kenyon.jpg"
-  committees:
-    - "Constitution & Governance Committee"
-    - "Corporate Finance & Performance Overview & Scrutiny Committee"
-    - "Miscellaneous Licensing Committee"
-    - "West Sub-Area Planning Committee"
-  email: "cllr.anna.thomason-kenyon@cornwall.gov.uk"
-  attendance: 95
-  bio: "Deputy Leader of CING. Representing Constantine, Mabe & Mawnan, Anna brings strong local knowledge to planning and governance committees with a 95% attendance record."
-  active: true
+  - name: "Anna Thomason-Kenyon"
+    role: "Deputy Leader"
+    division: "Constantine, Mabe & Mawnan"
+    photo: "/images/councillors/anna-thomason-kenyon.jpg"
+    committees:
+      - Constitution and Governance Committee
+      - Corporate Finance and Performance Overview and Scrutiny Committee
+      - Miscellaneous Licensing Committee
+      - Urgent Driver/Operator/Vehicle Sub Committee
+      - West Sub-Area Planning Committee
+    email: "cllr.anna.thomason-kenyon@cornwall.gov.uk"
+    attendance: 95
+    bio: "Deputy Leader of CING. Representing Constantine, Mabe & Mawnan, Anna brings strong local knowledge to planning and governance committees with a 95% attendance record."
+    active: true
 
 # TODO(IMG-04-stage-2): replace karen-knight.jpg with ≥1024px source when available
-- name: "Karen Knight"
-  role: "Member"
-  division: "Camborne West & Treswithian"
-  photo: "/images/councillors/karen-knight.jpg"
-  committees:
-    - "Constitution & Governance Committee"
-    - "Corporate Finance & Performance Overview & Scrutiny Committee"
-    - "Licensing Act Committee"
-    - "Together for Families Overview & Scrutiny Committee"
-    - "West Sub-Area Planning Committee"
-  email: "cllr.karen.knight@cornwall.gov.uk"
-  attendance: 89
-  bio: "Representing Camborne West & Treswithian, Karen serves on five committees with particular focus on licensing, families, and local planning decisions."
-  active: true
+  - name: "Karen Knight"
+    role: "Member"
+    division: "Camborne West & Treswithian"
+    photo: "/images/councillors/karen-knight.jpg"
+    committees:
+      - Constitution and Governance Committee
+      - Corporate Finance and Performance Overview and Scrutiny Committee
+      - Licensing Act Committee
+      - Licensing Act Sub Committee
+      - Street Trading and Pavement Licensing Sub Committee
+      - Together for Families Overview and Scrutiny Committee
+      - West Sub-Area Planning Committee
+    email: "cllr.karen.knight@cornwall.gov.uk"
+    attendance: 89
+    bio: "Representing Camborne West & Treswithian, Karen serves on five committees with particular focus on licensing, families, and local planning decisions."
+    active: true
