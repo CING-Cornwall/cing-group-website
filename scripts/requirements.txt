@@ -1,6 +1,6 @@
 # Pinned dependencies for the CING press toolchain.
 # Verified against PyPI at execution time. Bump via Dependabot once Phase 4 BUILD-03 lands.
-reportlab==4.4.10
+reportlab==4.5.0
 Pillow==12.2.0
 # DATA-03 cron — added Phase 4 (scripts/refresh_councillors.py)
 requests==2.33.1
