@@ -82,11 +82,17 @@
       {{ .Content }}
     </div>
 
-    {{/* Back to news */}}
-    <div class="mt-16 pt-8 border-t border-surface-container">
+    {{/* Share + back to news */}}
+    <div class="mt-16 pt-8 border-t border-surface-container flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
       <a href="{{ "/news/" | relURL }}" class="inline-flex items-center gap-2 text-primary font-bold hover:text-tertiary transition-colors">
         <span class="material-symbols-outlined">arrow_back</span> Back to News
       </a>
+      {{ partial "share-buttons.html" (dict
+        "url"   .Permalink
+        "title" .Title
+        "text"  (or .Description .Params.excerpt .Title)
+        "type"  "news"
+      ) }}
     </div>
   </div>
 </article>

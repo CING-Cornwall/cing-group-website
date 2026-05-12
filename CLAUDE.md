@@ -39,6 +39,7 @@ Custom layouts override Hugo defaults — there is no theme:
 - `layouts/_default/baseof.html` — base wrapper with Tailwind config, fonts, Material Symbols, Google Analytics (consent-gated), cookie banner
 - `layouts/partials/header.html` — glassmorphism nav with mobile hamburger (vanilla JS)
 - `layouts/partials/footer.html` — 3-column footer
+- `layouts/partials/share-buttons.html` — inline share row (Web Share API → clipboard fallback, plus X/Bluesky/Facebook/LinkedIn/WhatsApp/Email deep-links). Self-contained: renders markup + a one-time delegated `<script>`. Used on `news/single.html` and `press/single.html`. Params: `url` (pass `.Permalink`), `title`, `text`, `type` (analytics `content_type`). Logs a `share` gtag event when consent has loaded gtag; no-ops otherwise. Ported from the Cornwall Political Watch `SharePanel` React component.
 - `layouts/index.html` — homepage (hero, principles grid, news teaser, CTA)
 - `layouts/about/list.html` — hero + asymmetric story + mission grid + team bento
 - `layouts/councillors/list.html` — hero + stats bar + portrait cards + quote
