@@ -94,4 +94,4 @@ The full prose manifesto ("Standing Up for Cornwall") lives in `docs/manifesto/M
 
 ### Councillor data
 
-Councillor data (divisions, committees, attendance percentages) is maintained in `data/councillors.yaml`. Phase 2 plan: GitHub Actions cron to auto-refresh data at build time.
+Councillor data (divisions, committees, attendance percentages) is maintained in `data/councillors.yaml`. It is auto-refreshed by the `.github/workflows/refresh-councillors.yml` workflow — a weekly cron (Mondays 06:00 UTC, plus `workflow_dispatch`) that runs `scripts/refresh_councillors.py` to scrape Cornwall Council member pages and opens a PR proposing diffs (title format `data: refresh councillor data (YYYY-Www)`, body is the per-councillor diff table from `.refresh-summary.md`). PRs are **not** auto-merged — an operator reviews them via the standard PR flow, since the council source is the source of truth.
