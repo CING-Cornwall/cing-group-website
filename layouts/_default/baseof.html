@@ -31,7 +31,9 @@
   </script>
   {{ end }}
   <title>{{ if .IsHome }}CING — Independent Councillors for Cornwall{{ else }}{{ .Title }} | CING{{ end }}</title>
-  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}" />
+  {{/* Page description: explicit front-matter description, then a post excerpt (news/press), then the site default. */}}
+  {{ $desc := or .Description .Params.excerpt .Site.Params.description }}
+  <meta name="description" content="{{ $desc }}" />
 
   {{/* Favicon */}}
   <link rel="icon" type="image/svg+xml" href="{{ "/favicon.svg" | relURL }}" />
@@ -52,7 +54,7 @@
 
   {{/* Open Graph */}}
   <meta property="og:title" content="{{ .Title }}" />
-  <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}" />
+  <meta property="og:description" content="{{ $desc }}" />
   <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}" />
   <meta property="og:url" content="{{ .Permalink }}" />
   <meta property="og:image" content="{{ with .Params.image }}{{ . | absURL }}{{ else }}{{ with .Site.Params.ogImage }}{{ . | absURL }}{{ end }}{{ end }}" />
@@ -61,7 +63,7 @@
   {{/* Twitter Card */}}
   <meta name="twitter:card" content="{{ if .Params.image }}summary_large_image{{ else }}summary{{ end }}" />
   <meta name="twitter:title" content="{{ .Title }}" />
-  <meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}" />
+  <meta name="twitter:description" content="{{ $desc }}" />
   {{ with .Params.image }}<meta name="twitter:image" content="{{ . | absURL }}" />{{ end }}
 
   {{/* Structured Data */}}
