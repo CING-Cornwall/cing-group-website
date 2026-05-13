@@ -4,6 +4,8 @@ date: 2026-05-19T00:01:00+01:00
 publishDate: 2026-05-19T00:01:00+01:00
 category: "Highways & Transport"
 excerpt: "Cllr Rowland O’Connor cautions that a motion on road markings and parking enforcement risks adding bureaucracy and financial pressure — and duplicating an evidence-led programme already underway — at a time residents are focused on potholes and frontline highway repairs."
+image: "/images/press/road-markings-renewal-motion.jpg"
+imageAlt: "A road receding into the distance with dashed yellow centre markings on a navy background — CING press release on the road markings and parking enforcement motion."
 ---
 
 Cllr Rowland O'Connor has warned that a motion due before Cornwall Council on 19 May 2026 risks creating additional bureaucracy and financial pressure while duplicating work that is already underway within Cornwall's highways programme.

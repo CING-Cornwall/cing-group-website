@@ -4,6 +4,8 @@ date: 2026-05-19T09:30:00+01:00
 publishDate: 2026-05-19T00:01:00+01:00
 category: "Democracy & Governance"
 excerpt: "Cllr Rowland O’Connor supports a motion reinforcing freedom of expression, fair process and robust democratic debate within Cornwall Council — while making clear those protections do not extend to harassment, discrimination or unlawful conduct."
+image: "/images/press/freedom-of-expression-fair-process.jpg"
+imageAlt: "A gold studio microphone with sound waves on a navy background — CING press release on the freedom of expression and fair process motion."
 ---
 
 Cllr Rowland O'Connor has spoken in support of a motion before Cornwall Council aimed at reinforcing the importance of freedom of expression, fair process, and robust democratic debate within local government.
