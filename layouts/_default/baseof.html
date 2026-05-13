@@ -31,6 +31,10 @@
   </script>
   {{ end }}
   <title>{{ if .IsHome }}CING — Independent Councillors for Cornwall{{ else }}{{ .Title }} | CING{{ end }}</title>
+  {{/* Embargo-preview environment flag — set by scripts/preview_build.sh.
+       Gates noindex meta, the no-referrer hint, and the canonical-link suppression below;
+       also turns on the embargo-banner partial inside <main>. */}}
+  {{ $isPreview := eq hugo.Environment "preview" }}
   {{/* Page description: explicit front-matter description, then a post excerpt (news/press), then the site default. */}}
   {{ $desc := or .Description .Params.excerpt .Site.Params.description }}
   <meta name="description" content="{{ $desc }}" />
@@ -40,8 +44,20 @@
   <link rel="icon" type="image/png" sizes="32x32" href="{{ "/favicon-32x32.png" | relURL }}" />
   <link rel="apple-touch-icon" sizes="180x180" href="{{ "/apple-touch-icon.png" | relURL }}" />
 
-  {{/* Canonical URL */}}
+  {{/* Canonical URL — suppressed in preview builds so pre-embargo content
+       can't be canonicalised to the eventual public URL by a search engine
+       that happens across the unguessable preview path. */}}
+  {{ if not $isPreview }}
   <link rel="canonical" href="{{ .Permalink }}" />
+  {{ end }}
+
+  {{/* Embargo-preview hardening — noindex meta and a no-referrer hint so
+       a journalist following an outbound link doesn't leak the preview URL
+       in the Referer header. robots.txt has the matching Disallow: /preview/. */}}
+  {{ if $isPreview }}
+  <meta name="robots" content="noindex,nofollow,noarchive" />
+  <meta name="referrer" content="no-referrer" />
+  {{ end }}
 
   {{/* RSS auto-discovery */}}
   {{ range .AlternativeOutputFormats -}}
@@ -122,6 +138,9 @@
   {{ partial "header.html" . }}
 
   <main id="main-content">
+    {{/* Embargo banner — rendered inline (not floating) so it travels with
+         screenshots and copy-paste. Only present on preview builds. */}}
+    {{ if $isPreview }}{{ partial "embargo-banner.html" . }}{{ end }}
     {{ block "main" . }}{{ end }}
   </main>
 

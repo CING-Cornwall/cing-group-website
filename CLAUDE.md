@@ -98,3 +98,41 @@ The full prose manifesto ("Standing Up for Cornwall") lives in `docs/manifesto/M
 ### Councillor data
 
 Councillor data (divisions, committees, attendance percentages) is maintained in `data/councillors.yaml`. It is auto-refreshed by the `.github/workflows/refresh-councillors.yml` workflow — a weekly cron (Mondays 06:00 UTC, plus `workflow_dispatch`) that runs `scripts/refresh_councillors.py` to scrape Cornwall Council member pages and opens a PR proposing diffs (title format `data: refresh councillor data (YYYY-Www)`, body is the per-councillor diff table from `.refresh-summary.md`). PRs are **not** auto-merged — an operator reviews them via the standard PR flow, since the council source is the source of truth.
+
+### Embargoed press releases
+
+Multi-day embargoes live in `content/press/_incoming/<section>/` (cascade `build.render: never` — the content renders nowhere by default). The CI **Embargo guard** (`hugo.yml`) refuses to build if any file outside `_incoming/` has a future `publishDate`, so the only safe path for multi-day embargo is `_incoming/` + manual `git mv` on lift day.
+
+To **preview** embargoed content before lift, every section's `_index.md` carries:
+
+```yaml
+preview_token: "<24+-char hex>"     # openssl rand -hex 12
+preview_lift:  2026-05-19T07:00:00+01:00
+```
+
+The CI **Preview-token guard** (`scripts/preview_guard.py`) enforces format / uniqueness / `preview_lift == max(publishDate)`. The build step **`Build embargo previews`** (`scripts/preview_build.sh`) runs after the main site is built, after lychee + pa11y, and per `_incoming/<section>/` does:
+
+1. Copies that one section into a scratch source tree under `$RUNNER_TEMP` (so the live `content/press/` tree stays untouched — the embargo guard never sees the future-dated content).
+2. Symlinks `layouts/ assets/ static/ data/ i18n/ config/ archetypes/` and `hugo.toml`.
+3. Runs Hugo against the scratch tree with `--baseURL https://www.cingparty.uk/preview/<token>/ --environment preview --buildFuture --config hugo.toml,config/preview/config.toml --destination $WORKSPACE/public/preview/<token>/`.
+
+The preview env (`HUGO_ENVIRONMENT=preview`) triggers, via `baseof.html`/`header.html`/`share-buttons.html`/`embargo-banner.html`:
+
+- `<meta name="robots" content="noindex,nofollow,noarchive">` + `<meta name="referrer" content="no-referrer">`.
+- No `<link rel="canonical">` (so a search engine that stumbles in can't canonicalise embargoed content to the eventual live URL).
+- A prominent red/amber **embargo banner** as the first child of `<main>` (inline-styled so it renders without depending on the Tailwind purge).
+- Header menu replaced with a single "Live site" link — preview is a mini-site that only contains one section; menu pageRefs would otherwise resolve to nothing.
+- Share buttons suppressed — a one-click "Share on X" pre-embargo would defeat the whole point.
+- GA + cookie banner already gated on `hugo.IsProduction` — preview env is non-production, so these stay off.
+
+`config/preview/config.toml` disables `sitemap`/`RSS`/taxonomy outputs for the preview build (no metadata leakage).
+
+The build step **`Write lift-day redirect stubs`** (`scripts/lift_redirects.py`) handles bookmarked preview URLs after lift: for every section _outside_ `_incoming/` that still carries a `preview_token`, it writes a tiny meta-refresh + JS-redirect stub at `public/preview/<token>/...` for each rendered page under that section, pointing to the canonical published URL. Stubs include `noindex` and a visible fallback link.
+
+Both preview steps are `continue-on-error: true` — a bad token never blocks the main site deploy. Preview URLs are surfaced in `$GITHUB_STEP_SUMMARY` on every workflow run.
+
+`static/robots.txt` carries a matching `Disallow: /preview/` for belt-and-braces. The site's main sitemap is built from `content/` only, so preview paths never leak there either.
+
+**Lift-day procedure** is unchanged from before — `git mv content/press/_incoming/<section> content/press/` + push. The preview URL automatically switches from a rendered preview to a redirect stub on the next deploy.
+
+**Helper:** `scripts/new_embargo.sh <section-slug> <iso-datetime>` scaffolds a new `_incoming/<section>/_index.md` with a fresh `preview_token` and the supplied `preview_lift`.

@@ -80,6 +80,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r scripts/requirements.txt
 
+      - name: Preview-token guard — validate preview_token / preview_lift / uniqueness
+        run: |
+          set -euo pipefail
+          python3 scripts/preview_guard.py
+
       - name: Embargo guard — fail on future-dated press outside _incoming/
         run: |
           set -euo pipefail
@@ -200,6 +205,27 @@ jobs:
           # Always stop the server, even on a11y failure.
           kill $SERVER_PID 2>/dev/null || true
           exit $PA11Y_EXIT
+
+      # Embargo previews are additive: a failure here must never block the
+      # main site deploy. Run AFTER lychee + pa11y so those checks don't
+      # see in-progress draft content under /preview/.
+      - name: Build embargo previews
+        id: preview_build
+        continue-on-error: true
+        env:
+          HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
+          PUBLIC_BASE: https://www.cingparty.uk
+          TZ: Europe/London
+        run: |
+          set -euo pipefail
+          bash scripts/preview_build.sh
+
+      - name: Write lift-day redirect stubs
+        id: lift_redirects
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          python3 scripts/lift_redirects.py
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
