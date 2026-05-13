@@ -18,6 +18,9 @@
   Place at most ONCE per page — the enhancement script uses event delegation
   but the markup is not meant to be duplicated.
 */}}
+{{/* Disabled on embargo previews so a one-click "Share on X" can't leak the
+     preview URL ahead of lift. The banner inside <main> handles "what now". */}}
+{{- if ne hugo.Environment "preview" -}}
 {{- $url := .url -}}
 {{- $title := .title -}}
 {{- $text := .text | default .title -}}
@@ -164,3 +167,4 @@
   });
 })();
 </script>
+{{- end -}}{{/* end: if ne hugo.Environment "preview" */}}

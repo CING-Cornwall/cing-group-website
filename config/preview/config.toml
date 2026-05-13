@@ -1,0 +1,18 @@
+# Hugo config overlay for the embargo-preview build.
+#
+# Merged on top of /hugo.toml when `HUGO_ENVIRONMENT=preview` is set
+# (invoked by scripts/preview_build.sh as `--config hugo.toml,config/preview/config.toml`).
+#
+# Goals:
+#   - No sitemap / RSS leaks. Even though robots.txt disallows /preview/,
+#     and the embargo banner shouts on every page, belt-and-braces.
+#   - Hugo.IsProduction stays false (HUGO_ENVIRONMENT != "production"), so
+#     GA + cookie banner code in baseof.html naturally skips itself.
+#   - baseURL is supplied on the command line per-section; do not set here.
+
+disableKinds = ["taxonomy", "term", "sitemap", "RSS"]
+
+[outputs]
+  home    = ["HTML"]
+  section = ["HTML"]
+  page    = ["HTML"]

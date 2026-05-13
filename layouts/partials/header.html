@@ -1,13 +1,26 @@
+{{/* Embargo-preview environment: rewrite the brand link to absolute prod URL
+     and replace the menu/CTA with a single "Live site" link (defined inline
+     below). The full nav can't follow the journalist into the preview because
+     menu pageRefs (e.g. /about/) don't exist in the scratch content tree. */}}
+{{ $isPreview := eq hugo.Environment "preview" }}
+{{ $prodHome := cond $isPreview "https://www.cingparty.uk/" ("/" | relURL) }}
+
 {{/* Fixed top navigation with glassmorphism */}}
 <header class="fixed top-0 w-full z-50 bg-[#00263b]/90 shadow-none backdrop-blur-md">
   <nav aria-label="Main navigation" class="flex justify-between items-center px-6 lg:px-8 py-4 max-w-screen-2xl mx-auto">
 
     {{/* Brand */}}
-    <a href="{{ "/" | relURL }}" class="text-xl lg:text-2xl font-bold tracking-tighter text-white uppercase font-headline">
+    <a href="{{ $prodHome }}" class="text-xl lg:text-2xl font-bold tracking-tighter text-white uppercase font-headline">
       CING
     </a>
 
-    {{/* Desktop nav links */}}
+    {{/* Desktop nav links — only on the public site. In preview mode the
+         menu pageRefs (e.g. /about/) don't exist in the scratch content
+         tree, so Hugo can't resolve them; rather than show broken links
+         we hide the menu and surface a single "Live site" link in the CTA
+         slot. The embargo banner inside <main> tells journalists what they
+         need to know about the page state. */}}
+    {{ if not $isPreview }}
     <div class="hidden md:flex gap-8 items-center">
       {{ range .Site.Menus.main }}
         {{ if ne .Name "Get Involved" }}
@@ -25,23 +38,36 @@
         {{ end }}
       {{ end }}
     </div>
+    {{ end }}
 
-    {{/* Right side: CTA + mobile hamburger */}}
+    {{/* Right side: CTA + mobile hamburger. In preview mode, replace the
+         "Get Involved" CTA with a "Live site" link (single way out of the
+         embargo preview), and drop the mobile hamburger entirely. */}}
     <div class="flex items-center gap-4">
-      <a href="{{ "/get-involved/" | relURL }}"
-         class="hidden md:inline-block bg-tertiary-container text-on-tertiary-container px-6 py-2 rounded-md font-bold hover:bg-white/10 transition-all duration-300 scale-95 hover:scale-100 ease-in-out">
-        Get Involved
-      </a>
+      {{ if $isPreview }}
+        <a href="https://www.cingparty.uk/"
+           class="inline-flex items-center gap-2 bg-tertiary-container text-on-tertiary-container px-4 py-2 rounded-md font-bold text-sm hover:bg-white/10 transition-all">
+          <span class="material-symbols-outlined text-base">arrow_outward</span>
+          Live site
+        </a>
+      {{ else }}
+        <a href="{{ "/get-involved/" | relURL }}"
+           class="hidden md:inline-block bg-tertiary-container text-on-tertiary-container px-6 py-2 rounded-md font-bold hover:bg-white/10 transition-all duration-300 scale-95 hover:scale-100 ease-in-out">
+          Get Involved
+        </a>
 
-      {{/* Mobile hamburger */}}
-      <button id="mobile-menu-btn" class="md:hidden text-white p-2" aria-label="Open navigation menu" aria-expanded="false">
-        <span class="material-symbols-outlined text-3xl">menu</span>
-      </button>
+        {{/* Mobile hamburger */}}
+        <button id="mobile-menu-btn" class="md:hidden text-white p-2" aria-label="Open navigation menu" aria-expanded="false">
+          <span class="material-symbols-outlined text-3xl">menu</span>
+        </button>
+      {{ end }}
     </div>
   </nav>
 </header>
 
-{{/* Mobile menu overlay */}}
+{{/* Mobile menu overlay — public site only; the preview header has no
+     menu, so the overlay and its driver script are unnecessary. */}}
+{{ if not $isPreview }}
 <div id="mobile-menu" class="fixed inset-0 z-[60] hidden" aria-hidden="true">
   {{/* Backdrop */}}
   <div id="mobile-menu-backdrop" class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
@@ -121,3 +147,4 @@
     });
   })();
 </script>
+{{ end }}{{/* end: if not $isPreview — mobile menu */}}

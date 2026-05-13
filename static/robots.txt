@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
+# Embargoed press previews live under unguessable /preview/<token>/ paths.
+# Pages also carry <meta name="robots" content="noindex,nofollow"> as
+# belt-and-braces, but ask compliant crawlers not to bother in the first place.
+Disallow: /preview/
 
 Sitemap: https://www.cingparty.uk/sitemap.xml
