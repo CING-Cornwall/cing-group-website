@@ -46,7 +46,7 @@ The motion is due to be debated at Cornwall Council on 19 May 2026.
 
 ## Media Contact
 
-CING Media Office
-e: [cllr.rowland.oconnor@cornwall.gov.uk](mailto:cllr.rowland.oconnor@cornwall.gov.uk)
-t: +44 (0)7732 079611
+CING Media Office<br>
+e: [cllr.rowland.oconnor@cornwall.gov.uk](mailto:cllr.rowland.oconnor@cornwall.gov.uk)<br>
+t: +44 (0)7732 079611<br>
 w: <https://www.cingparty.uk>
