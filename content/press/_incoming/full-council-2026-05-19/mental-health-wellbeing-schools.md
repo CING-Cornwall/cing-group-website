@@ -4,6 +4,8 @@ date: 2026-05-19T09:00:00+01:00
 publishDate: 2026-05-19T00:01:00+01:00
 category: "Education & SEND"
 excerpt: "Cllr Rowland O’Connor backs a motion for a formal review into mental health and wellbeing in Cornwall’s schools, warning in an emotional chamber speech that vulnerable children and SEND families are being failed by a system that is “breaking children rather than supporting them.”"
+image: "/images/press/mental-health-wellbeing-schools.jpg"
+imageAlt: "A gold heart above an open book on a navy background — CING press release on the schools, SEND and wellbeing motion."
 ---
 
 Councillor Rowland O'Connor has spoken in strong support of a motion brought before Cornwall Council calling for a formal review into mental health and wellbeing in schools, warning that vulnerable children and SEND families are increasingly being failed by a system that is "breaking children rather than supporting them."
