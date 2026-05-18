@@ -34,6 +34,8 @@
     active: true
 
 # TODO(IMG-04-stage-2): replace karen-knight.jpg with ≥1024px source when available
+    outside_bodies:
+      - Fifth Nation Members’ Working Group
   - name: "Karen Knight"
     role: "Member"
     division: "Camborne West & Treswithian"
