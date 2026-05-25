@@ -8,7 +8,6 @@
       - Constitution and Governance Committee
       - Corporate Finance and Performance Overview and Scrutiny Committee
       - Miscellaneous Licensing Committee
-      - Standards Committee
       - Together for Families Overview and Scrutiny Committee
       - Urgent Driver/Operator/Vehicle Sub Committee
     outside_bodies:
@@ -26,6 +25,7 @@
       - Constitution and Governance Committee
       - Corporate Finance and Performance Overview and Scrutiny Committee
       - Miscellaneous Licensing Committee
+      - Standards Committee
       - Urgent Driver/Operator/Vehicle Sub Committee
       - West Sub-Area Planning Committee
     email: "cllr.anna.thomason-kenyon@cornwall.gov.uk"
@@ -34,6 +34,8 @@
     active: true
 
 # TODO(IMG-04-stage-2): replace karen-knight.jpg with ≥1024px source when available
+    outside_bodies:
+      - Fifth Nation Members’ Working Group
   - name: "Karen Knight"
     role: "Member"
     division: "Camborne West & Treswithian"
