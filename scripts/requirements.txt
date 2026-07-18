@@ -1,13 +1,13 @@
 # Pinned dependencies for the CING press toolchain.
 # Verified against PyPI at execution time. Bump via Dependabot once Phase 4 BUILD-03 lands.
 reportlab==4.5.0
-Pillow==12.2.0
+Pillow==12.3.0
 # DATA-03 cron — added Phase 4 (scripts/refresh_councillors.py)
-requests==2.33.1
-beautifulsoup4==4.14.3
+requests==2.34.2
+beautifulsoup4==4.15.0
 ruamel.yaml==0.19.1
 # Test framework — added Phase 4 (offline fixture tests for cron parser)
-pytest==9.0.3
+pytest==9.1.1
 # CI hygiene — close Phase 3 review WR-01 (no install fallback for jsonschema; consolidates pip story)
 jsonschema==4.26.0
 PyYAML==6.0.3
