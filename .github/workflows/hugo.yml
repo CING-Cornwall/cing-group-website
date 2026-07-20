@@ -70,7 +70,7 @@ jobs:
           set -euo pipefail
           tailwindcss -i assets/css/main.css -o assets/css/compiled.css --minify
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
