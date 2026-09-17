@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import io
 import sys
+import time
 from pathlib import Path
 
 import pytest
@@ -16,6 +17,7 @@ from ruamel.yaml import YAML
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
+import scripts.refresh_councillors as refresh_module  # noqa: E402
 from scripts.refresh_councillors import (  # noqa: E402
     CPW_SLUGS_BY_NAME,
     UIDS_BY_NAME,
@@ -113,18 +115,14 @@ def test_round_trip_preserves_karen_todo_comment():
     )
 
 
-def test_round_trip_preserves_anna_no_outside_bodies_key():
-    """Anna's entry has NO `outside_bodies` key on disk. The round-trip must
-    not introduce one (otherwise the policy in refresh() — 'leave entry
-    unchanged when key missing AND council returns no bodies' — would break
-    on first run)."""
+def test_round_trip_preserves_current_outside_body_assignments():
+    """Round-trip must retain the current generated outside-body ownership."""
     yaml = _make_yaml()
     data = yaml.load(DATA_PATH.read_text(encoding="utf-8"))
     anna = next(e for e in data if e["name"] == "Anna Thomason-Kenyon")
-    assert "outside_bodies" not in anna, (
-        "Anna's entry must not have an outside_bodies key on disk — "
-        "the refresh policy depends on it"
-    )
+    karen = next(e for e in data if e["name"] == "Karen Knight")
+    assert anna["outside_bodies"] == ["Fifth Nation Members’ Working Group"]
+    assert "outside_bodies" not in karen
 
 
 def test_uid_constants_match_data_yaml():
@@ -269,6 +267,65 @@ def test_parse_attendance_picks_overall_not_per_committee():
     assert pct == 91, f"Parser must pick the 'overall attendance' value (91), not 67; got {pct}"
 
 
+def test_parse_attendance_accepts_plain_percentage_without_react_comment():
+    """CPW may server-render the headline without React's empty comment node."""
+    html = (
+        '<span class="text-positive">88%</span>'
+        '<span class="text-muted">overall attendance</span>'
+    )
+    assert parse_attendance_percentage(html, "plain-render") == 88
+
+
+class _StubResponse:
+    def __init__(self, text):
+        self.text = text
+
+    def raise_for_status(self):
+        return None
+
+
+def test_fetch_attendance_retries_transient_parse_failure(monkeypatch):
+    responses = iter([
+        _StubResponse("<html><body>Temporary incomplete page</body></html>"),
+        _StubResponse(
+            '<span>91<!-- -->%</span><span>overall attendance</span>'
+        ),
+    ])
+    calls = []
+    sleeps = []
+
+    def fake_get(url, *, headers, timeout):
+        calls.append((url, headers, timeout))
+        return next(responses)
+
+    monkeypatch.setattr(refresh_module.requests, "get", fake_get)
+    monkeypatch.setattr(time, "sleep", sleeps.append)
+
+    assert refresh_module.fetch_attendance_percentage("rowland-oconnor") == 91
+    assert len(calls) == 2
+    assert all(call[1] == refresh_module.HEADERS for call in calls)
+    assert all(call[2] == refresh_module.TIMEOUT for call in calls)
+    assert sleeps == [1]
+
+
+def test_fetch_attendance_retries_request_failure_three_times(monkeypatch):
+    calls = []
+    sleeps = []
+
+    def fail_get(url, *, headers, timeout):
+        calls.append((url, headers, timeout))
+        raise refresh_module.requests.ConnectionError("temporary connection failure")
+
+    monkeypatch.setattr(refresh_module.requests, "get", fail_get)
+    monkeypatch.setattr(time, "sleep", sleeps.append)
+
+    with pytest.raises(refresh_module.requests.ConnectionError):
+        refresh_module.fetch_attendance_percentage("rowland-oconnor")
+
+    assert len(calls) == 3
+    assert sleeps == [1, 2]
+
+
 # ---------- Fail-loud contract (D-09) ----------
 
 def test_fail_loud_on_missing_committees_section():
@@ -284,3 +341,157 @@ def test_fail_loud_on_missing_overall_attendance_span():
     html = "<html><body><p>No CPW headline span here.</p></body></html>"
     with pytest.raises(RuntimeError, match="overall attendance"):
         parse_attendance_percentage(html, "missing-slug")
+
+
+def _write_active_councillors(path):
+    path.write_text(
+        """\
+- name: "Rowland O'Connor"
+  active: true
+  attendance: 10
+  committees: [Old Rowland committee]
+- name: "Anna Thomason-Kenyon"
+  active: true
+  attendance: 20
+  committees: [Old Anna committee]
+- name: "Karen Knight"
+  active: true
+  attendance: 30
+  committees: [Old Karen committee]
+""",
+        encoding="utf-8",
+    )
+
+
+def test_refresh_continues_after_one_councillor_failure(tmp_path, monkeypatch, capsys):
+    data_path = tmp_path / "councillors.yaml"
+    _write_active_councillors(data_path)
+    attendance_calls = []
+    summary = {}
+
+    monkeypatch.setattr(refresh_module, "ROOT", tmp_path)
+    monkeypatch.setattr(
+        refresh_module,
+        "fetch_committees_and_bodies",
+        lambda uid: ([f"Current committee {uid}"], []),
+    )
+
+    def fake_attendance(slug):
+        attendance_calls.append(slug)
+        if slug == "rowland-oconnor":
+            raise RuntimeError("transient CPW page")
+        return 88
+
+    monkeypatch.setattr(refresh_module, "fetch_attendance_percentage", fake_attendance)
+
+    def capture_summary(rows, failures=()):
+        summary["rows"] = rows
+        summary["failures"] = failures
+
+    monkeypatch.setattr(refresh_module, "write_summary", capture_summary)
+
+    refresh_module.refresh(data_path)
+
+    data = YAML(typ="safe").load(data_path.read_text(encoding="utf-8"))
+    by_name = {entry["name"]: entry for entry in data}
+    assert by_name["Rowland O'Connor"]["attendance"] == 10
+    assert by_name["Rowland O'Connor"]["committees"] == ["Old Rowland committee"]
+    assert by_name["Anna Thomason-Kenyon"]["attendance"] == 88
+    assert by_name["Karen Knight"]["attendance"] == 88
+    assert attendance_calls == [
+        "rowland-oconnor",
+        "anna-thomason-kenyon",
+        "karen-knight",
+    ]
+    assert [row["name"] for row in summary["rows"]] == [
+        "Anna Thomason-Kenyon",
+        "Karen Knight",
+    ]
+    assert [name for name, _ in summary["failures"]] == ["Rowland O'Connor"]
+    assert "Rowland O'Connor" in capsys.readouterr().err
+
+
+def test_refresh_continues_after_council_request_failure(tmp_path, monkeypatch):
+    data_path = tmp_path / "councillors.yaml"
+    _write_active_councillors(data_path)
+    summary = {}
+
+    monkeypatch.setattr(refresh_module, "ROOT", tmp_path)
+
+    def fake_committees(uid):
+        if uid == UIDS_BY_NAME["Rowland O'Connor"]:
+            raise refresh_module.requests.ConnectionError("temporary council failure")
+        return [f"Current committee {uid}"], []
+
+    def capture_summary(rows, failures=()):
+        summary["rows"] = rows
+        summary["failures"] = failures
+
+    monkeypatch.setattr(refresh_module, "fetch_committees_and_bodies", fake_committees)
+    monkeypatch.setattr(refresh_module, "fetch_attendance_percentage", lambda slug: 88)
+    monkeypatch.setattr(refresh_module, "write_summary", capture_summary)
+
+    refresh_module.refresh(data_path)
+
+    data = YAML(typ="safe").load(data_path.read_text(encoding="utf-8"))
+    by_name = {entry["name"]: entry for entry in data}
+    assert by_name["Rowland O'Connor"]["attendance"] == 10
+    assert by_name["Anna Thomason-Kenyon"]["attendance"] == 88
+    assert by_name["Karen Knight"]["attendance"] == 88
+    assert [row["name"] for row in summary["rows"]] == [
+        "Anna Thomason-Kenyon",
+        "Karen Knight",
+    ]
+    assert [name for name, _ in summary["failures"]] == ["Rowland O'Connor"]
+
+
+def test_refresh_fails_without_writing_when_all_councillors_fail(tmp_path, monkeypatch):
+    data_path = tmp_path / "councillors.yaml"
+    _write_active_councillors(data_path)
+    original = data_path.read_bytes()
+    attendance_calls = []
+
+    monkeypatch.setattr(refresh_module, "ROOT", tmp_path)
+    monkeypatch.setattr(
+        refresh_module,
+        "fetch_committees_and_bodies",
+        lambda uid: ([f"Current committee {uid}"], []),
+    )
+
+    def fail_attendance(slug):
+        attendance_calls.append(slug)
+        raise RuntimeError("transient CPW page")
+
+    monkeypatch.setattr(refresh_module, "fetch_attendance_percentage", fail_attendance)
+    monkeypatch.setattr(
+        refresh_module,
+        "write_summary",
+        lambda rows, failures=(): pytest.fail(
+            "summary must not be written when all councillors fail"
+        ),
+    )
+
+    with pytest.raises(RuntimeError, match="all 3 active councillors failed"):
+        refresh_module.refresh(data_path)
+
+    assert attendance_calls == [
+        "rowland-oconnor",
+        "anna-thomason-kenyon",
+        "karen-knight",
+    ]
+    assert data_path.read_bytes() == original
+
+
+def test_write_summary_surfaces_partial_refresh_failure(tmp_path, monkeypatch):
+    summary_path = tmp_path / "summary.md"
+    monkeypatch.setattr(refresh_module, "ROOT", tmp_path)
+
+    refresh_module.write_summary(
+        [],
+        summary_path=summary_path,
+        failures=[("Rowland O'Connor", RuntimeError("transient CPW page"))],
+    )
+
+    summary = summary_path.read_text(encoding="utf-8")
+    assert "### Refresh warnings" in summary
+    assert "**Rowland O'Connor** was not updated: transient CPW page" in summary
