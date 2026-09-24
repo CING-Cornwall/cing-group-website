@@ -41,6 +41,7 @@ councillor fails, the script exits non-zero without writing refreshed data.
 
 from __future__ import annotations
 
+import json
 import re
 import sys
 import time
@@ -203,17 +204,96 @@ def parse_committees_and_bodies(html: str, uid: int) -> Tuple[List[str], List[st
 _CPW_ATTENDANCE_RE = re.compile(
     r'<span[^>]*>(\d+)(?:<!--\s*-->)?%</span>\s*<span[^>]*>overall attendance</span>'
 )
+_CPW_METADATA_ATTENDANCE_RES = (
+    re.compile(
+        r"(?:^|\w\s+|[^\w\s.+-]\s*)(\d{1,3})%(?!\d)\s+"
+        r"(?:overall\s+)?attendance\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\battendance(?:\s+(?:stands?|is))?\s+at\s+(\d{1,3})%(?!\d)",
+        re.IGNORECASE,
+    ),
+)
+
+
+def _attendance_from_metadata_text(text: str):
+    for pattern in _CPW_METADATA_ATTENDANCE_RES:
+        match = pattern.search(text)
+        if match is not None:
+            return int(match.group(1))
+    return None
+
+
+def _json_ld_person_descriptions(value):
+    if isinstance(value, dict):
+        json_type = value.get("@type")
+        json_types = json_type if isinstance(json_type, list) else [json_type]
+        is_person = any(
+            isinstance(item, str)
+            and (item == "Person" or item.rstrip("/").endswith("/Person"))
+            for item in json_types
+        )
+        if is_person:
+            description = value.get("description")
+            if isinstance(description, str):
+                yield description
+        for child in value.values():
+            yield from _json_ld_person_descriptions(child)
+    elif isinstance(value, list):
+        for child in value:
+            yield from _json_ld_person_descriptions(child)
+
+
+def _validate_attendance_percentage(value: int, slug: str, source: str) -> int:
+    if 0 <= value <= 100:
+        return value
+    raise RuntimeError(
+        f"slug={slug}: attendance value {value}% from {source} is outside 0-100"
+    )
 
 
 def parse_attendance_percentage(html: str, slug: str) -> int:
-    """Pure-function parser for the all-time attendance % from a CPW page."""
-    m = _CPW_ATTENDANCE_RE.search(html)
-    if m is None:
-        raise RuntimeError(
-            f"slug={slug}: 'overall attendance' span not found in CPW page — "
-            "page structure may have changed"
+    """Parse all-time attendance from rendered HTML or semantic metadata.
+
+    The rendered headline is preferred. Metadata provides a stable fallback
+    when Next.js streams the visible page through React Server Component data.
+    """
+    match = _CPW_ATTENDANCE_RE.search(html)
+    if match is not None:
+        return _validate_attendance_percentage(
+            int(match.group(1)), slug, "rendered headline"
         )
-    return int(m.group(1))
+
+    soup = BeautifulSoup(html, "html.parser")
+    metadata_selectors = (
+        {"name": "description"},
+        {"property": "og:description"},
+        {"name": "twitter:description"},
+    )
+    for selector in metadata_selectors:
+        tag = soup.find("meta", attrs=selector)
+        content = tag.get("content") if tag is not None else None
+        if not isinstance(content, str):
+            continue
+        value = _attendance_from_metadata_text(content)
+        if value is not None:
+            return _validate_attendance_percentage(value, slug, "meta description")
+
+    for tag in soup.find_all("script", attrs={"type": "application/ld+json"}):
+        try:
+            payload = json.loads(tag.string or tag.get_text())
+        except (json.JSONDecodeError, TypeError):
+            continue
+        for description in _json_ld_person_descriptions(payload):
+            value = _attendance_from_metadata_text(description)
+            if value is not None:
+                return _validate_attendance_percentage(value, slug, "JSON-LD")
+
+    raise RuntimeError(
+        f"slug={slug}: 'overall attendance' value not found in rendered headline "
+        "or CPW metadata — page structure may have changed"
+    )
 
 
 # ---------- HTTP fetch wrappers ----------

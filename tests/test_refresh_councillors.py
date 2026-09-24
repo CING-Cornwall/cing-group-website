@@ -276,6 +276,70 @@ def test_parse_attendance_accepts_plain_percentage_without_react_comment():
     assert parse_attendance_percentage(html, "plain-render") == 88
 
 
+def test_parse_attendance_from_nextjs_meta_description():
+    html = """
+    <html><head>
+      <meta name="description" content="Rowland O'Connor — 88% attendance across recorded meetings.">
+    </head><body><script>self.__next_f.push([1, "payload"])</script></body></html>
+    """
+    assert parse_attendance_percentage(html, "rowland-oconnor") == 88
+
+
+def test_parse_attendance_from_nextjs_json_ld_description():
+    html = """
+    <html><head>
+      <script type="application/ld+json">
+        {"@context":"https://schema.org","@type":"Person","description":"Her recorded meeting attendance stands at 74%."}
+      </script>
+    </head><body></body></html>
+    """
+    assert parse_attendance_percentage(html, "anna-thomason-kenyon") == 74
+
+
+def test_parse_attendance_ignores_unrelated_metadata_percentages():
+    html = """
+    <html><head>
+      <meta name="description" content="Won 88% of the vote and achieved 86% school attendance.">
+      <script type="application/ld+json">
+        {"@type":"Event","description":"The event recorded 74% attendance."}
+      </script>
+    </head></html>
+    """
+    with pytest.raises(RuntimeError, match="overall attendance"):
+        parse_attendance_percentage(html, "unrelated-percentages")
+
+
+@pytest.mark.parametrize(
+    "value", ["-5", "+5", "88.5", "1088", "- 5", "88. 5", "1e2"]
+)
+def test_parse_attendance_rejects_malformed_metadata_number(value):
+    html = f'<meta name="description" content="{value}% attendance">'
+    with pytest.raises(RuntimeError, match="overall attendance"):
+        parse_attendance_percentage(html, "malformed-percentage")
+
+
+def test_parse_attendance_skips_malformed_json_ld_before_valid_person():
+    html = """
+    <script type="application/ld+json">{"@type":"Person", invalid}</script>
+    <script type="application/ld+json">
+      {"@graph":[{"@type":"Person","description":"88% attendance"}]}
+    </script>
+    """
+    assert parse_attendance_percentage(html, "rowland-oconnor") == 88
+
+
+def test_parse_attendance_malformed_json_ld_only_fails_loudly():
+    html = '<script type="application/ld+json">{"@type":"Person", invalid}</script>'
+    with pytest.raises(RuntimeError, match="overall attendance"):
+        parse_attendance_percentage(html, "malformed-json-ld")
+
+
+def test_parse_attendance_rejects_out_of_range_metadata_value():
+    html = '<meta name="description" content="125% attendance">'
+    with pytest.raises(RuntimeError, match="outside 0-100"):
+        parse_attendance_percentage(html, "invalid-percentage")
+
+
 class _StubResponse:
     def __init__(self, text):
         self.text = text
