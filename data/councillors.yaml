@@ -13,7 +13,7 @@
     outside_bodies:
       - Cornwall Airport Newquay Consultative Forum
     email: "cllr.rowland.oconnor@cornwall.gov.uk"
-    attendance: 93
+    attendance: 88
     bio: "Group Leader of CING. Serving St Columb Major, St Mawgan & St Wenn, Rowland sits on a wide range of scrutiny and governance committees, holding the administration to account on finance, standards, and audit."
     active: true
 
@@ -22,6 +22,8 @@
     division: "Constantine, Mabe & Mawnan"
     photo: "/images/councillors/anna-thomason-kenyon.jpg"
     committees:
+      - Budget Development Overview and Scrutiny Committee
+      - Chief Officers Employment Committee
       - Constitution and Governance Committee
       - Corporate Finance and Performance Overview and Scrutiny Committee
       - Miscellaneous Licensing Committee
@@ -29,7 +31,7 @@
       - Urgent Driver/Operator/Vehicle Sub Committee
       - West Sub-Area Planning Committee
     email: "cllr.anna.thomason-kenyon@cornwall.gov.uk"
-    attendance: 89
+    attendance: 75
     bio: "Deputy Leader of CING. Representing Constantine, Mabe & Mawnan, Anna brings strong local knowledge to planning and governance committees."
     active: true
 
@@ -41,6 +43,7 @@
     division: "Camborne West & Treswithian"
     photo: "/images/councillors/karen-knight.jpg"
     committees:
+      - Budget Development Overview and Scrutiny Committee
       - Constitution and Governance Committee
       - Corporate Finance and Performance Overview and Scrutiny Committee
       - Licensing Act Committee
@@ -48,6 +51,6 @@
       - Street Trading and Pavement Licensing Sub Committee
       - West Sub-Area Planning Committee
     email: "cllr.karen.knight@cornwall.gov.uk"
-    attendance: 90
+    attendance: 86
     bio: "Representing Camborne West & Treswithian, Karen serves on a range of committees with particular focus on licensing and local planning decisions."
     active: true
