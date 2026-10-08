@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
 """Weekly refresh of councillor data.
 
-Hybrid sources (cing-938, 2026-04-28):
+REFRESH PAUSED: CPW is no longer the authorised attendance path. Council
+current-term retrieval has not yet been verified. The production entry point
+fails closed before network or data writes; historical parsing/refresh code is
+retained for offline regression tests, not as an operational fallback.
+See docs/attendance-refresh.md for the recovery contract.
+
+Historical hybrid sources (cing-938, 2026-04-28):
 
   - **Attendance %** comes from Cornwall Political Watch
     (`cornwallpoliticalwatch.com/councillors/{slug}`). CPW reports the
@@ -346,6 +352,25 @@ def fetch_attendance_percentage(slug: str) -> int:
 
 SUMMARY_PATH = ROOT / ".refresh-summary.md"
 
+# Deliberate circuit breaker, not an environment toggle. Removal requires a
+# reviewed Council current-term implementation and matching dated public labels.
+ATTENDANCE_REFRESH_PAUSED = True
+
+
+def report_attendance_pause() -> None:
+    report = (
+        "# Attendance refresh paused\n\n"
+        "No councillor data was updated. Stored values are historical and not current.\n\n"
+        "CPW attendance retrieval is retired. Primary Council records for the "
+        "current term have not yet been verified; no reporting dates or fresh "
+        "percentages are claimed. The public page shows attendance as unavailable.\n\n"
+        "Keep the last known good YAML unchanged. Do not publish a data refresh "
+        "or substitute the Council default rolling window for current-term figures.\n"
+        "See docs/attendance-refresh.md for recovery requirements.\n"
+    )
+    SUMMARY_PATH.write_text(report, encoding="utf-8")
+    print(report, file=sys.stderr)
+
 
 def _summarise_list(items):
     """Render a YAML list as a compact comma-separated string for the diff table."""
@@ -429,6 +454,10 @@ def refresh(data_path: Path = DATA_PATH) -> None:
     via `body-path` — D-08). Preserves all other fields, comments, and key
     order via ruamel.yaml typ="rt".
     """
+    if ATTENDANCE_REFRESH_PAUSED:
+        report_attendance_pause()
+        raise RuntimeError("Attendance refresh paused: Council current-term source unverified")
+
     yaml = YAML(typ="rt")
     yaml.preserve_quotes = True
     yaml.indent(mapping=2, sequence=4, offset=2)
