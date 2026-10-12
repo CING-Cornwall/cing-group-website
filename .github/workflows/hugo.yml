@@ -176,7 +176,7 @@ jobs:
           fail: true
 
       - name: Setup Node (a11y job only — ephemeral CI tool, not a project dep)
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: "20"
 
