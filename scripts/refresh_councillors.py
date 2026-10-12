@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
 """Weekly refresh of councillor data.
 
-Hybrid sources (cing-938, 2026-04-28):
+REFRESH PAUSED: CPW is no longer the authorised attendance path. Council
+current-term retrieval has not yet been verified. The production entry point
+fails closed before network or data writes; historical parsing/refresh code is
+retained for offline regression tests, not as an operational fallback.
+See docs/attendance-refresh.md for the recovery contract.
+
+Historical hybrid sources (cing-938, 2026-04-28):
 
   - **Attendance %** comes from Cornwall Political Watch
     (`cornwallpoliticalwatch.com/councillors/{slug}`). CPW reports the
@@ -42,6 +48,7 @@ councillor fails, the script exits non-zero without writing refreshed data.
 from __future__ import annotations
 
 import json
+import os
 import re
 import sys
 import time
@@ -300,8 +307,22 @@ def parse_attendance_percentage(html: str, slug: str) -> int:
 
 def fetch_committees_and_bodies(uid: int) -> Tuple[List[str], List[str]]:
     url = f"https://democracy.cornwall.gov.uk/mgUserInfo.aspx?UID={uid}"
-    resp = requests.get(url, headers=HEADERS, timeout=TIMEOUT)
-    resp.raise_for_status()
+    # Scope the authenticated proxy to council requests, never CPW or global env.
+    proxy = os.environ.get("COUNCIL_PROXY_URL", "").strip()
+    try:
+        if proxy:
+            resp = requests.get(url, headers=HEADERS, timeout=TIMEOUT,
+                                proxies={"https": proxy})
+        else:
+            resp = requests.get(url, headers=HEADERS, timeout=TIMEOUT)
+        resp.raise_for_status()
+    except requests.RequestException:
+        if proxy:
+            # Requests exceptions may embed proxy userinfo; suppress the chain too.
+            raise requests.RequestException(
+                f"UID={uid}: council request through configured proxy failed"
+            ) from None
+        raise
     return parse_committees_and_bodies(resp.text, uid)
 
 
@@ -330,6 +351,25 @@ def fetch_attendance_percentage(slug: str) -> int:
 # ---------- Round-trip refresh ----------
 
 SUMMARY_PATH = ROOT / ".refresh-summary.md"
+
+# Deliberate circuit breaker, not an environment toggle. Removal requires a
+# reviewed Council current-term implementation and matching dated public labels.
+ATTENDANCE_REFRESH_PAUSED = True
+
+
+def report_attendance_pause() -> None:
+    report = (
+        "# Attendance refresh paused\n\n"
+        "No councillor data was updated. Stored values are historical and not current.\n\n"
+        "CPW attendance retrieval is retired. Primary Council records for the "
+        "current term have not yet been verified; no reporting dates or fresh "
+        "percentages are claimed. The public page shows attendance as unavailable.\n\n"
+        "Keep the last known good YAML unchanged. Do not publish a data refresh "
+        "or substitute the Council default rolling window for current-term figures.\n"
+        "See docs/attendance-refresh.md for recovery requirements.\n"
+    )
+    SUMMARY_PATH.write_text(report, encoding="utf-8")
+    print(report, file=sys.stderr)
 
 
 def _summarise_list(items):
@@ -414,6 +454,10 @@ def refresh(data_path: Path = DATA_PATH) -> None:
     via `body-path` — D-08). Preserves all other fields, comments, and key
     order via ruamel.yaml typ="rt".
     """
+    if ATTENDANCE_REFRESH_PAUSED:
+        report_attendance_pause()
+        raise RuntimeError("Attendance refresh paused: Council current-term source unverified")
+
     yaml = YAML(typ="rt")
     yaml.preserve_quotes = True
     yaml.indent(mapping=2, sequence=4, offset=2)

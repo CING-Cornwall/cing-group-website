@@ -31,6 +31,16 @@ DATA_PATH = ROOT / "data" / "councillors.yaml"
 NON_REFRESHABLE_KEYS = ("name", "role", "division", "photo", "email", "bio", "active")
 
 
+@pytest.fixture(autouse=True)
+def historical_refresh_only(monkeypatch):
+    """Exercise retained historical machinery with offline mocks/fixtures only.
+
+    Operational refresh stays paused; test_attendance_pause tests the real
+    default and asserts that it makes no network calls or YAML writes.
+    """
+    monkeypatch.setattr(refresh_module, "ATTENDANCE_REFRESH_PAUSED", False)
+
+
 def _make_yaml():
     yaml = YAML(typ="rt")
     yaml.preserve_quotes = True

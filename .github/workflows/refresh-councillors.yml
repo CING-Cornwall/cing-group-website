@@ -47,8 +47,14 @@ jobs:
           echo "Computed ISO week token: ${WEEK}"
 
       - name: Refresh councillor data
+        env:
+          COUNCIL_PROXY_URL: ${{ secrets.COUNCIL_PROXY_URL }}
         run: |
           set -euo pipefail
+          if [ -z "$COUNCIL_PROXY_URL" ]; then
+            echo 'Required COUNCIL_PROXY_URL secret is missing' >&2
+            exit 1
+          fi
           # Writes data/councillors.yaml AND emits .refresh-summary.md (markdown
           # diff table consumed by the PR body via body-path below — D-08).
           python scripts/refresh_councillors.py
