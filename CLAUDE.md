@@ -4,13 +4,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Static website for the Cornish Independent NonAligned Group (CING) — a group of independent councillors on Cornwall Council. Built with Hugo, styled with Tailwind CSS (CDN), deployed to GitHub Pages at `www.cingparty.uk`.
+Static website for the Cornish Independent NonAligned Group (CING) — a group of independent councillors on Cornwall Council. Built with Hugo, styled with Tailwind CSS v4 (compiled by the standalone CLI), deployed to GitHub Pages at `www.cingparty.uk`.
 
 ## Commands
 
 ```bash
 # Local development
 hugo server --baseURL http://localhost:1313/ --disableFastRender
+
+# Compile Tailwind (assets/css/compiled.css is gitignored; CI does this before hugo)
+./tailwindcss -i assets/css/main.css -o assets/css/compiled.css --minify
 
 # Production build
 hugo --gc --minify --baseURL "https://www.cingparty.uk/"
@@ -19,7 +22,7 @@ hugo --gc --minify --baseURL "https://www.cingparty.uk/"
 hugo new content/news/my-post-title.md
 ```
 
-Deployment is automatic via GitHub Actions on push to `main`. No npm/Node dependencies — Hugo is the only build tool. (Exception: the pa11y-ci CI job uses `actions/setup-node` and `npm install --no-save` ephemerally inside a single workflow step. Node is a CI-only tool, never a project dependency — there is no `package.json` and `git clone && hugo` works on a fresh machine without Node installed.)
+Deployment is automatic via GitHub Actions on push to `main`. No npm/Node dependencies — Hugo plus the Tailwind standalone CLI binary (pinned version + SHA256 in `hugo.yml`; see `docs/MAINTENANCE.md`) are the only build tools. (Exception: the pa11y-ci CI job uses `actions/setup-node` and `npm install --no-save` ephemerally inside a single workflow step. Node is a CI-only tool, never a project dependency — there is no `package.json` and `git clone && hugo` works on a fresh machine without Node installed.)
 
 ## Architecture
 
@@ -36,7 +39,7 @@ Access pattern in templates:
 
 Custom layouts override Hugo defaults — there is no theme:
 
-- `layouts/_default/baseof.html` — base wrapper with Tailwind config, fonts, Material Symbols, Google Analytics (consent-gated), cookie banner
+- `layouts/_default/baseof.html` — base wrapper with compiled CSS, fonts, Google Analytics (consent-gated), cookie banner, OG/Twitter meta. (Material Symbols is `@import`ed in `assets/css/main.css`, not linked here — see Design system.)
 - `layouts/partials/header.html` — glassmorphism nav with mobile hamburger (vanilla JS)
 - `layouts/partials/footer.html` — 3-column footer
 - `layouts/partials/share-buttons.html` — inline share row (Web Share API → clipboard fallback, plus X/Bluesky/Facebook/LinkedIn/WhatsApp/Email deep-links). Self-contained: renders markup + a one-time delegated `<script>`. Used on `news/single.html` and `press/single.html`. Params: `url` (pass `.Permalink`), `title`, `text`, `type` (analytics `content_type`). Logs a `share` gtag event when consent has loaded gtag; no-ops otherwise. Ported from the Cornwall Political Watch `SharePanel` React component.
@@ -52,7 +55,11 @@ Content pages that use a non-default layout specify it in front matter: `layout:
 
 ### Design system
 
-All styling uses Tailwind CSS via CDN with Material Design 3 colour tokens defined inline in `baseof.html`. Full brand documentation lives in `docs/brand/`:
+Styling is Tailwind CSS v4, compiled from `assets/css/main.css` (entry point + custom classes) and `assets/css/theme.css` (`@theme` Material Design 3 colour tokens, fonts, radii) into the gitignored `assets/css/compiled.css`.
+
+**Cascade-layer gotcha:** v4 puts every utility inside `@layer utilities`, so *any unlayered CSS* (custom rules in `main.css` outside a layer, or a third-party `<link>` stylesheet) beats utilities regardless of specificity. That is why Material Symbols is pulled in via `@import url(...) layer(base)` at the top of `main.css` — loaded as a `<link>`, its `font-size:24px` overrode `text-4xl` etc. on every icon.
+
+Full brand documentation lives in `docs/brand/`:
 
 - **[`docs/brand/DESIGN.md`](docs/brand/DESIGN.md)** — **Master design system** ("Kernow Horizon") from Stitch. Creative north star, philosophy, do's/don'ts. The canonical design authority.
 - **[`docs/brand/colours.md`](docs/brand/colours.md)** — Complete colour token reference (primary, secondary, tertiary, surface, semantic)
@@ -73,6 +80,12 @@ Design principle: no 1px borders — sections separated by tonal surface shifts.
 ### Documentation
 
 `docs/` contains committed reference documentation and brand standards — see [`docs/README.md`](docs/README.md) for an index. Unlike `.reference/` (gitignored Stitch exports), `docs/` is version-controlled and serves as the durable source of truth for brand guidelines and project standards.
+
+### Images
+
+Content images live in `assets/images/` (not `static/`) and go through Hugo's image pipeline via `layouts/partials/responsive-image.html` (params: `src` relative to `assets/` with no leading slash, `alt`, `sizes`, `loading`, `widths`, `class`; emits WebP + JPEG srcsets). Front-matter `image:` / councillor `photo:` values are written as `/images/...` and resolved with `resources.Get` after trimming the slash — never `absURL` them directly, the unprocessed path 404s. Only `og-default.jpg`, `hero-coast.svg` and favicons remain in `static/`.
+
+Known limitation: the 18 landscape/hero photos are 512×512 sources (Stitch exports; no larger originals exist), so full-width heroes are upscaled and soft on desktop. Councillor portraits are 1024px and press heroes 1600px. When larger photos are supplied, raise the `widths` slices (currently `320 480 512`) in the templates.
 
 ### Forms
 
