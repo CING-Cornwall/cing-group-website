@@ -68,19 +68,32 @@
   <meta name="geo.region" content="GB-CON" />
   <meta name="geo.placename" content="Cornwall" />
 
+  {{/* Share image: front-matter `image` paths live in assets/ (image pipeline), so resolve
+       them as resources; anything not found there falls back to a static/ URL. */}}
+  {{ $ogImage := "" }}
+  {{ with .Params.image }}
+    {{ with resources.Get (strings.TrimPrefix "/" .) }}
+      {{ $ogImage = (.Process "resize 1200x jpeg q85").Permalink }}
+    {{ else }}
+      {{ $ogImage = . | absURL }}
+    {{ end }}
+  {{ else }}
+    {{ with .Site.Params.ogImage }}{{ $ogImage = . | absURL }}{{ end }}
+  {{ end }}
+
   {{/* Open Graph */}}
   <meta property="og:title" content="{{ .Title }}" />
   <meta property="og:description" content="{{ $desc }}" />
   <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}" />
   <meta property="og:url" content="{{ .Permalink }}" />
-  <meta property="og:image" content="{{ with .Params.image }}{{ . | absURL }}{{ else }}{{ with .Site.Params.ogImage }}{{ . | absURL }}{{ end }}{{ end }}" />
+  <meta property="og:image" content="{{ $ogImage }}" />
   <meta property="og:site_name" content="{{ .Site.Title }}" />
 
   {{/* Twitter Card */}}
   <meta name="twitter:card" content="{{ if .Params.image }}summary_large_image{{ else }}summary{{ end }}" />
   <meta name="twitter:title" content="{{ .Title }}" />
   <meta name="twitter:description" content="{{ $desc }}" />
-  {{ with .Params.image }}<meta name="twitter:image" content="{{ . | absURL }}" />{{ end }}
+  {{ if .Params.image }}<meta name="twitter:image" content="{{ $ogImage }}" />{{ end }}
 
   {{/* Structured Data */}}
   {{ if .IsHome }}
@@ -126,7 +139,7 @@
 
   {{/* Google Fonts */}}
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Public+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  {{/* Material Symbols is @imported in assets/css/main.css (layer(base)) so Tailwind utilities can size icons */}}
 </head>
 <body class="bg-background text-on-background font-body selection:bg-tertiary-fixed selection:text-on-tertiary-fixed">
 

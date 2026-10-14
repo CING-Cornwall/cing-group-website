@@ -8,6 +8,12 @@
  *   container queries          — built into v4 core; no plugin directive needed.
  */
 
+/* Material Symbols' stylesheet sets .material-symbols-outlined{font-size:24px}.
+ * Loaded from a <link> it is unlayered, and unlayered rules beat every
+ * Tailwind v4 utility (which live in @layer utilities), so text-4xl etc.
+ * were ignored on icons. Importing it into the base layer restores
+ * utility precedence. Must stay the first rule in this file. */
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap") layer(base);
 @import "tailwindcss";
 @import "./theme.css";
 
